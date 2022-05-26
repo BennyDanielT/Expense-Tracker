@@ -16,4 +16,8 @@ Benny Daniel (B00899629) - https://tutorial2-csci-5709.herokuapp.com/
 <li>
 Vatsal Yadav (B00893030) - https://tutorial-two-vatsal.herokuapp.com/
 </li>
+
+<li>
+Smit Thakkar (B00896215) - https://t2-smit-thakkar-b00896215.herokuapp.com/
+</li>
 </ol>
