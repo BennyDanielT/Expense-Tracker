@@ -20,4 +20,8 @@ Vatsal Yadav (B00893030) - https://tutorial-two-vatsal.herokuapp.com/
 <li>
 Smit Thakkar (B00896215) - https://t2-smit-thakkar-b00896215.herokuapp.com/
 </li>
+
+<li>
+Devarshi Vyas (B00878443) - https://t2-vyas-devarshi.herokuapp.com/
+</li>
 </ol>
