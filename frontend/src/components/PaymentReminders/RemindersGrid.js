@@ -32,35 +32,35 @@ export default function RemindersGrid() {
             <Row className="font-monospace m-0 ps-0 pe-0 pe-sm-5 ps-sm-5 pt-5 text-black container-fluid">
                 <div className="col-md-6 col-12"> Create</div>
                 {Object.values(json).map(reminder =>
-                    <div className="col-md-6 col-12" >
+                    <div className="col-md-6 col-12">
 
-                        <div className="p-2 m-1 rounded-3  border" style={{backgroundColor:"#a5b4fc"}}>
-                        <Row>
-                            <Col md={3} className="d-none d-md-block p-0 p-md-1 p-lg-4 ">
-                                <img className="w-100" alt="Reminder Icon"
-                                     src="/sticky-notes.png"/>
-                            </Col>
-                            <Col className="p-3">
-                                <Stack gap={1}>
-                                    <Row style={{fontSize: 20, fontWeight:"bold"}}>
-                                        <Col>{reminder.date}</Col>
-                                        <Col className="text-end"> ${reminder.amount}</Col>
+                        <div className="p-2 m-1 rounded-3  border" style={{backgroundColor: "#a5b4fc"}}>
+                            <Row>
+                                <Col md={3} className="d-none d-md-block p-0 p-md-1 p-lg-4 ">
+                                    <img className="w-100" alt="Reminder Icon"
+                                         src="/sticky-notes.png"/>
+                                </Col>
+                                <Col className="p-3">
+                                    <Stack gap={1}>
+                                        <Row style={{fontSize: 20, fontWeight: "bold"}}>
+                                            <Col>{reminder.date}</Col>
+                                            <Col className="text-end"> ${reminder.amount}</Col>
 
-                                    </Row>
-                                    <div>{reminder.name}</div>
-                                    <div>{reminder.desc}</div>
-                                    <Stack direction="horizontal" className="justify-content-end" gap={2}>
-                                        <button
-                                            className="rounded-3"  style={{backgroundColor:"#f87171"}}>Remove
-                                        </button>
-                                        <button
-                                            className="rounded-3" style={{backgroundColor:"#2dd4bf"}}>Edit
-                                        </button>
+                                        </Row>
+                                        <div>{reminder.name}</div>
+                                        <div>{reminder.desc}</div>
+                                        <Stack direction="horizontal" className="justify-content-end" gap={2}>
+                                            <button
+                                                className="rounded-3" style={{backgroundColor: "#f87171"}}>Remove
+                                            </button>
+                                            <button
+                                                className="rounded-3" style={{backgroundColor: "#2dd4bf"}}>Edit
+                                            </button>
+                                        </Stack>
                                     </Stack>
-                                </Stack>
 
-                            </Col>
-                        </Row>
+                                </Col>
+                            </Row>
 
                         </div>
                     </div>
