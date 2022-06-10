@@ -32,12 +32,12 @@ export default function RemindersGrid() {
             <Row className="font-monospace m-0 ps-0 pe-0 pe-sm-5 ps-sm-5 pt-5 text-black container-fluid">
                 <div className="col-md-6 col-12"> Create</div>
                 {Object.values(json).map(reminder =>
-                    <div className="col-md-6 col-12">
+                    <div className="col-md-6 col-12" >
 
-                        <div className="p-2 m-1 rounded-3 bg-light border">
+                        <div className="p-2 m-1 rounded-3  border" style={{backgroundColor:"#a5b4fc"}}>
                         <Row>
-                            <Col md={3} className="d-none d-md-block">
-                                <img className="w-100 p-1" alt="Reminder Icon"
+                            <Col md={3} className="d-none d-md-block p-0 p-md-1 p-lg-4 ">
+                                <img className="w-100" alt="Reminder Icon"
                                      src="/sticky-notes.png"/>
                             </Col>
                             <Col className="p-3">
@@ -51,10 +51,10 @@ export default function RemindersGrid() {
                                     <div>{reminder.desc}</div>
                                     <Stack direction="horizontal" className="justify-content-end" gap={2}>
                                         <button
-                                            className="rounded-3" >Remove
+                                            className="rounded-3"  style={{backgroundColor:"#f87171"}}>Remove
                                         </button>
                                         <button
-                                            className="hover:bg-teal-600 bg-teal-400 text-black rounded-3">Edit
+                                            className="rounded-3" style={{backgroundColor:"#2dd4bf"}}>Edit
                                         </button>
                                     </Stack>
                                 </Stack>
