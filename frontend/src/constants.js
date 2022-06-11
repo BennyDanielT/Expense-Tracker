@@ -2,5 +2,21 @@ export const routes = {
     home: {
         path: '/',
         isAuthenticated: true
+    },
+    group: {
+        path: "/group",
+        isAuthenticated: true
+    },
+    "create-group": {
+        path: "/create-group",
+        isAuthenticated: true
     }
 }
+
+export const setLocalStorage = (key, value) => {
+    localStorage.setItem(key, value);
+};
+
+export const getLocalStorage = (key) => {
+    return localStorage.getItem(key);
+};

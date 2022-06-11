@@ -1,0 +1,34 @@
+.create-group .group-type button {
+    background: #47524B;
+    color: #FCFCFC;
+}
+
+.create-group .group-type .selected {
+    background: #37BE66 !important;
+    color: #000000 !important;
+}
+
+.groups-home .groups-list {
+    border: 2px solid grey;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.groups-home, .create-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.groups-home .current-groups > * {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+.title {
+    color: green;
+}

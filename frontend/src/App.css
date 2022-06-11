@@ -1,0 +1,17 @@
+.errors {
+    color: red;
+}
+
+a {
+    color: #0d4fb0;
+    text-decoration: none;
+}
+
+body {
+    height: 100vh;
+}
+
+#root {
+    background: #e1f5fe;
+    height: 100%;
+}
