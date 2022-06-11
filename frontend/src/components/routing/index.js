@@ -1,6 +1,6 @@
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {routes} from "../../constants";
-import {Home} from "../home";
+import {Home} from "../Home";
 import {GroupHomePage} from "../group/GroupHomePage";
 import {CreateGroup} from "../group/CreateGroup";
 import RemindersGrid from "../PaymentReminders/RemindersGrid";
