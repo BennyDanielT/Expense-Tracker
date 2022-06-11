@@ -88,8 +88,6 @@ function CreateGroup() {
         }
     }
 
-    const id = useId();
-
     const submitForm = (e) => {
 
         const callErrorFunctions = () => {
