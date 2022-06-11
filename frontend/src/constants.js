@@ -10,6 +10,14 @@ export const routes = {
     "create-group": {
         path: "/create-group",
         isAuthenticated: true
+    },
+    reminders: {
+        path: '/reminders',
+        isAuthenticated: true
+    },
+    createReminder: {
+        path: '/create-reminder',
+        isAuthenticated: true
     }
 }
 
