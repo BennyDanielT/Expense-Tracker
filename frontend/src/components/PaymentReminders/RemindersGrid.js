@@ -29,22 +29,32 @@ export default function RemindersGrid() {
         }
     };
 
-    const [editReminder, setEditReminder] = useState({reminder:"", show:false});
+    const [editReminder, setEditReminder] = useState({reminder: "", show: false});
 
-    const handleClose = () => setEditReminder(prevState => {return {reminder: prevState.reminder, show: false}});
-    const handleShow = () => setEditReminder(prevState => {return {reminder: prevState.reminder, show: true}});
+    const handleClose = () => setEditReminder(prevState => {
+        return {reminder: prevState.reminder, show: false}
+    });
+    const handleShow = () => setEditReminder(prevState => {
+        return {reminder: prevState.reminder, show: true}
+    });
 
     const [currentReminder, setCurrentReminder] = useState(null)
     const [show, setShow] = useState(false);
 
     const handleDeleteClose = () => setShow(false);
     const handleDeleteShow = () => setShow(true);
-
+    /*const handleCreateReminder = () => createReminder("/createReminder");*/
+    const handleCreateReminder = () => this.props.history.push('/create-reminder')
 
     return (
         <Container fluid>
-            <Row className="font-monospace m-0 ps-0 pe-0 pe-sm-5 ps-sm-5 pt-5 text-black container-fluid">
-                <div className="col-md-6 col-12"> Create</div>
+            <Row className="font-monospace m-0 text-black container-fluid justify-content-around">
+                <button
+                    className="rounded-3" style={{width: "180px"}}
+                    onClick={handleCreateReminder}>Create Reminder
+                </button>
+            </Row>
+            <Row className="font-monospace m-0 ps-0 pe-0 pe-sm-5 ps-sm-5 pt-2 text-black container-fluid">
                 {Object.values(json).map(reminder =>
                     <div className="col-md-6 col-12">
 
@@ -66,11 +76,17 @@ export default function RemindersGrid() {
                                         <Stack direction="horizontal" className="justify-content-end" gap={2}>
                                             <button
                                                 className="rounded-3" style={{backgroundColor: "#f87171"}}
-                                                onClick={()=>{handleDeleteShow(); setCurrentReminder(reminder)}}>Remove
+                                                onClick={() => {
+                                                    handleDeleteShow();
+                                                    setCurrentReminder(reminder)
+                                                }}>Remove
                                             </button>
                                             <button
                                                 className="rounded-3" style={{backgroundColor: "#2dd4bf"}}
-                                                onClick={()=>{handleShow(); setEditReminder({reminder:reminder, show:true})}}>Edit
+                                                onClick={() => {
+                                                    handleShow();
+                                                    setEditReminder({reminder: reminder, show: true})
+                                                }}>Edit
                                             </button>
                                         </Stack>
                                     </Stack>
