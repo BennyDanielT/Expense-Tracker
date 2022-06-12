@@ -1,5 +1,5 @@
 import "./group.css";
-import {Heading} from "./Heading";
+import {Heading} from "../Heading/Heading";
 import {Button, Card} from "react-bootstrap";
 import {useHistory} from "react-router-dom";
 import {routes} from "../../constants";

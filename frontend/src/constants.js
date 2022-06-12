@@ -23,6 +23,18 @@ export const routes = {
         path: "/delete-group/:id",
         isAuthenticated: true,
     },
+    viewNotification: {
+        path: "/view-notification",
+        isAuthenticated: true
+    },
+    emailNotification: {
+        path: "/email-notification",
+        isAuthenticated: true
+    },
+    notificationSettings: {
+        path: "/notification-settings",
+        isAuthenticated: true
+    },
     reminders: {
         path: '/reminders',
         isAuthenticated: true
