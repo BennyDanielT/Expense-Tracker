@@ -5,6 +5,7 @@ import {getLocalStorage, routes, setLocalStorage} from "../../constants";
 import Swal from "sweetalert2";
 import {useHistory} from "react-router-dom";
 import "./group.css";
+import {Heading} from "./Heading";
 
 function CreateGroup() {
     const [values, setValues] = useState({name: "", icon: "", type: "home", members: null});
@@ -130,8 +131,8 @@ function CreateGroup() {
 
     return (
         <div className="create-group">
-            <Form.Label><h2 className="title">Create Group</h2></Form.Label>
-            <Form className="create-group-form mt-4">
+            <Form.Label><Heading>Create Group</Heading></Form.Label>
+            <Form className="create-group-form m-4">
                 <Form.Group className="mb-3" controlId="groupName">
                     <Form.Label>Group Name</Form.Label>
                     <Form.Control type="text" placeholder="Enter group name" value={values["name"]}

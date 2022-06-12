@@ -14,11 +14,9 @@
     padding: 10px;
 }
 
-.groups-home, .create-group {
+.groups-home, .create-group, .view-group, .delete-group, .edit-group {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 .groups-home .current-groups > * {
@@ -30,5 +28,23 @@
 }
 
 .title {
+    margin: 10px;
+    text-align: center;
     color: green;
+}
+
+.view-group .lent {
+    color: blue;
+}
+
+.view-group .owed {
+    color: red;
+}
+
+.view-group .settled-up {
+    color: green;
+}
+
+.view-group .card {
+    margin: 0 0.5rem 0 0.5rem !important;
 }

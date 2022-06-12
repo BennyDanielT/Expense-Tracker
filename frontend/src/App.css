@@ -8,10 +8,10 @@ a {
 }
 
 body {
+    background: #e1f5fe !important;
     height: 100vh;
 }
 
 #root {
-    background: #e1f5fe;
     height: 100%;
 }
