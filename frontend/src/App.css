@@ -23,3 +23,7 @@ body {
 .owed {
     color: red;
 }
+
+.form-switch {
+    zoom: 1.5;
+}
