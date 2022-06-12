@@ -4,7 +4,7 @@ import {Button, Form} from "react-bootstrap";
 import {useHistory} from "react-router-dom";
 import Swal from "sweetalert2";
 import "./group.css";
-import {Heading} from "./Heading";
+import {Heading} from "../Heading/Heading";
 
 function GroupHomePage() {
     const [groups, updateGroups] = useState([]);

@@ -27,20 +27,6 @@
     margin: auto;
 }
 
-.title {
-    margin: 10px;
-    text-align: center;
-    color: green;
-}
-
-.view-group .lent {
-    color: blue;
-}
-
-.view-group .owed {
-    color: red;
-}
-
 .view-group .settled-up {
     color: green;
 }
