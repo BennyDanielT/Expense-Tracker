@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import {useHistory} from "react-router-dom";
 import "./group.css";
 import {Heading} from "./Heading";
+import {dummyMembersData} from "./helpers";
 
 function CreateGroup() {
     const [values, setValues] = useState({name: "", icon: "", type: "home", members: null});
@@ -13,21 +14,6 @@ function CreateGroup() {
     const [mainError, setMainError] = useState("");
     const history = useHistory();
     const uniqueId = useId();
-
-    const dummyMembersData = useRef([
-        {
-            label: "Abhishek",
-            value: "abhishek"
-        },
-        {
-            label: "Foo",
-            value: "foo"
-        },
-        {
-            label: "Bar",
-            value: "bar"
-        }
-    ]);
 
     const onChangeFunctions = {
         'name': (e) => {
@@ -161,7 +147,7 @@ function CreateGroup() {
                     <Select
                         isMulti
                         name="colors"
-                        options={dummyMembersData.current}
+                        options={dummyMembersData}
                         className="basic-multi-select"
                         classNamePrefix="select"
                         onChange={onChangeFunctions['members']}
