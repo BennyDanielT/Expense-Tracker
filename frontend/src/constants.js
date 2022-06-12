@@ -15,7 +15,7 @@ export const routes = {
         path: "/view-group/:id",
         isAuthenticated: true,
     },
-    modifyGroup: {
+    editGroup: {
         path: "/edit-group/:id",
         isAuthenticated: true,
     },

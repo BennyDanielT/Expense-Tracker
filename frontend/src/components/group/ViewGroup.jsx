@@ -1,6 +1,8 @@
 import "./group.css";
 import {Heading} from "./Heading";
 import {Button, Card} from "react-bootstrap";
+import {useHistory} from "react-router-dom";
+import {routes} from "../../constants";
 
 function ViewGroup() {
 
@@ -60,6 +62,17 @@ function ViewGroup() {
         ]
     };
 
+    const history = useHistory();
+
+    const editGroup = (currentGroup) => {
+        history.push({pathname: routes.editGroup.path, state: currentGroup});
+    };
+
+    const deleteGroup = (currentGroup) => {
+        history.push({pathname: routes.deleteGroup.path, state: currentGroup});
+    };
+
+
     return (
         <div className="view-group">
             <Heading>View Group</Heading>
@@ -83,35 +96,35 @@ function ViewGroup() {
                                     </div>
                                 </div>
                                 <div>
-                                    {!result.expenses.owed && !result.expenses.lent ? "" :
-                                        <div>
-                                            <div className="mt-2 mb-2">
-                                                <b>Detailed Report</b>
-                                            </div>
-                                            <div className="mb-3">
-                                                {result.expenses?.details?.map((ele, index) => {
-                                                    const key = <span><b>{Object.keys(ele)[0]}</b></span>
-                                                    let value;
-                                                    if (Object.values(ele)[0].lent) {
-                                                        value = <span>+{Object.values(ele)[0].lent}</span>
-                                                    } else {
-                                                        value = <span>-{Object.values(ele)[0].owed}</span>
-                                                    }
+                                    {/*{!result.expenses.owed && !result.expenses.lent ? "" :*/}
+                                    {/*    <div>*/}
+                                    {/*        <div className="mt-2 mb-2">*/}
+                                    {/*            <b>Detailed Report</b>*/}
+                                    {/*        </div>*/}
+                                    {/*        <div className="mb-3">*/}
+                                    {/*            {result.expenses?.details?.map((ele, index) => {*/}
+                                    {/*                const key = <span><b>{Object.keys(ele)[0]}</b></span>*/}
+                                    {/*                let value;*/}
+                                    {/*                if (Object.values(ele)[0].lent) {*/}
+                                    {/*                    value = <span>+{Object.values(ele)[0].lent}</span>*/}
+                                    {/*                } else {*/}
+                                    {/*                    value = <span>-{Object.values(ele)[0].owed}</span>*/}
+                                    {/*                }*/}
 
-                                                    return (
-                                                        <div key={index} className="d-flex justify-content-between">
-                                                            <div style={{marginRight: "10px !important"}}>
-                                                                {key}
-                                                            </div>
-                                                            <div>
-                                                                {value}
-                                                            </div>
-                                                        </div>
-                                                    )
-                                                })}
-                                            </div>
-                                        </div>
-                                    }
+                                    {/*                return (*/}
+                                    {/*                    <div key={index} className="d-flex justify-content-between">*/}
+                                    {/*                        <div style={{marginRight: "10px !important"}}>*/}
+                                    {/*                            {key}*/}
+                                    {/*                        </div>*/}
+                                    {/*                        <div>*/}
+                                    {/*                            {value}*/}
+                                    {/*                        </div>*/}
+                                    {/*                    </div>*/}
+                                    {/*                )*/}
+                                    {/*            })}*/}
+                                    {/*        </div>*/}
+                                    {/*    </div>*/}
+                                    {/*}*/}
                                     <div>{!result.expenses.owed && !result.expenses.lent ?
                                         <div className="settled-up">{"Hurray !! All settled up"}</div> :
                                         result.expenses.owed ?
@@ -120,10 +133,17 @@ function ViewGroup() {
                                                 className="lent">{"Expense lent : " + result.expenses.lent}</div>}</div>
                                 </div>
                             </div>
-
-                            <Button className="mt-2">
-                                Settle Up
-                            </Button>
+                            <div className="d-flex justify-content-evenly">
+                                <Button className="mt-2">
+                                    Settle Up
+                                </Button>
+                                <Button className="mt-2" onClick={() => editGroup(result)}>
+                                    Edit Group
+                                </Button>
+                                <Button className="mt-2" onClick={() => deleteGroup(result)}>
+                                    Delete Group
+                                </Button>
+                            </div>
                         </Card>
                     )
                 })}

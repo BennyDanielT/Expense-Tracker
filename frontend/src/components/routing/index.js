@@ -5,7 +5,7 @@ import {CreateGroup} from "../group/CreateGroup";
 import RemindersGrid from "../PaymentReminders/RemindersGrid";
 import CreateReminder from "../PaymentReminders/CreateReminder";
 import {ViewGroup} from "../group/ViewGroup";
-import {ModifyGroup} from "../group/ModifyGroup";
+import {EditGroup} from "../group/EditGroup";
 import {DeleteGroup} from "../group/DeleteGroup";
 
 function Routing() {
@@ -24,8 +24,8 @@ function Routing() {
                 <Route exact path={routes.viewGroup.path}>
                     <ViewGroup/>
                 </Route>
-                <Route exact path={routes.modifyGroup.path}>
-                    <ModifyGroup/>
+                <Route exact path={routes.editGroup.path}>
+                    <EditGroup/>
                 </Route>
                 <Route exact path={routes.deleteGroup.path}>
                     <DeleteGroup/>
