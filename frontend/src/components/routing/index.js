@@ -3,6 +3,9 @@ import {routes} from "../../constants";
 import {Home} from "../home";
 import {GroupHomePage} from "../group/GroupHomePage";
 import {CreateGroup} from "../group/CreateGroup";
+import {CreateEditTag} from "../tasks/CreateEditTag";
+import { ViewTagDetails } from "../tasks/ViewTagDetails";
+import { ViewTags } from "../tasks/ViewTags";
 
 function Routing() {
     return (
@@ -16,6 +19,18 @@ function Routing() {
                 </Route>
                 <Route exact path={routes["create-group"].path}>
                     <CreateGroup/>
+                </Route>
+                <Route exact path={routes["create-tag"].path}>
+                    <CreateEditTag/>
+                </Route>
+                <Route exact path={routes["edit-tag"].path}>
+                    <CreateEditTag/>
+                </Route>
+                <Route exact path={routes["view-tag-details"].path}>
+                    <ViewTagDetails/>
+                </Route>
+                <Route exact path={routes["view-tags"].path}>
+                    <ViewTags/>
                 </Route>
             </Switch>
         </BrowserRouter>

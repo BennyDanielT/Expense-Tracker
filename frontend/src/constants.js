@@ -10,6 +10,22 @@ export const routes = {
     "create-group": {
         path: "/create-group",
         isAuthenticated: true
+    },
+    "create-tag": {
+        path: "/create-tag",
+        isAuthenticated: true
+    },
+    "edit-tag": {
+        path: "/edit-tag",
+        isAuthenticated: true
+    },
+    "view-tag-details": {
+        path: "/view-tag-details",
+        isAuthenticated: true
+    },
+    "view-tags": {
+        path: "/view-tags",
+        isAuthenticated: true
     }
 }
 
