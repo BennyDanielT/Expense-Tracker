@@ -7,8 +7,28 @@ export const routes = {
         path: "/group",
         isAuthenticated: true
     },
-    "create-group": {
+    createGroup: {
         path: "/create-group",
+        isAuthenticated: true
+    },
+    viewGroup: {
+        path: "/view-group/:id",
+        isAuthenticated: true,
+    },
+    editGroup: {
+        path: "/edit-group/:id",
+        isAuthenticated: true,
+    },
+    deleteGroup: {
+        path: "/delete-group/:id",
+        isAuthenticated: true,
+    },
+    reminders: {
+        path: '/reminders',
+        isAuthenticated: true
+    },
+    createReminder: {
+        path: '/create-reminder',
         isAuthenticated: true
     },
     "create-tag": {
