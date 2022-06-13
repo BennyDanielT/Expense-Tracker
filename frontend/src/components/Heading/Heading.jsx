@@ -1,4 +1,4 @@
-import "./group.css";
+import "./index.css";
 
 function Heading({children}) {
     return (

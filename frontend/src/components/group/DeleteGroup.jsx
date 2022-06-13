@@ -1,5 +1,5 @@
 import {useHistory, useLocation} from "react-router-dom";
-import {Heading} from "./Heading";
+import {Heading} from "../Heading/Heading";
 import "./group.css";
 import {Button, Card} from "react-bootstrap";
 import Swal from "sweetalert2";

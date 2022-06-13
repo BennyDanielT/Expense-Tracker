@@ -5,7 +5,7 @@ import {getLocalStorage, routes, setLocalStorage} from "../../constants";
 import Swal from "sweetalert2";
 import {useHistory} from "react-router-dom";
 import "./group.css";
-import {Heading} from "./Heading";
+import {Heading} from "../Heading/Heading";
 import {dummyMembersData} from "./helpers";
 
 function CreateGroup() {

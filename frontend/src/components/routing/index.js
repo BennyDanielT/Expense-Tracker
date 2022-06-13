@@ -7,6 +7,9 @@ import CreateReminder from "../PaymentReminders/CreateReminder";
 import {ViewGroup} from "../group/ViewGroup";
 import {EditGroup} from "../group/EditGroup";
 import {DeleteGroup} from "../group/DeleteGroup";
+import {ViewNotification} from "../notifications/ViewNotification";
+import {EmailNotification} from "../notifications/EmailNotification";
+import {NotificationSettings} from "../notifications/NotificationSettings";
 
 function Routing() {
     return (
@@ -29,6 +32,15 @@ function Routing() {
                 </Route>
                 <Route exact path={routes.deleteGroup.path}>
                     <DeleteGroup/>
+                </Route>
+                <Route exact path={routes.viewNotification.path}>
+                    <ViewNotification/>
+                </Route>
+                <Route exact path={routes.emailNotification.path}>
+                    <EmailNotification/>
+                </Route>
+                <Route exact path={routes.notificationSettings.path}>
+                    <NotificationSettings/>
                 </Route>
                 <Route exact path={routes.reminders.path}>
                     <RemindersGrid/>

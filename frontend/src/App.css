@@ -15,3 +15,15 @@ body {
 #root {
     height: 100%;
 }
+
+.lent {
+    color: blue;
+}
+
+.owed {
+    color: red;
+}
+
+.form-switch {
+    zoom: 1.5;
+}
