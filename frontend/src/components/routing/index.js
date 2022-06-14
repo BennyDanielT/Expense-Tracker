@@ -3,8 +3,12 @@ import {routes} from "../../constants";
 import {Home} from "../Home";
 import {GroupHomePage} from "../group/GroupHomePage";
 import {CreateGroup} from "../group/CreateGroup";
-import RemindersGrid from "../PaymentReminders/RemindersGrid";
-import CreateReminder from "../PaymentReminders/CreateReminder";
+import RemindersGrid from "../paymentReminders/RemindersGrid";
+import CreateReminder from "../paymentReminders/CreateReminder";
+import {AnalyticsHome} from "../analytics/AnalyticsHome";
+import ExpenseTracking from "../analytics/ExpenseTracking";
+import SpendingTrends from "../analytics/SpendingAnalysis";
+
 
 function Routing() {
     return (
@@ -24,6 +28,15 @@ function Routing() {
                 </Route>
                 <Route exact path={routes.createReminder.path}>
                     <CreateReminder/>
+                </Route>
+                <Route exact path={routes.analytics.path}>
+                    <AnalyticsHome/>
+                </Route>
+                <Route exact path={routes.expenseTracking.path}>
+                    <ExpenseTracking/>
+                </Route>
+                <Route exact path={routes.spendingTrends.path}>
+                    <SpendingTrends/>
                 </Route>
             </Switch>
         </BrowserRouter>

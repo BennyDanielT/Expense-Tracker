@@ -18,7 +18,20 @@ export const routes = {
     createReminder: {
         path: '/create-reminder',
         isAuthenticated: true
+    },
+    analytics: {
+        path: '/analytics',
+        isAuthenticated: true
+    },
+    expenseTracking: {
+        path: '/expense-tracking',
+        isAuthenticated: true
+    },
+    spendingTrends: {
+        path: '/spending-trends',
+        isAuthenticated: true
     }
+
 }
 
 export const setLocalStorage = (key, value) => {
