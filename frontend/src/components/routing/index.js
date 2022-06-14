@@ -7,9 +7,9 @@ import CreateReminder from "../PaymentReminders/CreateReminder";
 import {ViewGroup} from "../group/ViewGroup";
 import {EditGroup} from "../group/EditGroup";
 import {DeleteGroup} from "../group/DeleteGroup";
-import {CreateEditTag} from "../tasks/CreateEditTag";
-import { ViewTagDetails } from "../tasks/ViewTagDetails";
-import { ViewTags } from "../tasks/ViewTags";
+import {CreateEditTag} from "../tags/CreateEditTag";
+import { ViewTagDetails } from "../tags/ViewTagDetails";
+import { ViewTags } from "../tags/ViewTags";
 
 function Routing() {
     return (
@@ -40,16 +40,16 @@ function Routing() {
                     <CreateReminder/>
                 </Route>
                 
-                <Route exact path={routes["create-tag"].path}>
-                    <CreateEditTag/>
+                <Route exact path={routes.createTag.path}>
+                    <CreateEditTag setting="create"/>
                 </Route>
-                <Route exact path={routes["edit-tag"].path}>
-                    <CreateEditTag/>
+                <Route exact path={routes.editTag.path}>
+                    <CreateEditTag setting="edit"/>
                 </Route>
-                <Route exact path={routes["view-tag-details"].path}>
+                <Route exact path={routes.viewTagDetails.path}>
                     <ViewTagDetails/>
                 </Route>
-                <Route exact path={routes["view-tags"].path}>
+                <Route exact path={routes.viewTags.path}>
                     <ViewTags/>
                 </Route>
             </Switch>

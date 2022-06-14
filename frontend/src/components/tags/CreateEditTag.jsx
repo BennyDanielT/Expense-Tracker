@@ -2,16 +2,16 @@ import { useId, useRef, useState } from "react";
 import { getLocalStorage, routes, setLocalStorage } from "../../constants";
 import { useHistory } from "react-router-dom";
 import Picker from "emoji-picker-react";
-import "./tasks.css";
+import "./tags.css";
 
-function CreateEditTag() {
+function CreateEditTag({ setting }) {
   const [errors, setErrors] = useState({});
   const [mainError, setMainError] = useState("");
   const history = useHistory();
   const uniqueId = useId();
 
   //
-  const [mode, setMode] = useState("edit");
+  const [mode, setMode] = useState(setting);
   const [tagDetails, setTagDetails] = useState({
     tagId: "110297",
     name: "ferin",
@@ -80,7 +80,11 @@ function CreateEditTag() {
   };
 
   return (
-    <div className="create-edit-tag">
+    <div
+      style={{
+        padding: "30px",
+      }}
+    >
       <h2>{mode === "create" ? "Create Tag" : "Edit Tag"}</h2>
       <form>
         <div className="form-group">

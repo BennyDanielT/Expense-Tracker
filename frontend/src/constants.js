@@ -31,19 +31,19 @@ export const routes = {
         path: '/create-reminder',
         isAuthenticated: true
     },
-    "create-tag": {
+    createTag: {
         path: "/create-tag",
         isAuthenticated: true
     },
-    "edit-tag": {
+    editTag: {
         path: "/edit-tag",
         isAuthenticated: true
     },
-    "view-tag-details": {
+    viewTagDetails: {
         path: "/view-tag-details",
         isAuthenticated: true
     },
-    "view-tags": {
+    viewTags: {
         path: "/view-tags",
         isAuthenticated: true
     }
