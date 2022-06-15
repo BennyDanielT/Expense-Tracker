@@ -9,8 +9,9 @@ import {
   Col,
   Placeholder,
   Button,
+  ButtonGroup,
 } from "react-bootstrap";
-
+import { stockData } from "./data/sample-data";
 function ViewCoupons() {
   // page content
   const pageTitle = "Hurray! You've free coupons to redeem 🎉";
@@ -22,23 +23,31 @@ function ViewCoupons() {
         <Meta title={pageTitle} />
         <Header head={pageTitle} description={pageDescription} />
       </div>
-      <Row xs={1} md={2} className="g-4">
-        {Array.from({ length: 4 }).map((_, idx) => (
-          <Col>
-            <Card>
-              <Card.Img variant="top" src="holder.js/100px160" />
-              <Card.Body>
-                <Card.Title>Card title</Card.Title>
-                <Card.Text>
-                  This is a longer card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+      <div className="stock-container">
+        {stockData.map((data, key) => {
+          return (
+            <div className="Container">
+              <Card className="text-center">
+                <Card.Header>Featured</Card.Header>
+                <Card.Body>
+                  <Card.Title>{data.company}</Card.Title>
+                  <Card.Text>{data.description}</Card.Text>
+
+                  <ButtonGroup aria-label="Basic example">
+                    <Button variant="primary">Visit Website</Button>
+                    {/* <Button variant="warning"></Button> */}
+                    <Button variant="success">Redeem</Button>
+                  </ButtonGroup>
+                </Card.Body>
+                <Card.Footer className="text-muted">
+                  Expiring on : {data.expiring_on}
+                </Card.Footer>
+              </Card>
+              <br></br>
+            </div>
+          );
+        })}
+      </div>
     </Container>
   );
 }

@@ -1,38 +1,22 @@
 export const stockData = [
   {
-    company: "Twitter Inc",
-    ticker: "TWTR",
-    stockPrice: "22.76 USD",
-    timeElapsed: "5 sec ago",
+    company: "Karma SPA",
+    description:
+      "Enjoy a spa day, including a Sea Scrub, Knot Again Massage, Sweet Skin Facial, Happy Hands and Feet.",
+    expiring_on: "November 23, 2022",
+    website: "https://halifaxshoppingcentre.com/promotions/",
   },
   {
-    company: "Square Inc",
-    ticker: "SQ",
-    stockPrice: "45.28 USD",
-    timeElapsed: "10 sec ago",
+    company: "Subway Inc",
+    description:
+      "Chicken Bacon & Peppercorn Ranch – Canadian farm-raised chicken and maplewood smoked bacon, topped with crispy veggies and zesty new peppercorn ranch dressing",
+    expiring_on: "November 13, 2022",
   },
   {
-    company: "Shopify Inc",
-    ticker: "SHOP",
-    stockPrice: "341.79 USD",
-    timeElapsed: "3 sec ago",
-  },
-  {
-    company: "Sunrun Inc",
-    ticker: "RUN",
-    stockPrice: "9.87 USD",
-    timeElapsed: "4 sec ago",
-  },
-  {
-    company: "Adobe Inc",
-    ticker: "ADBE",
-    stockPrice: "300.99 USD",
-    timeElapsed: "10 sec ago",
-  },
-  {
-    company: "HubSpot Inc",
-    ticker: "HUBS",
-    stockPrice: "115.22 USD",
-    timeElapsed: "12 sec ago",
+    company: "Decathlon",
+    description:
+      "If you're thinking about picking up a new sport, Decathalon is the place to be. They believe that sports should be accessible to everyone and focus on designing and selling high-quality sports equipment",
+    expiring_on: "November 13, 2022",
+    website: "https://halifaxshoppingcentre.com/promotions/",
   },
 ];
