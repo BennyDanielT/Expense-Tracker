@@ -34,7 +34,7 @@ function ViewCoupons() {
                   <Card.Text>{data.description}</Card.Text>
 
                   <ButtonGroup aria-label="Basic example">
-                    <Button href="#" variant="success">
+                    <Button href="redeem-coupon" variant="success">
                       Show Details
                     </Button>
                     <Button href={data.website} variant="primary">
