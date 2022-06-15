@@ -19,6 +19,7 @@ import { CouponRedeemed } from "../CouponManagement/couponRedeemed";
 import { Login } from "../UserManagement/Login";
 import { Register } from "../UserManagement/Register";
 import { ForgotPassword } from "../UserManagement/ForgetPassword";
+import { PasswordChanged } from "../UserManagement/ChangePassword";
 function Routing() {
   return (
     <BrowserRouter>
@@ -59,6 +60,9 @@ function Routing() {
         </Route>
         <Route exact path={routes.forgotPassword.path}>
           <ForgotPassword />
+        </Route>
+        <Route exact path={routes.passwordChanged.path}>
+          <PasswordChanged />
         </Route>
         <Route exact path={routes.createGroup.path}>
           <CreateGroup />

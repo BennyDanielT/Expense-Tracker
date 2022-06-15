@@ -27,6 +27,10 @@ export const routes = {
     path: "/forgot-password",
     isAuthenticated: true,
   },
+  passwordChanged: {
+    path: "/password-changed",
+    isAuthenticated: true,
+  },
   group: {
     path: "/group",
     isAuthenticated: true,
