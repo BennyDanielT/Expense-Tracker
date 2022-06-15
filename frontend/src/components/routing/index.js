@@ -1,17 +1,21 @@
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { routes } from '../../constants';
-import { GroupHomePage } from '../group/GroupHomePage';
-import { CreateGroup } from '../group/CreateGroup';
-import RemindersGrid from '../PaymentReminders/RemindersGrid';
-import CreateReminder from '../PaymentReminders/CreateReminder';
-import { ViewGroup } from '../group/ViewGroup';
-import { EditGroup } from '../group/EditGroup';
-import { DeleteGroup } from '../group/DeleteGroup';
-import { ViewNotification } from '../notifications/ViewNotification';
-import { EmailNotification } from '../notifications/EmailNotification';
-import { NotificationSettings } from '../notifications/NotificationSettings';
-import Grid from '../ExportData/Grid';
-
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { routes } from "../../constants";
+import { GroupHomePage } from "../group/GroupHomePage";
+import { CreateGroup } from "../group/CreateGroup";
+import RemindersGrid from "../PaymentReminders/RemindersGrid";
+import CreateReminder from "../PaymentReminders/CreateReminder";
+import { ViewGroup } from "../group/ViewGroup";
+import { EditGroup } from "../group/EditGroup";
+import { DeleteGroup } from "../group/DeleteGroup";
+import { ViewNotification } from "../notifications/ViewNotification";
+import { EmailNotification } from "../notifications/EmailNotification";
+import { NotificationSettings } from "../notifications/NotificationSettings";
+import Grid from "../ExportData/Grid";
+import { ViewCoupons } from "../CouponManagement/viewCoupons";
+import { ReedemCoupon } from "../CouponManagement/redeemCoupon";
+import Layout from "../CouponManagement/Layout/Layout";
+import NotFound from "../CouponManagement/notFound";
+import { CouponRedeemed } from "../CouponManagement/couponRedeemed";
 function Routing() {
   return (
     <BrowserRouter>
@@ -19,6 +23,28 @@ function Routing() {
         <Route exact path={routes.home.path}>
           <div>Home</div>
         </Route>
+
+        <Route exact path={routes.viewCoupons.path}>
+          <Layout>
+            <ViewCoupons />
+          </Layout>
+        </Route>
+        <Route exact path={routes.notFound.path}>
+          <Layout>
+            <NotFound />
+          </Layout>
+        </Route>
+        <Route exact path={routes.redeemCoupon.path}>
+          <Layout>
+            <ReedemCoupon />
+          </Layout>
+        </Route>
+        <Route exact path={routes.couponRedeemed.path}>
+          <Layout>
+            <CouponRedeemed />
+          </Layout>
+        </Route>
+
         <Route exact path={routes.group.path}>
           <GroupHomePage />
         </Route>
