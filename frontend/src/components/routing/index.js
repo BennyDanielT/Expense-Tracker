@@ -12,7 +12,8 @@ import { EmailNotification } from "../notifications/EmailNotification";
 import { NotificationSettings } from "../notifications/NotificationSettings";
 import Grid from "../ExportData/Grid";
 import { ViewCoupons } from "../CouponManagement/viewCoupons";
-
+import Layout from "../CouponManagement/Layout/Layout";
+import NotFound from "../CouponManagement/notFound";
 function Routing() {
   return (
     <BrowserRouter>
@@ -20,9 +21,18 @@ function Routing() {
         <Route exact path={routes.home.path}>
           <div>Home</div>
         </Route>
+
         <Route exact path={routes.viewCoupons.path}>
-          <ViewCoupons />
+          <Layout>
+            <ViewCoupons />
+          </Layout>
         </Route>
+        <Route exact path={routes.notFound.path}>
+          <Layout>
+            <NotFound />
+          </Layout>
+        </Route>
+
         <Route exact path={routes.group.path}>
           <GroupHomePage />
         </Route>

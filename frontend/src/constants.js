@@ -83,6 +83,10 @@ export const routes = {
     path: "/payment-history",
     isAuthenticated: true,
   },
+  notFound: {
+    path: "/error",
+    isAuthenticated: true,
+  },
 };
 
 export const setLocalStorage = (key, value) => {
