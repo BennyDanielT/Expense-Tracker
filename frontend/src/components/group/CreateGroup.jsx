@@ -146,7 +146,7 @@ function CreateGroup() {
                     <Form.Label>Group Members</Form.Label>
                     <Select
                         isMulti
-                        name="colors"
+                        name="members"
                         options={dummyMembersData}
                         className="basic-multi-select"
                         classNamePrefix="select"
