@@ -12,6 +12,7 @@ import { EmailNotification } from "../notifications/EmailNotification";
 import { NotificationSettings } from "../notifications/NotificationSettings";
 import Grid from "../ExportData/Grid";
 import { ViewCoupons } from "../CouponManagement/viewCoupons";
+import { ReedemCoupon } from "../CouponManagement/redeemCoupon";
 import Layout from "../CouponManagement/Layout/Layout";
 import NotFound from "../CouponManagement/notFound";
 function Routing() {
@@ -30,6 +31,11 @@ function Routing() {
         <Route exact path={routes.notFound.path}>
           <Layout>
             <NotFound />
+          </Layout>
+        </Route>
+        <Route exact path={routes.redeemCoupon.path}>
+          <Layout>
+            <ReedemCoupon />
           </Layout>
         </Route>
 
