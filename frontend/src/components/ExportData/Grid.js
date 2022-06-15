@@ -76,7 +76,7 @@ export default function Grid() {
           ))}
         </tbody>
       </Table>
-      <div class='col-md-12 text-center'>
+      <div className='col-md-12 text-center'>
         <Pdf targetRef={ref} filename='Export_Test.pdf' options={options}>
           {({ toPdf }) => (
             <Button className='mt-2' onClick={toPdf}>

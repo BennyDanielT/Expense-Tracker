@@ -11,6 +11,12 @@ import { ViewNotification } from "../notifications/ViewNotification";
 import { EmailNotification } from "../notifications/EmailNotification";
 import { NotificationSettings } from "../notifications/NotificationSettings";
 import Grid from "../ExportData/Grid";
+import CreateSnap from "../ExportData/CreateSnap";
+import ViewSnaps from "../ExportData/ViewSnaps.js";
+import AddMethod from "../Payments/AddMethod.js";
+import InitiatePayment from "../Payments/InitiatePayment.js";
+import PaymentHistory from "../Payments/PaymentHistory.js";
+import PaymentStatus from "../Payments/PaymentStatus.js";
 import { ViewCoupons } from "../CouponManagement/viewCoupons";
 import { ReedemCoupon } from "../CouponManagement/redeemCoupon";
 import Layout from "../CouponManagement/Layout/Layout";
@@ -48,6 +54,7 @@ function Routing() {
         <Route exact path={routes.group.path}>
           <GroupHomePage />
         </Route>
+        
         <Route exact path={routes.createGroup.path}>
           <CreateGroup />
         </Route>
@@ -81,28 +88,27 @@ function Routing() {
         </Route>
 
         <Route exact path={routes.createSnapshot.path}>
-          <Grid />
+          <CreateSnap />
         </Route>
 
-        <Route exact path={routes.viewSnapshot.path}>
-          <Grid />
+        {/* <Route exact path={routes.viewSnapshot.path}>
+          <ViewSnaps />
         </Route>
-////////////////////////////////
         <Route exact path={routes.addPaymentMethod.path}>
-          <Grid />
+          <AddMethod />
         </Route>
 
         <Route exact path={routes.initiatePayment.path}>
-          <Grid />
+          <InitiatePayment />
         </Route>
 
         <Route exact path={routes.paymentStatus.path}>
-          <Grid />
+          <PaymentStatus />
         </Route>
 
         <Route exact path={routes.paymentHistory.path}>
-          <Grid />
-        </Route>
+          <PaymentHistory />
+        </Route> */}
         {/* <Route exact path={routes.createSnapshot.path}>
                     <CreateSnapshot/>
                 </Route>
