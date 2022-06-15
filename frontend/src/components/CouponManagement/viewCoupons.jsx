@@ -34,9 +34,12 @@ function ViewCoupons() {
                   <Card.Text>{data.description}</Card.Text>
 
                   <ButtonGroup aria-label="Basic example">
-                    <Button variant="primary">Visit Website</Button>
-                    {/* <Button variant="warning"></Button> */}
-                    <Button variant="success">Redeem</Button>
+                    <Button href={data.website} variant="primary">
+                      Visit Website
+                    </Button>
+                    <Button href="#" variant="success">
+                      Redeem
+                    </Button>
                   </ButtonGroup>
                 </Card.Body>
                 <Card.Footer className="text-muted">
