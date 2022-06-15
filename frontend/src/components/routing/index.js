@@ -15,7 +15,7 @@ import { ViewCoupons } from "../CouponManagement/viewCoupons";
 import { ReedemCoupon } from "../CouponManagement/redeemCoupon";
 import Layout from "../CouponManagement/Layout/Layout";
 import NotFound from "../CouponManagement/notFound";
-import couponRedeemed from "../CouponManagement/couponRedeemed";
+import { CouponRedeemed } from "../CouponManagement/couponRedeemed";
 function Routing() {
   return (
     <BrowserRouter>
@@ -41,7 +41,7 @@ function Routing() {
         </Route>
         <Route exact path={routes.couponRedeemed.path}>
           <Layout>
-            <couponRedeemed />
+            <CouponRedeemed />
           </Layout>
         </Route>
 
