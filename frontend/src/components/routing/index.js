@@ -91,10 +91,10 @@ function Routing() {
           <CreateSnap />
         </Route>
 
-        {/* <Route exact path={routes.viewSnapshot.path}>
+        <Route exact path={routes.viewSnapshot.path}>
           <ViewSnaps />
         </Route>
-        <Route exact path={routes.addPaymentMethod.path}>
+        {/* <Route exact path={routes.addPaymentMethod.path}>
           <AddMethod />
         </Route>
 
