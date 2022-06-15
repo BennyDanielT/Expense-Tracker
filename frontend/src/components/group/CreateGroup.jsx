@@ -1,4 +1,4 @@
-import {useId, useRef, useState} from "react";
+import {useId, useState} from "react";
 import {Button, ButtonGroup, Form} from "react-bootstrap";
 import Select from "react-select";
 import {getLocalStorage, routes, setLocalStorage} from "../../constants";
@@ -85,7 +85,7 @@ function CreateGroup() {
         if (Object.keys(values).length) {
             let error = false;
             Object.values(values).forEach((value) => {
-                if (!value) {
+                if (!value || (Array.isArray(value) && !value.length)) {
                     error = true
                 }
             });

@@ -85,7 +85,7 @@ function EditGroup() {
         if (Object.keys(values).length) {
             let error = false;
             Object.values(values).forEach((value) => {
-                if (!value) {
+                if (!value || (Array.isArray(value) && !value.length)) {
                     error = true
                 }
             });
