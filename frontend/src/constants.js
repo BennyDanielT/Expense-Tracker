@@ -23,6 +23,10 @@ export const routes = {
     path: "/register",
     isAuthenticated: true,
   },
+  forgotPassword: {
+    path: "/forgot-password",
+    isAuthenticated: true,
+  },
   group: {
     path: "/group",
     isAuthenticated: true,
