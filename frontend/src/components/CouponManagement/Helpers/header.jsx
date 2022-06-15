@@ -1,5 +1,4 @@
-import { Container } from "react-bootstrap";
-
+import { Container, Card, Col, Row } from "react-bootstrap";
 const Header = ({ head, description }) => {
   return (
     <Container>
