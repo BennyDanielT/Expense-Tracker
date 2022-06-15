@@ -79,6 +79,30 @@ function Routing() {
         <Route exact path={routes.exportGrid.path}>
           <Grid />
         </Route>
+
+        <Route exact path={routes.createSnapshot.path}>
+          <Grid />
+        </Route>
+
+        <Route exact path={routes.viewSnapshot.path}>
+          <Grid />
+        </Route>
+////////////////////////////////
+        <Route exact path={routes.addPaymentMethod.path}>
+          <Grid />
+        </Route>
+
+        <Route exact path={routes.initiatePayment.path}>
+          <Grid />
+        </Route>
+
+        <Route exact path={routes.paymentStatus.path}>
+          <Grid />
+        </Route>
+
+        <Route exact path={routes.paymentHistory.path}>
+          <Grid />
+        </Route>
         {/* <Route exact path={routes.createSnapshot.path}>
                     <CreateSnapshot/>
                 </Route>
