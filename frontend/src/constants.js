@@ -15,6 +15,22 @@ export const routes = {
     path: "/coupon-redeemed",
     isAuthenticated: true,
   },
+  login: {
+    path: "/login",
+    isAuthenticated: true,
+  },
+  register: {
+    path: "/register",
+    isAuthenticated: true,
+  },
+  forgotPassword: {
+    path: "/forgot-password",
+    isAuthenticated: true,
+  },
+  passwordChanged: {
+    path: "/password-changed",
+    isAuthenticated: true,
+  },
   group: {
     path: "/group",
     isAuthenticated: true,
