@@ -51,6 +51,8 @@ export default function ViewSnaps() {
             denyButtonText: "Delete Snapshot",
             showCloseButton: true,
             showDenyButton: true,
+            showConfirmButton: false,
+            showCancelButton:true,
             preDeny() {
                 Swal.fire(
                     'Deleted!',

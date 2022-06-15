@@ -94,7 +94,7 @@ function Routing() {
         <Route exact path={routes.viewSnapshot.path}>
           <ViewSnaps />
         </Route>
-        {/* <Route exact path={routes.addPaymentMethod.path}>
+        <Route exact path={routes.addPaymentMethod.path}>
           <AddMethod />
         </Route>
 
@@ -108,25 +108,7 @@ function Routing() {
 
         <Route exact path={routes.paymentHistory.path}>
           <PaymentHistory />
-        </Route> */}
-        {/* <Route exact path={routes.createSnapshot.path}>
-                    <CreateSnapshot/>
-                </Route>
-                <Route exact path={routes.viewSnapshot.path}>
-                    <ViewSnapshot/>
-                </Route>
-                <Route exact path={routes.addPaymentMethod.path}>
-                    <AddMethod/>
-                </Route>
-                <Route exact path={routes.initiatePayment.path}>
-                    <InitiatePayment/>
-                </Route>
-                <Route exact path={routes.paymentStatus.path}>
-                    <PaymentStatus/>
-                </Route>
-                <Route exact path={routes.paymentHistory.path}>
-                    <PaymentHistory/>
-                </Route> */}
+        </Route>
       </Switch>
     </BrowserRouter>
   );
