@@ -12,14 +12,6 @@ const Menu = () => {
           Group-24
         </Link>
         <Nav>
-          <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li>
-              <Link to="/about" className="nav-link px-2 link-secondary">
-                Home
-              </Link>
-            </li>
-          </ul>
-
           <div className="col-md-3 text-end">
             <Link to="/">
               <button type="button" className="btn btn-outline-primary me-2">

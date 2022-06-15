@@ -89,7 +89,7 @@ function ReedemCoupon() {
         </Accordion>
         <br></br>
         <div className="d-grid gap-2">
-          <Button variant="primary" size="lg">
+          <Button variant="primary" size="lg" href="coupon-redeemed">
             Redeem
           </Button>
         </div>
