@@ -1,74 +1,86 @@
 export const routes = {
   home: {
-    path: '/',
+    path: "/",
+    isAuthenticated: true,
+  },
+  viewCoupons: {
+    path: "/view-coupons",
+    isAuthenticated: true,
+  },
+  redeemCoupon: {
+    path: "/redeem-coupon",
+    isAuthenticated: true,
+  },
+  couponRedeemed: {
+    path: "/coupon-redeemed",
     isAuthenticated: true,
   },
   group: {
-    path: '/group',
+    path: "/group",
     isAuthenticated: true,
   },
   createGroup: {
-    path: '/create-group',
+    path: "/create-group",
     isAuthenticated: true,
   },
   viewGroup: {
-    path: '/view-group/:id',
+    path: "/view-group/:id",
     isAuthenticated: true,
   },
   editGroup: {
-    path: '/edit-group/:id',
+    path: "/edit-group/:id",
     isAuthenticated: true,
   },
   deleteGroup: {
-    path: '/delete-group/:id',
+    path: "/delete-group/:id",
     isAuthenticated: true,
   },
   viewNotification: {
-    path: '/view-notification',
+    path: "/view-notification",
     isAuthenticated: true,
   },
   emailNotification: {
-    path: '/email-notification',
+    path: "/email-notification",
     isAuthenticated: true,
   },
   notificationSettings: {
-    path: '/notification-settings',
+    path: "/notification-settings",
     isAuthenticated: true,
   },
   reminders: {
-    path: '/reminders',
+    path: "/reminders",
     isAuthenticated: true,
   },
   createReminder: {
-    path: '/create-reminder',
+    path: "/create-reminder",
     isAuthenticated: true,
   },
   exportGrid: {
-    path: '/export-grid',
+    path: "/export-grid",
     isAuthenticated: true,
   },
   createSnapshot: {
-    path: '/create-snapshot',
+    path: "/create-snapshot",
     isAuthenticated: true,
   },
   viewSnapshot: {
-    path: '/view-snapshot',
+    path: "/view-snapshot",
     isAuthenticated: true,
   },
   addPaymentMethod: {
-    path: '/add-method',
+    path: "/add-method",
     isAuthenticated: true,
   },
   initiatePayment: {
-    path: '/initiate-payment',
+    path: "/initiate-payment",
     isAuthenticated: true,
   },
   paymentStatus: {
-    path: '/payment-status',
+    path: "/payment-status",
     isAuthenticated: true,
   },
   paymentHistory: {
-    path: '/payment-history',
+    path: "/payment-history",
     isAuthenticated: true,
   },
 };

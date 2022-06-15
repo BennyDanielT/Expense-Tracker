@@ -1,16 +1,17 @@
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { routes } from '../../constants';
-import { GroupHomePage } from '../group/GroupHomePage';
-import { CreateGroup } from '../group/CreateGroup';
-import RemindersGrid from '../PaymentReminders/RemindersGrid';
-import CreateReminder from '../PaymentReminders/CreateReminder';
-import { ViewGroup } from '../group/ViewGroup';
-import { EditGroup } from '../group/EditGroup';
-import { DeleteGroup } from '../group/DeleteGroup';
-import { ViewNotification } from '../notifications/ViewNotification';
-import { EmailNotification } from '../notifications/EmailNotification';
-import { NotificationSettings } from '../notifications/NotificationSettings';
-import Grid from '../ExportData/Grid';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { routes } from "../../constants";
+import { GroupHomePage } from "../group/GroupHomePage";
+import { CreateGroup } from "../group/CreateGroup";
+import RemindersGrid from "../PaymentReminders/RemindersGrid";
+import CreateReminder from "../PaymentReminders/CreateReminder";
+import { ViewGroup } from "../group/ViewGroup";
+import { EditGroup } from "../group/EditGroup";
+import { DeleteGroup } from "../group/DeleteGroup";
+import { ViewNotification } from "../notifications/ViewNotification";
+import { EmailNotification } from "../notifications/EmailNotification";
+import { NotificationSettings } from "../notifications/NotificationSettings";
+import Grid from "../ExportData/Grid";
+import { ViewCoupons } from "../CouponManagement/viewCoupons";
 
 function Routing() {
   return (
@@ -18,6 +19,9 @@ function Routing() {
       <Switch>
         <Route exact path={routes.home.path}>
           <div>Home</div>
+        </Route>
+        <Route exact path={routes.viewCoupons.path}>
+          <ViewCoupons />
         </Route>
         <Route exact path={routes.group.path}>
           <GroupHomePage />
