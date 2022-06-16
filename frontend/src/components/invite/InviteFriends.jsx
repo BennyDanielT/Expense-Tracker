@@ -42,6 +42,10 @@ export default function InviteFriends() {
         <Button className="mt-2" onClick={() => {history.push("/succInvite")}}>
           Successfull Invites
           </Button>
+
+          <Button className="mt-2" onClick={()=> {history.push("/friends-invited")}}>
+          All Invites
+          </Button>
      
       </Form>
     </div>

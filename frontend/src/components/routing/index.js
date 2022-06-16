@@ -23,6 +23,7 @@ import { ViewExpense } from "../expense/ViewExpense";
 import InviteFriends from "../invite/InviteFriends";
 import SettleExpense from "../expense/SettleExpense";
 import SuccInvites from "../invite/SuccessfulInvites";
+import FriendsInvited from "../invite/FriendsInvited";
 function Routing() {
   return (
     <BrowserRouter>
@@ -72,6 +73,9 @@ function Routing() {
         </Route>
         <Route exact path={routes.successfullInvites.path}>
             <SuccInvites />
+        </Route>
+        <Route exact path={routes.friendsInvited.path}>
+            <FriendsInvited />
         </Route>
         <Route exact path={routes.group.path}>
           <GroupHomePage />

@@ -6,7 +6,7 @@ import { useState } from 'react';
 import Popup from './Popup';
 import "../invite/popup.css";
 
-export default function friendsInvited() {
+export default function FriendsInvited() {
 
     
   return (
