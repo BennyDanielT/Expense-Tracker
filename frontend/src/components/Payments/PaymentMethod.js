@@ -1,67 +1,50 @@
-import {Heading} from "../Heading/Heading";
-import {Button, Card, Alert} from "react-bootstrap";
-import Swal from "sweetalert2";
-import ReactDOMServer from "react-dom/server";
-import {routes} from "../../constants";
-import {useHistory,useLocation, Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 
+import CheckoutForm from "./checkout";
+import "../Payments/checkout.css"
+
+// Make sure to call loadStripe outside of a component’s render to avoid
+// recreating the Stripe object on every render.
+// This is your test publishable API key.
+const stripePromise = loadStripe("pk_test_51LAz4KC9WWOmeUQqQnjG12zdy2nfQtoTOTtTqfKI2n29aZzvrXfa5JSLkHvlzQ1M4M5PHiWA31eyTVog8hgllFRv00CUHckRs6");
 
 export default function PaymentMethod() {
-    const history = useHistory();
-    const location = useLocation();
-    const status = "success";
-    
-    function Success(props) {
-        return(<div><Alert variant='success'>
-        <Alert.Heading className='text-center'>Payment Successful!</Alert.Heading>
-        <hr />
-        <p className='text-center'>
-          Your payment was successful!
-        </p>
-      </Alert>
-      <Link to="/export-grid">
-      <div class="d-flex justify-content-center">
-      <button className="mt-2 ">
-          Home
-          </button>
-          </div>
-    </Link>
-    </div>);
-      }
-      
-      function Failure(props) {
-        return(
-            <div><Alert className='margin' variant='danger'>
-        <Alert.Heading className='text-center'>Payment Failure</Alert.Heading>
-        <hr />
-        <p className='text-center'>
-          Your payment didn't go through, please try again!
-        </p>
-      </Alert>
-      <Link to="/export-grid">
-      <div class="d-flex justify-content-center">
-      <button className="mt-2">
-          Home
-          </button>
-          </div>
-    </Link>
-    </div>);
+    const [clientSecret, setClientSecret] = useState("");
 
-      }
+    useEffect(() => {
+        let headers = new Headers();
 
-      function Message()
-      {
-        if (status=="success")
-        {
-            return <Success />;
-        }
-        else
-    {
-        return <Failure />;
-    }
-      }
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        headers.append('Origin','http://localhost:3000');
 
-      return(<Message/>);
+        // Create PaymentIntent as soon as the page loads
+        fetch("http://localhost:8080/create-payment-intent", {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify({ items: [{ id: "xl-tshirt" }] }),
+        })
+            .then((res) => res.json())
+            .then((data) => setClientSecret(data.clientSecret));
+    }, []);
 
-    
+    const appearance = {
+        theme: 'stripe',
+    };
+    const options = {
+        clientSecret,
+        appearance,
+    };
+
+    return (
+        <div className="App">
+            {clientSecret && (
+                <Elements options={options} stripe={stripePromise}>
+                    <CheckoutForm />
+                </Elements>
+            )}
+        </div>
+    );
 }

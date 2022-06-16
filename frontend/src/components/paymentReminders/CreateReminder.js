@@ -1,10 +1,10 @@
 import {useState} from 'react';
 import {Button, Form} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.css';
-import DateTimePicker from 'react-datetime-picker';
 import {useHistory} from "react-router-dom";
 import {routes} from "../../constants";
 import {Alert, Snackbar} from "@mui/material";
+import DatePicker from "react-datepicker";
 
 
 // Reference : https://www.npmjs.com/package/react-datetime-picker
@@ -105,9 +105,12 @@ export default function CreateReminder() {
 
                 <Form.Group controlId="date">
                     <Form.Label className="mt-1">Time</Form.Label>
-                    <DateTimePicker className="form-control"
-                                    clearIcon={null}
-                                    onChange={setDate} minDate={new Date()} value={date}/>
+                    <DatePicker
+                        showTimeSelect
+                        selected={date}
+                        onChange={setDate}
+                        dateFormat="Pp"
+                    />
                 </Form.Group>
 
                 <Button className="mt-3" type="submit">Submit</Button>
