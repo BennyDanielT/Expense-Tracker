@@ -1,0 +1,58 @@
+.add-expense .expense-type button {
+    background: #47524B;
+    color: #FCFCFC;
+}
+
+.add-expense .expense-type .selected {
+    background: #37BE66 !important;
+    color: #000000 !important;
+}
+
+.expenses-home .expenses-list {
+    border: 2px solid grey;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.expenses-home, .create-expense, .view-expense, .delete-expense, .edit-expense {
+    display: flex;
+    flex-direction: column;
+}
+
+.expenses-home .current-expenses > * {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+.view-expense .settled-up {
+    color: green;
+}
+
+.view-expense .card {
+    margin: 0 0.5rem 0 0.5rem !important;
+}
+
+.delete{
+    color: green;
+    font-size: 14px;
+    padding: 6px 12px;
+    margin-bottom: 0;
+
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+}
