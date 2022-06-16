@@ -45,3 +45,21 @@
         width: 700;
         padding: 30; 
   }
+
+  .succinvite{
+    margin-top: 10%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 700;
+        padding: 30; 
+  }
+
+  .friendsinvited{
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 700;
+    padding: 30; 
+  }

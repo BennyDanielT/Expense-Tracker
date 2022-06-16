@@ -31,6 +31,10 @@ export const routes = {
     path: "/invite-friends",
     isAuthenticated: true,
   },
+  successfullInvites: {
+    path: "/succInvite",
+    isAuthenticated:true,
+  },
   editExpense: {
     path: "/edit-expense/:id",
     isAuthenticated: true,

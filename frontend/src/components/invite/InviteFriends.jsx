@@ -4,6 +4,8 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import Popup from './Popup';
+import { useHistory } from 'react-router-dom';
+import succInvites from './SuccessfulInvites';
 
 export default function InviteFriends() {
 
@@ -13,6 +15,11 @@ export default function InviteFriends() {
     setIsOpen(!isOpen);
     
   }
+  
+
+  const history=useHistory();
+
+
   return (
     <div className='invite'>
       <h4>Invite Friends!</h4>
@@ -31,6 +38,10 @@ export default function InviteFriends() {
       </>}
       handleClose={togglePopup}
     />}
+
+        <Button className="mt-2" onClick={() => {history.push("/succInvite")}}>
+          Successfull Invites
+          </Button>
      
       </Form>
     </div>

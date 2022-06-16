@@ -18,10 +18,11 @@ import NotFound from "../CouponManagement/notFound";
 import { CouponRedeemed } from "../CouponManagement/couponRedeemed";
 import { AddExepnse } from "../expense/AddExpense";
 import { EditExpense } from "../expense/EditExpense";
-import { settleExpense } from "../expense/SettleExpense";
 import { ExpenseHomePage } from "../expense/ExpenseHomePage";
 import { ViewExpense } from "../expense/ViewExpense";
 import InviteFriends from "../invite/InviteFriends";
+import SettleExpense from "../expense/SettleExpense";
+import SuccInvites from "../invite/SuccessfulInvites";
 function Routing() {
   return (
     <BrowserRouter>
@@ -64,11 +65,13 @@ function Routing() {
           
         </Route>
         <Route exact path={routes.settleExpense.path}>
-          <settleExpense />
-          
+          <SettleExpense />          
         </Route>
         <Route exact path={routes.inviteFriends.path}>
           <InviteFriends/>
+        </Route>
+        <Route exact path={routes.successfullInvites.path}>
+            <SuccInvites />
         </Route>
         <Route exact path={routes.group.path}>
           <GroupHomePage />

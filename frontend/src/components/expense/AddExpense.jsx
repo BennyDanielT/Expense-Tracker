@@ -102,7 +102,7 @@ function AddExepnse() {
         'groups': (e) => {
             setValues({
                 ...values,
-                members: e.map((ele) => ele.value)
+                groups: e.map((ele) => ele.value)
             });
         }
     }
@@ -116,6 +116,7 @@ function AddExepnse() {
         e.preventDefault();
         if (Object.keys(values).length) {
             let error = false;
+            console.log(values);
             Object.values(values).forEach((value) => {
                 if (!value || (Array.isArray(value) && !value.length)) {
                     error = true

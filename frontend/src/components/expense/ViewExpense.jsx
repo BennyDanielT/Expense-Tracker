@@ -27,7 +27,7 @@ function ViewExpense() {
                     ]
                 },
                 "members": ["foo", "bar"],
-                "group": ["Avengers"]
+                
             },
             {
                 "id": 2,
@@ -53,14 +53,14 @@ function ViewExpense() {
                     ]
                 },
                 "members": ["foo"],
-                "group": ["University"]
+                
             },
             {
                 "id": 3,
                 "name": "Expense 3",
                 "expenses": {},
                 "members": ["bar"],
-                "group": ["India"]
+                
             },
         ]
     };
@@ -97,16 +97,7 @@ function ViewExpense() {
                                                 )
                                             })}
                                         </ul>
-                                        <div>Group Name</div>
-                                        <ul>
-                                            {result.group.map((groups) => {
-                                                return(
-                                                    <li key={groups}>{groups}</li>
-                                                )
-                                            })
-
-                                            }
-                                        </ul>
+                                        
                                     </div>
                                 </div>
                                 <div>
