@@ -26,7 +26,7 @@ export default function CreateReminder() {
     };
 
     const handleReminderAmount = (e) => {
-        if (e.target.value.match(/^[0-9.]*$/)) {
+        if (e.target.value.match(/^[0-9]*$/)) {
             setReminderAmount(e.target.value);
         }
     };
