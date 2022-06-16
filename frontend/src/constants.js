@@ -108,7 +108,7 @@ export const routes = {
     isAuthenticated: true,
   },
   viewSnapshot: {
-    path: "/view-snapshot",
+    path: "/view-snapshots",
     isAuthenticated: true,
   },
   addPaymentMethod: {

@@ -24,6 +24,11 @@ body {
     color: red;
 }
 
+.snaps
+{
+    color:green;
+}
+
 .form-switch {
     zoom: 1.5;
 }

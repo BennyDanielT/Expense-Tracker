@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Table } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import "../ExportData/Grid.css";
-// import Pdf, {toPDF} from 'react-to-pdf';
+import Pdf, {toPDF} from 'react-to-pdf';
 const ref = React.createRef();
 
 // Reference : https://www.npmjs.com/package/react-datetime-picker
@@ -76,7 +76,7 @@ export default function Grid() {
           ))}
         </tbody>
       </Table>
-      {/* <div class='col-md-12 text-center'>
+      <div className='col-md-12 text-center'>
         <Pdf targetRef={ref} filename='Export_Test.pdf' options={options}>
           {({ toPdf }) => (
             <Button className='mt-2' onClick={toPdf}>
@@ -84,7 +84,7 @@ export default function Grid() {
             </Button>
           )}
         </Pdf>
-      </div> */}
+      </div>
     </div>
   );
 }
