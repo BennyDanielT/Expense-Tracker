@@ -178,6 +178,38 @@ export const routes = {
     expenseAnalysis: {
         path: '/expense-analysis',
         isAuthenticated: true
+    },
+    expense: {
+      path: "/expense",
+      isAuthenticated: true,
+    },
+    addExpense: {
+      path: "/add-expense",
+      isAuthenticated: true,
+    },
+    viewExpense: {
+      path: "/view-expense/:id",
+      isAuthenticated: true,
+    },
+    inviteFriends: {
+      path: "/invite-friends",
+      isAuthenticated: true,
+    },
+    friendsInvited:{
+      path: "/friends-invited",
+      isAuthenticated: true,
+    },
+    successfullInvites: {
+      path: "/succInvite",
+      isAuthenticated:true,
+    },
+    editExpense: {
+      path: "/edit-expense/:id",
+      isAuthenticated: true,
+    },
+    settleExpense: {
+      path: "/settle-expense",
+      isAuthenticated: true,
     }
 };
 
