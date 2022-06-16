@@ -132,3 +132,5 @@ function CreateEditTag({ setting }) {
 }
 
 export { CreateEditTag };
+
+// TODO: emoji picker collapse

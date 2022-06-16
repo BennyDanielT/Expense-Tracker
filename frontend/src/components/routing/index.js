@@ -10,6 +10,9 @@ import {DeleteGroup} from "../group/DeleteGroup";
 import {CreateEditTag} from "../tags/CreateEditTag";
 import { ViewTagDetails } from "../tags/ViewTagDetails";
 import { ViewTags } from "../tags/ViewTags";
+import { AddNewReceipt } from "../receipts/AddNewReceipt";
+import { ViewReceipts } from "../receipts/ViewReceipts";
+import { ViewReceiptDetails } from "../receipts/ViewReceiptDetails";
 
 function Routing() {
     return (
@@ -52,9 +55,26 @@ function Routing() {
                 <Route exact path={routes.viewTags.path}>
                     <ViewTags/>
                 </Route>
+                
+                <Route exact path={routes.addReceipt.path}>
+                    <AddNewReceipt />
+                </Route>
+                <Route exact path={routes.viewReceiptDetails.path}>
+                    <ViewReceiptDetails/>
+                </Route>
+                <Route exact path={routes.viewReceipts.path}>
+                    <ViewReceipts/>
+                </Route>
+                
             </Switch>
         </BrowserRouter>
     );
 }
 
 export {Routing}
+
+// TODO: Delete popup
+// Add Toast - everywhere
+// create tag validation
+// create edit tag - icon collapsible and position
+// error handling

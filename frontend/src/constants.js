@@ -46,6 +46,18 @@ export const routes = {
     viewTags: {
         path: "/view-tags",
         isAuthenticated: true
+    },
+    addReceipt: {
+        path: "/add-new-receipt",
+        isAuthenticated: true
+    },
+    viewReceiptDetails: {
+        path: "/view-receipt-details",
+        isAuthenticated: true
+    },
+    viewReceipts: {
+        path: "/view-receipts",
+        isAuthenticated: true
     }
 }
 
