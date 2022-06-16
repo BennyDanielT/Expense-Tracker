@@ -1,0 +1,13 @@
+.table > thead > tr > th {
+  background-color: Green;
+  color: White;
+}
+
+table
+{
+    text-align: center;
+
+}
+
+tr:nth-child(even) {background: #CCC}
+tr:nth-child(odd) {background: #FFF}

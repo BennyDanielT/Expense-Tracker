@@ -1,0 +1,36 @@
+.create-group .group-type button {
+    background: #47524B;
+    color: #FCFCFC;
+}
+
+.create-group .group-type .selected {
+    background: #37BE66 !important;
+    color: #000000 !important;
+}
+
+.groups-home .groups-list {
+    border: 2px solid grey;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.groups-home, .create-group, .view-group, .delete-group, .edit-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.groups-home .current-groups > * {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+.view-group .settled-up {
+    color: green;
+}
+
+.view-group .card {
+    margin: 0 0.5rem 0 0.5rem !important;
+}
