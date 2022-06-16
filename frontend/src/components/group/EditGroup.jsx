@@ -1,19 +1,27 @@
-import {useId, useState} from "react";
-import {Button, ButtonGroup, Form} from "react-bootstrap";
-import Select from "react-select";
-import {getLocalStorage, routes, setLocalStorage} from "../../constants";
-import Swal from "sweetalert2";
-import {useHistory} from "react-router-dom";
-import "./group.css";
+import {useHistory, useLocation} from "react-router-dom";
 import {Heading} from "../Heading/Heading";
+import {Button, Form} from "react-bootstrap";
+import {useState} from "react";
+import Select from "react-select";
 import {dummyMembersData} from "./helpers";
+import Swal from "sweetalert2";
+import {routes} from "../../constants";
 
-function CreateGroup() {
-    const [values, setValues] = useState({name: "", icon: "", type: "home", members: null});
-    const [errors, setErrors] = useState({});
+function EditGroup() {
+    const location = useLocation();
+
+    const apiData = location.state;
+
     const [mainError, setMainError] = useState("");
-    const history = useHistory();
-    const uniqueId = useId();
+
+    const actualMembers = [];
+
+    apiData.members.forEach((ele) => {
+        actualMembers.push({label: ele.slice(0, 1).toUpperCase() + ele.slice(1), value: ele});
+    });
+
+    const [values, setValues] = useState({name: apiData.name, members: actualMembers, icon: null});
+    const [errors, setErrors] = useState({});
 
     const onChangeFunctions = {
         'name': (e) => {
@@ -57,25 +65,17 @@ function CreateGroup() {
                 })
             }
         },
-        'type': (e) => {
-            for (let i = 0; i < e.currentTarget.children.length; i++) {
-                e.currentTarget.children[i].classList.remove("selected");
-            }
-            e.target.classList.add("selected");
-            setValues({
-                ...values,
-                type: e.target.value
-            });
-        },
         'members': (e) => {
             setValues({
                 ...values,
                 members: e.map((ele) => ele.value)
             });
         }
-    }
+    };
 
-    const submitForm = (e) => {
+    const history = useHistory();
+
+    const editGroup = (e) => {
 
         const callErrorFunctions = () => {
             setMainError("Enter all the form fields to continue!!");
@@ -91,62 +91,45 @@ function CreateGroup() {
             });
             if (!error) {
                 setMainError("");
-                const groups = getLocalStorage("groups")
-                let newGroups = [];
-                if (groups) {
-                    newGroups = JSON.parse(groups);
-                }
-                newGroups.push({[uniqueId]: values});
-                setLocalStorage("groups", JSON.stringify(newGroups));
                 Swal.fire(
-                    'Group Created',
-                    'New Group is created',
+                    'Edit',
+                    'Your group has been been successfully edited',
                     'success'
-                ).then((ele) => {
-                    setTimeout(() => {
-                        history.push(routes.group.path);
-                    }, 100);
-                });
+                ).then(() => {
+                    history.push(routes.group.path);
+                })
             } else {
                 callErrorFunctions();
             }
         } else {
             callErrorFunctions();
         }
-    }
+    };
 
     return (
-        <div className="create-group">
-            <Form.Label><Heading>Create Group</Heading></Form.Label>
-            <Form className="create-group-form m-4">
+        <div className="edit-group p-4">
+            <Form.Label><Heading>Edit Group</Heading></Form.Label>
+            <Form>
                 <Form.Group className="mb-3" controlId="groupName">
                     <Form.Label>Group Name</Form.Label>
                     <Form.Control type="text" placeholder="Enter group name" value={values["name"]}
                                   onChange={onChangeFunctions['name']}/>
                     <div className="errors">{errors['name']}</div>
                 </Form.Group>
+
                 <Form.Group className="mb-3" controlId="groupIcon">
                     <Form.Label>Group Icon</Form.Label>
                     <Form.Control type="file" accept="image/*" placeholder="Add group icon"
                                   onChange={onChangeFunctions['icon']}/>
                     <div className="errors">{errors['icon']}</div>
                 </Form.Group>
-                <Form.Group className="mb-3 group-type" controlId="groupType">
-                    <Form.Label>Group Type</Form.Label>
-                    <div>
-                        <ButtonGroup aria-label="Group Types" onClick={onChangeFunctions['type']}>
-                            <Button variant="secondary selected" value={values["type"]}>Home</Button>
-                            <Button variant="secondary" value="trip">Trip</Button>
-                            <Button variant="secondary" value="others">Others</Button>
-                        </ButtonGroup>
-                    </div>
-                    <div className="errors">{errors['type']}</div>
-                </Form.Group>
+
                 <Form.Group className="mb-3" controlId="react-select-3-input">
                     <Form.Label>Group Members</Form.Label>
                     <Select
                         isMulti
-                        name="members"
+                        name="colors"
+                        defaultValue={values.members}
                         options={dummyMembersData}
                         className="basic-multi-select"
                         classNamePrefix="select"
@@ -156,9 +139,10 @@ function CreateGroup() {
                 </Form.Group>
 
                 <div className="errors mb-3">{mainError}</div>
+
                 <div className="d-flex justify-content-center">
-                    <Button variant="primary" type="submit" onClick={submitForm}>
-                        Submit
+                    <Button className="mt-4" onClick={editGroup}>
+                        Edit {apiData.name}
                     </Button>
                 </div>
             </Form>
@@ -166,4 +150,4 @@ function CreateGroup() {
     )
 }
 
-export {CreateGroup};
+export {EditGroup}

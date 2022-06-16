@@ -8,10 +8,22 @@ a {
 }
 
 body {
+    background: #e1f5fe !important;
     height: 100vh;
 }
 
 #root {
-    background: #e1f5fe;
     height: 100%;
+}
+
+.lent {
+    color: blue;
+}
+
+.owed {
+    color: red;
+}
+
+.form-switch {
+    zoom: 1.5;
 }
