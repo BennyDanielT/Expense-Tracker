@@ -44,8 +44,8 @@ import {AnalyticsHome} from "../analytics/AnalyticsHome";
 import ExpenseTracking from "../analytics/ExpenseTracking";
 import SpendingTrends from "../analytics/SpendingAnalysis";
 import ExpenseAnalysis from "../analytics/ExpenseAnalysis";
-import RemindersGrid from "../PaymentReminders/RemindersGrid";
-import CreateReminder from "../PaymentReminders/CreateReminder";
+import RemindersGrid from "../paymentReminders/RemindersGrid";
+import CreateReminder from "../paymentReminders/CreateReminder";
 
 function Routing() {
     return (
