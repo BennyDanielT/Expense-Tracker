@@ -2,6 +2,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {Col, Container, Form, Modal, Row, Stack} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import {useState} from "react";
+import {routes} from "../../constants";
+import {useHistory} from "react-router-dom";
+import {Alert, Snackbar} from "@mui/material";
 
 export default function RemindersGrid() {
 
@@ -29,6 +32,8 @@ export default function RemindersGrid() {
         }
     };
 
+    const history = useHistory();
+
     const [editReminder, setEditReminder] = useState({reminder: "", show: false});
 
     const handleClose = () => setEditReminder(prevState => {
@@ -40,27 +45,36 @@ export default function RemindersGrid() {
 
     const [currentReminder, setCurrentReminder] = useState(null)
     const [show, setShow] = useState(false);
+    const [snackbar, setSnackbar] = useState({message:"", severity:"success", visibility:false});
 
-    const handleDeleteClose = () => setShow(false);
+    const handleDeleteClose = () => {
+        setShow(false);
+        setSnackbar({message:"Payment Reminder Successfully Deleted!", severity:"success", visibility:true});
+    }
     const handleDeleteShow = () => setShow(true);
     /*const handleCreateReminder = () => createReminder("/createReminder");*/
     const handleCreateReminder = () => this.props.history.push('/create-reminder')
 
+    function handleEditSuccess() {
+        setEditReminder({reminder:"", show:false});
+        setSnackbar({message:"Payment Reminder Successfully Modified!", severity:"success", visibility:true});
+    }
+
     return (
         <Container fluid>
-            <Row className="font-monospace m-0 text-black container-fluid justify-content-around">
-                <button
-                    className="rounded-3" style={{width: "180px"}}
-                    onClick={handleCreateReminder}>Create Reminder
-                </button>
+            <Row className=" mt-3 text-black container-fluid justify-content-around">
+                <Button
+                    className="rounded-3" style={{width: "250px"}}
+                    onClick={() => history.push(routes.createReminder.path)}>Create Reminder
+                </Button>
             </Row>
-            <Row className="font-monospace m-0 ps-0 pe-0 pe-sm-5 ps-sm-5 pt-2 text-black container-fluid">
+            <Row className=" m-0 ps-0 pe-0 pe-sm-5 ps-sm-5 pt-2 text-black justify-content-center container-fluid">
                 {Object.values(json).map(reminder =>
-                    <div className="col-md-6 col-12">
+                    <div className="col-sm-10 col-12 col-md-8 col-lg-6 m-2">
 
-                        <div className="p-2 m-1 rounded-3  border" style={{backgroundColor: "#a5b4fc"}}>
+                        <div className="p-2 rounded-3  border" style={{backgroundColor: "#a5b4fc"}}>
                             <Row>
-                                <Col md={3} className="d-none d-md-block p-0 p-md-1 p-lg-4 ">
+                                <Col md={3} className="d-none d-md-block p-4 ">
                                     <img className="w-100" alt="Reminder Icon"
                                          src="/sticky-notes.png"/>
                                 </Col>
@@ -74,20 +88,18 @@ export default function RemindersGrid() {
                                         <div>{reminder.name}</div>
                                         <div>{reminder.desc}</div>
                                         <Stack direction="horizontal" className="justify-content-end" gap={2}>
-                                            <button
-                                                className="rounded-3" style={{backgroundColor: "#f87171"}}
-                                                onClick={() => {
-                                                    handleDeleteShow();
-                                                    setCurrentReminder(reminder)
-                                                }}>Remove
-                                            </button>
-                                            <button
-                                                className="rounded-3" style={{backgroundColor: "#2dd4bf"}}
+                                            <Button variant="danger"
+                                                    onClick={() => {
+                                                        handleDeleteShow();
+                                                        setCurrentReminder(reminder)
+                                                    }}>Remove
+                                            </Button>
+                                            <Button
                                                 onClick={() => {
                                                     handleShow();
                                                     setEditReminder({reminder: reminder, show: true})
                                                 }}>Edit
-                                            </button>
+                                            </Button>
                                         </Stack>
                                     </Stack>
 
@@ -100,13 +112,15 @@ export default function RemindersGrid() {
             </Row>
 
 
-            <Modal show={show} onHide={handleDeleteClose}>
+            {/* Delete reminder modal */}
+
+            <Modal show={show}>
                 <Modal.Header closeButton>
                     <Modal.Title>Delete Reminder</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>{currentReminder?.name}</Modal.Body>
+                <Modal.Body>Are you sure you want to delete payment reminder for {currentReminder?.name}?</Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleDeleteClose}>
+                    <Button variant="secondary" onClick={()=> setShow(false)}>
                         Close
                     </Button>
                     <Button variant="danger" onClick={handleDeleteClose}>
@@ -114,6 +128,9 @@ export default function RemindersGrid() {
                     </Button>
                 </Modal.Footer>
             </Modal>
+
+
+            {/* Modify reminder modal*/}
 
             <Modal size="lg" show={editReminder.show} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -155,13 +172,21 @@ export default function RemindersGrid() {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button variant="primary" onClick={handleEditSuccess}>
                         Save Changes
                     </Button>
                 </Modal.Footer>
             </Modal>
 
+         <Snackbar anchorOrigin={{ vertical:"top", horizontal:"right" }}
+             open={snackbar.visibility} autoHideDuration={3000} onClose={()=> setSnackbar({message:"", severity:"success", visibility: false})}>
+                <Alert onClose={()=> setSnackbar({message:"", severity:"success", visibility: false})} severity={snackbar.severity} sx={{ width: '100%' }}>
+                    {snackbar.message}
+                </Alert>
+            </Snackbar>
 
         </Container>
     );
+
+
 }
