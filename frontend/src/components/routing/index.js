@@ -13,7 +13,7 @@ import { NotificationSettings } from "../notifications/NotificationSettings";
 import Grid from "../ExportData/Grid";
 import CreateSnap from "../ExportData/CreateSnap";
 import ViewSnaps from "../ExportData/ViewSnaps.js";
-import AddMethod from "../Payments/AddMethod.js";
+// import AddMethod from "../Payments/AddMethod.js";
 import InitiatePayment from "../Payments/InitiatePayment.js";
 import PaymentHistory from "../Payments/PaymentHistory.js";
 import PaymentStatus from "../Payments/PaymentStatus.js";
@@ -94,9 +94,9 @@ function Routing() {
         <Route exact path={routes.viewSnapshot.path}>
           <ViewSnaps />
         </Route>
-        <Route exact path={routes.addPaymentMethod.path}>
+        {/* <Route exact path={routes.addPaymentMethod.path}>
           <AddMethod />
-        </Route>
+        </Route> */}
 
         <Route exact path={routes.initiatePayment.path}>
           <InitiatePayment />

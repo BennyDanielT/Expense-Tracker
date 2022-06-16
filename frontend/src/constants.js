@@ -67,10 +67,10 @@ export const routes = {
     path: "/view-snapshots",
     isAuthenticated: true,
   },
-  addPaymentMethod: {
-    path: "/add-method",
-    isAuthenticated: true,
-  },
+  // addPaymentMethod: {
+  //   path: "/add-method",
+  //   isAuthenticated: true,
+  // },
   initiatePayment: {
     path: "/initiate-payment",
     isAuthenticated: true,
