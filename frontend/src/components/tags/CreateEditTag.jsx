@@ -66,7 +66,7 @@ function CreateEditTag({ setting }) {
         : "Tag updated successfully"
     );
     setTimeout(() => {
-      history.push("/view-tags");
+      history.goBack();
     }, 2000);
   };
 
