@@ -62,6 +62,20 @@ function SideBar() {
                         <MenuItem> <Link to={routes.addReceipt.path}>Add Receipt</Link></MenuItem>
                         <MenuItem> <Link to={routes.viewReceipts.path}>View Receipts</Link></MenuItem>
                     </SubMenu>
+
+                    <SubMenu title={"Export Data"}>
+                        <MenuItem> <Link to={routes.exportGrid.path}>Export Grid</Link></MenuItem>
+                        <MenuItem> <Link to={routes.createSnapshot.path}>Create Snapshot</Link></MenuItem>
+                        <MenuItem> <Link to={routes.viewSnapshot.path}>View Snapshot</Link></MenuItem>
+                    </SubMenu>
+
+                    <SubMenu title={"Payments"}>
+                        <MenuItem> <Link to={routes.initiatePayment.path}>Initiate Payment</Link></MenuItem>
+                        <MenuItem> <Link to={routes.addPaymentMethod.path}>Add Payment Method</Link></MenuItem>
+                        <MenuItem> <Link to={routes.paymentStatus.path}>Payment Status</Link></MenuItem>
+                        <MenuItem> <Link to={routes.paymentHistory.path}>Payment History</Link></MenuItem>
+                    </SubMenu>
+
                 </Menu>
             </SidebarContent>
         </ProSidebar>
