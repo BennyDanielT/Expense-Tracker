@@ -32,12 +32,14 @@ export default function InviteFriends() {
         <Button variant="primary" type="button" onClick={togglePopup} >
            Send Invite
         </Button>
+        <div className='pp'>
         {isOpen && <Popup
       content={<>
         <b>Invitation sent successfully</b>
       </>}
       handleClose={togglePopup}
     />}
+    </div>
 
         <Button className="mt-2" onClick={() => {history.push("/succInvite")}}>
           Successfull Invites
