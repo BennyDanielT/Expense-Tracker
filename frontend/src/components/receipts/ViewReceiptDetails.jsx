@@ -30,7 +30,7 @@ function ViewReceiptDetails() {
                 onClick={() => {
                   toast("OCR has begun. Expense will be added soon.");
                   setTimeout(() => {
-                    history.goBack();
+                    history.push("/view-receipts");
                   }, 5000);
                 }}
               >
@@ -41,7 +41,7 @@ function ViewReceiptDetails() {
                 onClick={() => {
                   toast.error("Receipt deleted. Redirecting...");
                   setTimeout(() => {
-                    history.goBack();
+                    history.push("/view-receipts");
                   }, 2000);
                 }}
               >
