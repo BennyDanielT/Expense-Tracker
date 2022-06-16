@@ -45,7 +45,7 @@ function ExpenseHomePage() {
             <Form.Label><Heading>Expenses</Heading></Form.Label>
             <div className="current-groups m-4">
                 <div className="mb-4 mt-4"><b>Current Expenses</b></div>
-                <div className="mb-4 mt-3">Select the expenses that you want to update or delete
+                <div className="mb-4 mt-3">
                 <Button variant="primary" type="click" onClick={() => history.push(routes.viewExpense.path)}>
                     View Expenses
                 </Button>
