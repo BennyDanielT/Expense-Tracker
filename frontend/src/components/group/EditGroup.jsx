@@ -1,5 +1,5 @@
 import {useHistory, useLocation} from "react-router-dom";
-import {Heading} from "./Heading";
+import {Heading} from "../Heading/Heading";
 import {Button, Form} from "react-bootstrap";
 import {useState} from "react";
 import Select from "react-select";
@@ -85,7 +85,7 @@ function EditGroup() {
         if (Object.keys(values).length) {
             let error = false;
             Object.values(values).forEach((value) => {
-                if (!value) {
+                if (!value || (Array.isArray(value) && !value.length)) {
                     error = true
                 }
             });

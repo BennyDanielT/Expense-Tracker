@@ -1,11 +1,11 @@
-import {useId, useRef, useState} from "react";
+import {useId, useState} from "react";
 import {Button, ButtonGroup, Form} from "react-bootstrap";
 import Select from "react-select";
 import {getLocalStorage, routes, setLocalStorage} from "../../constants";
 import Swal from "sweetalert2";
 import {useHistory} from "react-router-dom";
 import "./group.css";
-import {Heading} from "./Heading";
+import {Heading} from "../Heading/Heading";
 import {dummyMembersData} from "./helpers";
 
 function CreateGroup() {
@@ -85,7 +85,7 @@ function CreateGroup() {
         if (Object.keys(values).length) {
             let error = false;
             Object.values(values).forEach((value) => {
-                if (!value) {
+                if (!value || (Array.isArray(value) && !value.length)) {
                     error = true
                 }
             });
@@ -146,7 +146,7 @@ function CreateGroup() {
                     <Form.Label>Group Members</Form.Label>
                     <Select
                         isMulti
-                        name="colors"
+                        name="members"
                         options={dummyMembersData}
                         className="basic-multi-select"
                         classNamePrefix="select"
