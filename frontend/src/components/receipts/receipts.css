@@ -1,0 +1,15 @@
+.centered-content {
+    text-align: center;
+}
+
+.custom-container {
+    margin: 0;
+}
+
+.imageCard{
+    text-align: center;
+    display: flex;
+    position: relative;
+    margin: 2rem;
+}
+
