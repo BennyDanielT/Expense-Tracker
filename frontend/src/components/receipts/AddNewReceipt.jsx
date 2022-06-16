@@ -33,7 +33,7 @@ function AddNewReceipt() {
     }
     toast("New receipt added.");
     setTimeout(() => {
-      history.goBack();
+      history.push("/view-receipts");
     }, 2500);
   }
 
