@@ -16,22 +16,23 @@ function AnalyticsHome() {
 
     return (
         <Container fluid>
-            <Row className="ms-2 me-2 ms-sm-5 me-sm-5 pt-2 pt-sm-5" style={{justifyContent: 'space-evenly'}}>
-                <Card className="col-12 col-sm-4 col-md-3 mb-3" onClick={onClick} style={{cursor: "pointer"}}>
+            <h1 align="center"> Analytics </h1>
+            <Row className="ms-2 me-2 ms-md-5 me-md-5 pt-2 pt-sm-5" style={{justifyContent: 'space-evenly'}}>
+                <Card className="col-10 col-sm-3 col-md-3 mb-3" onClick={onClick} style={{cursor: "pointer"}}>
                     <Card.Img className="p-3" variant="top" src="bar-chart.png"/>
-                    <Card.Body>
+                    <Card.Body className="p-1">
                         <Card.Title>Expense Tracking</Card.Title>
                     </Card.Body>
                 </Card>
-                <Card className="col-12 col-sm-4 col-md-3 mb-3" onClick={onClick} style={{cursor: "pointer"}}>
+                <Card className="col-10 col-sm-3 col-md-3 mb-3" onClick={onClick} style={{cursor: "pointer"}}>
                     <Card.Img className="p-3" variant="top" src="analytics.png"/>
-                    <Card.Body>
+                    <Card.Body className="p-1">
                         <Card.Title>Spending Trends</Card.Title>
                     </Card.Body>
                 </Card>
-                <Card className="col-12 col-sm-4 col-md-3" onClick={onClick} style={{cursor: "pointer"}}>
+                <Card className="col-10 col-sm-3 col-md-3 mb-3" onClick={onClick} style={{cursor: "pointer"}}>
                     <Card.Img className="p-3" variant="top" src="bar-chart-two.png"/>
-                    <Card.Body>
+                    <Card.Body className="p-1">
                         <Card.Title>Expense Analysis</Card.Title>
                     </Card.Body>
                 </Card>
