@@ -30,7 +30,7 @@ function App() {
     return (
         <div className="h-100 d-flex w-100">
             <Routing/>
-            {/*<ToastContainer/>*/}
+            <ToastContainer/>
         </div>
     );
 }
