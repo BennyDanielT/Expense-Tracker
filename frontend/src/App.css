@@ -32,3 +32,8 @@ body {
 .form-switch {
     zoom: 1.5;
 }
+
+.main {
+    overflow: auto;
+    width: 100%;
+}
