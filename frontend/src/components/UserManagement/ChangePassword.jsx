@@ -1,5 +1,7 @@
 import { Card, Button, ListGroup, Container } from "react-bootstrap";
 import { useState } from "react";
+import Swal from "sweetalert2";
+
 import { Link } from "react-router-dom";
 import Form from "./Utilities/FormHelper";
 import "./Style/main.css";
@@ -47,7 +49,7 @@ function PasswordChanged() {
     const validate = validateforgotPassword();
 
     if (validate) {
-      alert("Reset password link is sent to " + email);
+      Swal.fire("Yay!", "Reset password link is sent to " + email, "success");
       setValidate({});
       setEmail("");
     }

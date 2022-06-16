@@ -1,5 +1,7 @@
 import { Container, Card, Table, Button } from "react-bootstrap";
 import { useState } from "react";
+import Swal from "sweetalert2";
+
 import { Link } from "react-router-dom";
 import Form from "./Utilities/FormHelper";
 import "./Style/main.css";
@@ -50,7 +52,7 @@ function Register() {
       setName("");
       setEmail("");
       setPassword("");
-      alert("Successfully Register User");
+      Swal.fire("Yay!", "Successfully Registered the user", "success");
     }
   };
 

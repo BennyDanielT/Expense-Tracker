@@ -1,5 +1,7 @@
 import { Container, Card, Table, Button } from "react-bootstrap";
 import { useState } from "react";
+import Swal from "sweetalert2";
+
 import { Link } from "react-router-dom";
 import Form from "./Utilities/FormHelper";
 import "./Style/main.css";
@@ -45,7 +47,7 @@ function Login() {
       setValidate({});
       setEmail("");
       setPassword("");
-      alert("Successfully Login");
+      Swal.fire("Yay!", "Successfully Login", "success");
     }
   };
 
