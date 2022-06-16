@@ -10,6 +10,7 @@ a {
 body {
     background: #e1f5fe !important;
     height: 100vh !important;
+    width: 100% !important;
 }
 
 body.swal2-height-auto {
@@ -17,6 +18,7 @@ body.swal2-height-auto {
 }
 
 #root {
+    width: 100% !important;
     height: 100%;
 }
 
@@ -28,9 +30,8 @@ body.swal2-height-auto {
     color: red;
 }
 
-.snaps
-{
-    color:green;
+.snaps {
+    color: green;
 }
 
 .form-switch {
