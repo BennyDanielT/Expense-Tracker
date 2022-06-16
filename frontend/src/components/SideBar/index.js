@@ -12,12 +12,26 @@ function SideBar() {
             <SidebarContent>
                 <Menu>
                     <MenuItem> <Link to={routes.home.path}>HomePage</Link></MenuItem>
+
+
                     <SubMenu title={"User Management"}>
                         <MenuItem> <Link to={routes.login.path}>Login</Link></MenuItem>
                         <MenuItem><Link to={routes.register.path}>Register</Link></MenuItem>
                         <MenuItem><Link to={routes.forgotPassword.path}>Forgot Password</Link></MenuItem>
                         <MenuItem><Link to={routes.passwordChanged.path}>Change Password</Link></MenuItem>
                     </SubMenu>
+
+                    <SubMenu title={"Expenses"}>
+                        <MenuItem> <Link to={routes.expense.path}>Expense</Link></MenuItem>
+                        <MenuItem> <Link to={routes.addExpense.path}>Add Expense</Link></MenuItem>
+                    </SubMenu>
+
+                    <SubMenu title={"Invite"}>
+                        <MenuItem> <Link to={routes.inviteFriends.path}>Invite Friends</Link></MenuItem>
+                        <MenuItem> <Link to={routes.successfullInvites.path}>Successful Invites</Link></MenuItem>
+                        <MenuItem> <Link to={routes.friendsInvited.path}>Friends Invitied</Link></MenuItem>
+                    </SubMenu>
+
                     <SubMenu title={"Coupon Management"}>
                         <MenuItem> <Link to={routes.viewCoupons.path}>View Coupons</Link></MenuItem>
                         <MenuItem> <Link to={routes.redeemCoupon.path}>Redeem Coupons</Link></MenuItem>
