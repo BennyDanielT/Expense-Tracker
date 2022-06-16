@@ -5,6 +5,8 @@ import {useState} from "react";
 import {routes} from "../../constants";
 import {useHistory} from "react-router-dom";
 import {Alert, Snackbar} from "@mui/material";
+import StickyNote from "../../assets/sticky-notes.png";
+
 
 export default function RemindersGrid() {
 
@@ -76,7 +78,7 @@ export default function RemindersGrid() {
                             <Row>
                                 <Col md={3} className="d-none d-md-block pt-4 ">
                                     <img className="w-75" alt="Reminder Icon"
-                                         src="/sticky-notes.png"/>
+                                         src={StickyNote}/>
                                 </Col>
                                 <Col className="p-3">
                                     <Stack gap={1}>
