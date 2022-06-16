@@ -15,38 +15,6 @@ export const routes = {
         path: "/coupon-redeemed",
         isAuthenticated: true,
     },
-    expense: {
-        path: "/expense",
-        isAuthenticated: true,
-    },
-    addExpense: {
-        path: "/add-expense",
-        isAuthenticated: true,
-    },
-    viewExpense: {
-        path: "/view-expense/:id",
-        isAuthenticated: true,
-    },
-    inviteFriends: {
-        path: "/invite-friends",
-        isAuthenticated: true,
-    },
-    friendsInvited: {
-        path: "/friends-invited",
-        isAuthenticated: true,
-    },
-    successfullInvites: {
-        path: "/succInvite",
-        isAuthenticated: true,
-    },
-    editExpense: {
-        path: "/edit-expense/:id",
-        isAuthenticated: true,
-    },
-    settleExpense: {
-        path: "/settle-expense",
-        isAuthenticated: true,
-    },
     group: {
         path: "/group",
         isAuthenticated: true,
@@ -180,36 +148,36 @@ export const routes = {
         isAuthenticated: true
     },
     expense: {
-      path: "/expense",
-      isAuthenticated: true,
+        path: "/expense",
+        isAuthenticated: true,
     },
     addExpense: {
-      path: "/add-expense",
-      isAuthenticated: true,
+        path: "/add-expense",
+        isAuthenticated: true,
     },
     viewExpense: {
-      path: "/view-expense/:id",
-      isAuthenticated: true,
+        path: "/view-expense/:id",
+        isAuthenticated: true,
     },
     inviteFriends: {
-      path: "/invite-friends",
-      isAuthenticated: true,
+        path: "/invite-friends",
+        isAuthenticated: true,
     },
-    friendsInvited:{
-      path: "/friends-invited",
-      isAuthenticated: true,
+    friendsInvited: {
+        path: "/friends-invited",
+        isAuthenticated: true,
     },
     successfullInvites: {
-      path: "/succInvite",
-      isAuthenticated:true,
+        path: "/succInvite",
+        isAuthenticated: true,
     },
     editExpense: {
-      path: "/edit-expense/:id",
-      isAuthenticated: true,
+        path: "/edit-expense/:id",
+        isAuthenticated: true,
     },
     settleExpense: {
-      path: "/settle-expense",
-      isAuthenticated: true,
+        path: "/settle-expense",
+        isAuthenticated: true,
     }
 };
 

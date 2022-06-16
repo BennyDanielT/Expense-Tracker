@@ -1,9 +1,6 @@
-import {Heading} from "../Heading/Heading";
-import {Button, Card, Alert} from "react-bootstrap";
-import Swal from "sweetalert2";
-import ReactDOMServer from "react-dom/server";
+import {Alert} from "react-bootstrap";
 import {routes} from "../../constants";
-import {useHistory, useLocation, Link} from "react-router-dom";
+import {Link, useHistory, useLocation} from "react-router-dom";
 
 
 export default function PaymentStatus() {
@@ -31,7 +28,7 @@ export default function PaymentStatus() {
 
     function Failure(props) {
         return (
-            <div><Alert className='margin' variant='danger'>
+            <div className="p-4"><Alert className='margin' variant='danger'>
                 <Alert.Heading className='text-center'>Payment Failure</Alert.Heading>
                 <hr/>
                 <p className='text-center'>
@@ -50,11 +47,17 @@ export default function PaymentStatus() {
     }
 
     function Message() {
-        if (status == "success") {
-            return <Success/>;
-        } else {
-            return <Failure/>;
-        }
+        return (
+            <div>
+                <Success/>
+                <Failure/>
+            </div>
+        )
+        // if (status == "success") {
+        //     return <Success/>;
+        // } else {
+        //     return <Failure/>;
+        // }
     }
 
     return (<Message/>);

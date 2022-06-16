@@ -5,14 +5,13 @@ import {stockData} from "./data/sample-data";
 
 function ViewCoupons() {
     // page content
-    const pageTitle = "Hurray! You've free coupons to redeem 🎉";
     const pageDescription = ". ";
 
     return (
         <Container>
             <div>
-                <Meta title={pageTitle}/>
-                <Header head={pageTitle} description={pageDescription}/>
+                <Meta />
+                <Header description={pageDescription}/>
             </div>
             <div className="stock-container">
                 {stockData.map((data, key) => {
