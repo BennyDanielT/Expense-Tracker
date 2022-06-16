@@ -3,6 +3,7 @@ import {Heading} from "../Heading/Heading";
 import {Button, Card} from "react-bootstrap";
 import {useHistory} from "react-router-dom";
 import {routes} from "../../constants";
+import Swal from "sweetalert2";
 
 function ViewExpense() {
 
@@ -116,7 +117,15 @@ function ViewExpense() {
                                 <Button className="mt-2" onClick={() => editExpense(result)}>
                                     Edit Expense
                                 </Button>
-                                <Button className="mt-2" onClick={() => { if (window.confirm('Are you sure you wish to delete this expense?')) this.onCancel("Expense") } }>
+                                         <Button className="mt-2" onClick={() => Swal.fire({
+                                            title: 'Are you sure?',
+                                            text: "You won't be able to revert this!",
+                                            icon: 'warning',
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#3085d6',
+                                            cancelButtonColor: '#d33',
+                                            confirmButtonText: 'Yes, delete it!'
+                                        }) }>
                                     Delete Expense
                                 </Button>
                             </div>

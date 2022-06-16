@@ -17,7 +17,7 @@ export default function SettleExpense() {
                         placeholder="Enter amount" />
         </Form.Group>
         
-        <Button variant="primary" type="button" onClick={Swal.fire(
+        <Button variant="primary" type="button" onClick={()=>Swal.fire(
             'Congratulations!',
             'You are all settled up!',
             'success'
