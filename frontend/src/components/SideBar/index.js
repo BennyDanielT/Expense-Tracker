@@ -26,9 +26,41 @@ function SideBar() {
                         <MenuItem><Link to={routes.forgotPassword.path}>Forgot Password</Link></MenuItem>
                         <MenuItem><Link to={routes.passwordChanged.path}>Change Password</Link></MenuItem>
                     </SubMenu>
+                    <SubMenu title={"Coupon Management"}>
+                        <MenuItem> <Link to={routes.viewCoupons.path}>View Coupons</Link></MenuItem>
+                        <MenuItem> <Link to={routes.redeemCoupon.path}>Redeem Coupons</Link></MenuItem>
+                        <MenuItem> <Link to={routes.couponRedeemed.path}>Coupon Redeemed</Link></MenuItem>
+                    </SubMenu>
+                    <SubMenu title={"Notification"}>
+                        <MenuItem> <Link to={routes.notificationSettings.path}>Notification Settings</Link></MenuItem>
+                        <MenuItem><Link to={routes.emailNotification.path}>Email Notification</Link></MenuItem>
+                        <MenuItem><Link to={routes.viewNotification.path}>View Notification</Link></MenuItem>
+                    </SubMenu>
                     <SubMenu title={"Group Expense Tracking"}>
                         <MenuItem> <Link to={routes.group.path}>Group</Link></MenuItem>
                         <MenuItem> <Link to={routes.createGroup.path}>Create Group</Link></MenuItem>
+                    </SubMenu>
+
+                    <SubMenu title={"Reminders"}>
+                        <MenuItem> <Link to={routes.reminders.path}>Reminders</Link></MenuItem>
+                        <MenuItem> <Link to={routes.createReminder.path}>Create Reminder</Link></MenuItem>
+                    </SubMenu>
+
+                    <SubMenu title={"Analytics"}>
+                        <MenuItem> <Link to={routes.analytics.path}>Analytics</Link></MenuItem>
+                        <MenuItem> <Link to={routes.expenseAnalysis.path}>Expense Analytics</Link></MenuItem>
+                        <MenuItem> <Link to={routes.spendingTrends.path}>Spending Trends</Link></MenuItem>
+                        <MenuItem> <Link to={routes.expenseTracking.path}>Expense Tracking</Link></MenuItem>
+                    </SubMenu>
+
+                    <SubMenu title={"Tags"}>
+                        <MenuItem> <Link to={routes.createTag.path}>Create Tag</Link></MenuItem>
+                        <MenuItem> <Link to={routes.viewTags.path}>View Tags</Link></MenuItem>
+                    </SubMenu>
+
+                    <SubMenu title={"Receipts"}>
+                        <MenuItem> <Link to={routes.addReceipt.path}>Add Receipt</Link></MenuItem>
+                        <MenuItem> <Link to={routes.viewReceipts.path}>View Receipts</Link></MenuItem>
                     </SubMenu>
                 </Menu>
             </SidebarContent>
