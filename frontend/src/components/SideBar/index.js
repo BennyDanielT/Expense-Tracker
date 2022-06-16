@@ -3,8 +3,6 @@ import {Link} from "react-router-dom";
 import {routes} from "../../constants";
 
 function SideBar() {
-
-
     return (
         <ProSidebar
             breakPoint="md"
@@ -12,8 +10,6 @@ function SideBar() {
             <SidebarContent>
                 <Menu>
                     <MenuItem> <Link to={routes.home.path}>HomePage</Link></MenuItem>
-
-
                     <SubMenu title={"User Management"}>
                         <MenuItem> <Link to={routes.login.path}>Login</Link></MenuItem>
                         <MenuItem><Link to={routes.register.path}>Register</Link></MenuItem>
@@ -81,7 +77,6 @@ function SideBar() {
                         <MenuItem> <Link to={routes.paymentStatus.path}>Payment Status</Link></MenuItem>
                         <MenuItem> <Link to={routes.paymentHistory.path}>Payment History</Link></MenuItem>
                     </SubMenu>
-
                 </Menu>
             </SidebarContent>
         </ProSidebar>
