@@ -1,20 +1,12 @@
 import {Menu, MenuItem, ProSidebar, SidebarContent, SubMenu} from "react-pro-sidebar";
 import {Link} from "react-router-dom";
 import {routes} from "../../constants";
-import {useState} from "react";
 
 function SideBar() {
-
-    const [toggled, setToggled] = useState(false);
-    const handleToggleSidebar = (value) => {
-        setToggled(value);
-    }
 
 
     return (
         <ProSidebar
-            toggled={toggled}
-            handleToggleSidebar={handleToggleSidebar}
             breakPoint="md"
         >
             <SidebarContent>
