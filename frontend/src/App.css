@@ -42,3 +42,7 @@ body.swal2-height-auto {
     overflow: auto;
     width: 100%;
 }
+
+.paypal-link, .razorpay-link, .stripe-link {
+    cursor: pointer;
+}

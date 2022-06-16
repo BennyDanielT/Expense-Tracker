@@ -46,6 +46,7 @@ import SpendingTrends from "../analytics/SpendingAnalysis";
 import ExpenseAnalysis from "../analytics/ExpenseAnalysis";
 import RemindersGrid from "../paymentReminders/RemindersGrid";
 import CreateReminder from "../paymentReminders/CreateReminder";
+import HomePage from "../HomePage";
 
 function Routing() {
     return (
@@ -54,7 +55,7 @@ function Routing() {
             <div className="main">
                 <Switch>
                     <Route exact path={routes.home.path}>
-                        <div>Home</div>
+                        <HomePage/>
                     </Route>
 
                     <Route exact path={routes.viewCoupons.path}>
