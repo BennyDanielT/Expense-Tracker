@@ -8,11 +8,11 @@ function SpendingTrends() {
 
     const individualTrends =
         [
-            {"desc": "Food:", "value": "147$"},
-            {"desc": "Travel:", "value": "205$"},
-            {"desc": "Grocery:", "value": "98$"},
-            {"desc": "Utilities:", "value": "67$"},
-            {"desc": "Others:", "value": "245$"},];
+            {"desc": "Food", "value": "147$"},
+            {"desc": "Travel", "value": "205$"},
+            {"desc": "Grocery", "value": "98$"},
+            {"desc": "Utilities", "value": "67$"},
+            {"desc": "Others", "value": "245$"},];
 
     const groupTrends =
         [{"desc": "Total money sent:", "value": "568$"},
@@ -20,7 +20,7 @@ function SpendingTrends() {
             {"desc": "Total amount of group expenses:", "value": "476$"},
             {"desc": "----------------------", "value": " "},
             {"desc": "Group based expenses", "value": ""},
-            {"desc": "Home:", "value": "252$"},
+            {"desc": "Home", "value": "252$"},
             {"desc": "Friends:", "value": "62$"},
             {"desc": "Work:", "value": "50$"},
             {"desc": "Saturday Movie:", "value": "67$"},
@@ -151,12 +151,6 @@ function SpendingTrends() {
                             </Grid>
 
                         </Grid>)}
-                    <Form.Group className="col-10 col-md-8 mt-3 mb-3">
-                        <Form.Select value={spendingMode} onChange={onHandleChange}>
-                            <option value="Individual">Individual Spending</option>
-                            <option value="Group">Group Spending</option>
-                        </Form.Select>
-                    </Form.Group>
                 </Grid>
                 <Grid item xs={12} sm={8} md={5} lg={4}>
                     <Doughnut data={chartData} style={{backgroundColor: "#ffffff", marginBottom: "17px"}}

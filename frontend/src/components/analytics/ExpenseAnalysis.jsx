@@ -5,17 +5,17 @@ import {Grid, Typography} from "@mui/material";
 function ExpenseAnalysis() {
     const groupTrends =
         [{"desc": "Total money sent:", "value": "568$"},
-            {"desc": "Total money received:", "value": "92$"},
-            {"desc": "Total amount of group expenses:", "value": "476$"},
-            {"desc": "Total amount of individual expenses:", "value": "757$"},
-            {"desc": "Highest single expenses recorded:", "value": "92$"},
+            {"desc": "Total money received", "value": "92$"},
+            {"desc": "Total amount of group expenses", "value": "476$"},
+            {"desc": "Total amount of individual expenses", "value": "757$"},
+            {"desc": "Highest single expenses recorded", "value": "92$"},
             {"desc": "----------------------", "value": " "},
             {"desc": "Group based expenses", "value": ""},
-            {"desc": "Home:", "value": "252$"},
-            {"desc": "Friends:", "value": "62$"},
-            {"desc": "Work:", "value": "50$"},
-            {"desc": "Saturday Movie:", "value": "67$"},
-            {"desc": "Birthday:", "value": "45$"},];
+            {"desc": "Home", "value": "252$"},
+            {"desc": "Friends", "value": "62$"},
+            {"desc": "Work", "value": "50$"},
+            {"desc": "Saturday Movie", "value": "67$"},
+            {"desc": "Birthday", "value": "45$"},];
     const dataGroup = {
         labels: ['Home', 'Friends', 'Work', 'Saturday Movie', 'Birthday'],
         datasets: [
