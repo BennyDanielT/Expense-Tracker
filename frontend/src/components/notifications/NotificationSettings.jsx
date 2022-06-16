@@ -29,7 +29,7 @@ function NotificationSettings() {
             <Form>
                 {types.map((type) => {
                     return (
-                        <Card className="p-3 d-flex m-2">
+                        <Card className="p-3 d-flex m-2" key={type.name}>
                             <Form.Check
                                 type="switch"
                                 defaultChecked={type.checked}
