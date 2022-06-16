@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-const stripe = require("stripe")('sk_test_51LAz4KC9WWOmeUQqrPNjR1MoMg8QUwat6VjKu7criZO85933G7zghbRiOZl4u6L8aY4VetIlnUEkxANmg24K018D000U1euugz');
+const stripe = require("stripe")('sk_test_51L5xY5GQAnXJ0JEKipyVcR2IyoP5ECqTXhyRcSgxkGSiCunc3UFK2mtehvGpYtpCYnI57zf9S6ki82t36hyadpaT00q04YVOCW');
 const cors = require('cors');
 
 // Serve only the static files form the dist 

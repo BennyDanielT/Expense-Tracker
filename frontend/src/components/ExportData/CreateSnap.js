@@ -4,6 +4,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 import DateTimePicker from 'react-datetime-picker';
 import "../ExportData/CreateSnap.css";
 import DatePicker from "react-datepicker";
+import ReactDOMServer from "react-dom/server";
+import Swal from "sweetalert2";
+
 
 
 // Reference : https://www.npmjs.com/package/react-datetime-picker
@@ -34,6 +37,32 @@ export default function CreateSnap() {
         console.log(date);
 
     };
+    const alertUser = () => {
+        let title, account,amount;
+        
+        // amount = <div className="lent"><b>Balance: {balance}</b></div>;
+        // account = <div className="lent"><b>Account: {accountCategory}</b></div>;
+    
+        // amount = ReactDOMServer.renderToString(amount);
+        // account = ReactDOMServer.renderToString(account);
+    
+        Swal.fire({
+            title: `New Snap Created !`,
+            icon: 'success',
+            cancelButtonText:'Back',
+            showCloseButton: true,
+            showDenyButton: false,
+            showConfirmButton: false,
+            showCancelButton:true,
+            preDeny() {
+                Swal.fire(
+                    'Deleted!',
+                    'Snapshot has been deleted.',
+                    'success'
+                );
+            }
+        })
+    }
 
     return (
         <div
@@ -91,7 +120,7 @@ export default function CreateSnap() {
                         Balance should be a number between 0 and 1,000,000
                     </Form.Control.Feedback>
                 </Form.Group>
-                <Button className='mt-2 end' type='submit'>
+                <Button className='mt-2 end' type='submit' onClick={() => alertUser()}>
                     Submit
                 </Button>
 
@@ -100,3 +129,5 @@ export default function CreateSnap() {
         </div>
     );
 }
+
+
