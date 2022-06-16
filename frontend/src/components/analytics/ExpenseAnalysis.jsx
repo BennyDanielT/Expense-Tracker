@@ -10,7 +10,6 @@ function ExpenseAnalysis() {
             {"desc": "Total amount of individual expenses", "value": "757$"},
             {"desc": "Highest single expenses recorded", "value": "92$"},
             {"desc": "----------------------", "value": " "},
-            {"desc": "Group based expenses", "value": ""},
             {"desc": "Home", "value": "252$"},
             {"desc": "Friends", "value": "62$"},
             {"desc": "Work", "value": "50$"},
@@ -66,7 +65,7 @@ function ExpenseAnalysis() {
                       style={{backgroundColor: "#ffffff", margin: "17px"}}>
 
                     <Typography gutterBottom variant="h5" component="div">
-                        Spending Trends
+                        Group based expenses
                     </Typography>
                     {Object.values(groupTrends).map(category =>
                         <Grid container
