@@ -1,96 +1,90 @@
 import {Heading} from "../Heading/Heading";
-import {Button, Card, Alert} from "react-bootstrap";
-import Swal from "sweetalert2";
-import ReactDOMServer from "react-dom/server";
-import {routes} from "../../constants";
+import DatePicker from "react-datepicker";
+import {useState} from "react";
+import {Button, Table} from "react-bootstrap";
 
 export default function PaymentHistory() {
-    const snapshots = [
-        {
-            account: "Current",
-            balance: "$9005",
-            date: "June 10th, 2015 06:10PM",
-        },
-        {
-            account: "Current",
-            balance: "$8956",
-            date: "January 20th, 2017 08:10AM",
-        },
-        {
-            account: "Savings",
-            balance: "$88784",
-            date: "July 20th, 2018 08:10AM",
-        },
-        {
-            account: "Savings",
-            balance: "$32189",
-            date: "May 20th, 2019 08:10AM",
-        },
-        {
-            account: "Current",
-            balance: "$10256",
-            date: "December 25th, 2021 12:10PM",
-        },
-    ];
-
-    const deleteSnap = (snap) => {
-        let title, account,amount;
-        
-        title = <div className="owed"><b>Do you want to delete this Snapshot ?</b></div>;
-        amount = <div className="lent"><b>Balance: {snap.balance}</b></div>;
-        account = <div className="lent"><b>Account: {snap.account}</b></div>;
-
-        title = ReactDOMServer.renderToString(title);
-        amount = ReactDOMServer.renderToString(amount);
-        account = ReactDOMServer.renderToString(account);
-
-        Swal.fire({
-            title: `Instance: ${snap.date}`,
-            icon: 'question',
-            html: `<div class="mb-3">${account}</div> ${amount}<div class="mt-3 mb-3">${title}</div>`,
-            denyButtonText: "Delete Snapshot",
-            showCloseButton: true,
-            showDenyButton: true,
-            showConfirmButton: false,
-            showCancelButton:true,
-            preDeny() {
-                Swal.fire(
-                    'Deleted!',
-                    'Snapshot has been deleted.',
-                    'success'
-                );
-            }
-        })
-    }
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
 
     return (
-        <div>
-            <div className="m-4">
-            <Alert variant='primary'>
-        <Alert.Heading className='text-center'>My Snapshots</Alert.Heading>
-        
-      </Alert>
-      <hr />
-            </div>
-            {snapshots.map((snap) => {
-                let date, account,balance;
-                date = <div>Date: {snap.date}</div>;
-                account = <div className="snaps">Account: {snap.account}</div>
-                balance = <div className="lent">Balance: {snap.balance}</div>
+        <div className="m-4 p-4">
+            <Heading>
+                Payment History
+            </Heading>
 
-                return (
-                    <Card className="m-2 p-3" key={snap.date}>
-                        <div className="d-flex  justify-content-between align-items-center">
-                            <div>
-                                <h4>{date}</h4>
-                                <h5>{account}</h5>
-                                <h5>{balance}</h5>
-                            </div>
-                            <Button onClick={() => deleteSnap(snap)}>Delete this Snap</Button>
-                        </div>
-                    </Card>
-                )
-            })}
+            <div className="mb-3 mt-3">
+                <h3 className="d-flex justify-content-center">Display account activity</h3>
+                <div className="d-flex justify-content-center">The table below displays the list of payments made during
+                    the given time period.
+                </div>
+            </div>
+
+            <div className="d-flex mb-4">
+                <b>Payments List</b>
+            </div>
+
+            <div className="d-flex">
+                <div>
+                    <span>From</span>
+                    <DatePicker
+                        selected={startDate}
+                        onChange={(date) => setStartDate(date)}
+                    />
+                </div>
+                <div>
+                    <div>To</div>
+                    <DatePicker
+                        selected={endDate}
+                        onChange={(date) => setEndDate(date)}
+                    />
+                </div>
+            </div>
+            <div>
+                <Button className="mt-4 d-flex justify-content-center align-items-center"
+                        style={{width: "fit-content"}}>Go</Button>
+            </div>
+
+            <div className="mt-4">
+                <Table striped bordered hover>
+                    <thead>
+                    <tr>
+                        <th>
+                            Payment
+                        </th>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Loader
+                        </th>
+                        <th>
+                            Amount
+                        </th>
+                        <th>
+                            Payment Status
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>{new Date().toDateString()}</td>
+                        <td>US Payment Service</td>
+                        <td>$120</td>
+                        <td>Loaded on {new Date().toDateString()}</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>{new Date().toDateString()}</td>
+                        <td>US Payment Service</td>
+                        <td>$220</td>
+                        <td>Loaded on {new Date().toDateString()}</td>
+                    </tr>
+                    </tbody>
+                </Table>
+                <div>Current Page (1/1)</div>
+            </div>
         </div>
     );
 }
