@@ -16,6 +16,12 @@ import { ReedemCoupon } from "../CouponManagement/redeemCoupon";
 import Layout from "../CouponManagement/Layout/Layout";
 import NotFound from "../CouponManagement/notFound";
 import { CouponRedeemed } from "../CouponManagement/couponRedeemed";
+import { AddExepnse } from "../expense/AddExpense";
+import { EditExpense } from "../expense/EditExpense";
+import { settleExpense } from "../expense/SettleExpense";
+import { ExpenseHomePage } from "../expense/ExpenseHomePage";
+import { ViewExpense } from "../expense/ViewExpense";
+import InviteFriends from "../invite/InviteFriends";
 function Routing() {
   return (
     <BrowserRouter>
@@ -44,7 +50,26 @@ function Routing() {
             <CouponRedeemed />
           </Layout>
         </Route>
-
+        <Route exact path={routes.expense.path}>
+          <ExpenseHomePage />
+        </Route>
+        <Route exact path={routes.addExpense.path}>
+          <AddExepnse />
+        </Route>
+        <Route exact path={routes.viewExpense.path}>
+          <ViewExpense />
+        </Route>
+        <Route exact path={routes.editExpense.path}>
+          <EditExpense />
+          
+        </Route>
+        <Route exact path={routes.settleExpense.path}>
+          <settleExpense />
+          
+        </Route>
+        <Route exact path={routes.inviteFriends.path}>
+          <InviteFriends/>
+        </Route>
         <Route exact path={routes.group.path}>
           <GroupHomePage />
         </Route>

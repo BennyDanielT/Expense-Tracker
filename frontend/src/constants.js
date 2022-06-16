@@ -15,6 +15,30 @@ export const routes = {
     path: "/coupon-redeemed",
     isAuthenticated: true,
   },
+  expense: {
+    path: "/expense",
+    isAuthenticated: true,
+  },
+  addExpense: {
+    path: "/add-expense",
+    isAuthenticated: true,
+  },
+  viewExpense: {
+    path: "/view-expense/:id",
+    isAuthenticated: true,
+  },
+  inviteFriends: {
+    path: "/invite-friends",
+    isAuthenticated: true,
+  },
+  editExpense: {
+    path: "/edit-expense/:id",
+    isAuthenticated: true,
+  },
+  settleExpense: {
+    path: "/settle-expense",
+    isAuthenticated: true,
+  },
   group: {
     path: "/group",
     isAuthenticated: true,
