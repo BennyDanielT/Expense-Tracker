@@ -74,8 +74,8 @@ export default function RemindersGrid() {
 
                         <div className="p-2 rounded-3  border" style={{backgroundColor: "#a5b4fc"}}>
                             <Row>
-                                <Col md={3} className="d-none d-md-block p-4 ">
-                                    <img className="w-100" alt="Reminder Icon"
+                                <Col md={3} className="d-none d-md-block pt-4 ">
+                                    <img className="w-75" alt="Reminder Icon"
                                          src="/sticky-notes.png"/>
                                 </Col>
                                 <Col className="p-3">
