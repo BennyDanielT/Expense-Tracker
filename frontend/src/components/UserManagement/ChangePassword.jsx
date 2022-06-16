@@ -61,7 +61,6 @@ function PasswordChanged() {
         <div className="col-12 col-md-7 col-lg-6 auth-main-col text-center">
           <div className="d-flex flex-column align-content-end">
             <div className="auth-body mx-auto">
-              <p>Login to your account</p>
               <div className="auth-form-container text-start">
                 <div className="text-center">
                   <div className="text-center">
