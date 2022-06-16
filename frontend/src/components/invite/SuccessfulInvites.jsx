@@ -5,6 +5,8 @@ import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import Popup from './Popup';
 import "../invite/popup.css";
+import { Card } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
 
 export default function SuccInvites() {
 
@@ -12,15 +14,14 @@ export default function SuccInvites() {
   return (
     <div className='succinvite'>
       <h4>Invitee Successfully Joined:</h4>
-      <h6>
-        Name: Smit Thakkar
-        Email: thakkarsmit28@gmail.com
-    </h6>
-
-    <h6>
-            Name: ABCD
-            Email: abcd@xyz.com
-    </h6>
+      <Card style={{ width: '18rem' }}>
+    <Card.Header>Email:</Card.Header>
+    <ListGroup variant="flush">
+    <ListGroup.Item>thakkarsmit28@gmail.com</ListGroup.Item>
+    <ListGroup.Item>abhishekuppe@gmail.com</ListGroup.Item>
+    <ListGroup.Item>abc@xyz.com</ListGroup.Item>
+    </ListGroup>
+    </Card>
       
 
       

@@ -6,6 +6,7 @@ import { useState } from 'react';
 import Popup from './Popup';
 import { useHistory } from 'react-router-dom';
 import succInvites from './SuccessfulInvites';
+import Swal from 'sweetalert2';
 
 export default function InviteFriends() {
 
@@ -29,17 +30,10 @@ export default function InviteFriends() {
           <Form.Control type="text" 
                         placeholder="abcd@xyz.com" />
         </Form.Group>
-        <Button variant="primary" type="button" onClick={togglePopup} >
+        <Button variant="primary" type="button" onClick={()=> Swal.fire('Invitation sent successfully')} >
            Send Invite
         </Button>
-        <div className='pp'>
-        {isOpen && <Popup
-      content={<>
-        <b>Invitation sent successfully</b>
-      </>}
-      handleClose={togglePopup}
-    />}
-    </div>
+        
 
         <Button className="mt-2" onClick={() => {history.push("/succInvite")}}>
           Successfull Invites

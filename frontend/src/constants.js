@@ -3,6 +3,50 @@ export const routes = {
         path: "/",
         isAuthenticated: true,
     },
+    viewCoupons: {
+        path: "/view-coupons",
+        isAuthenticated: true,
+    },
+    redeemCoupon: {
+        path: "/redeem-coupon",
+        isAuthenticated: true,
+    },
+    couponRedeemed: {
+        path: "/coupon-redeemed",
+        isAuthenticated: true,
+    },
+    expense: {
+        path: "/expense",
+        isAuthenticated: true,
+    },
+    addExpense: {
+        path: "/add-expense",
+        isAuthenticated: true,
+    },
+    viewExpense: {
+        path: "/view-expense/:id",
+        isAuthenticated: true,
+    },
+    inviteFriends: {
+        path: "/invite-friends",
+        isAuthenticated: true,
+    },
+    friendsInvited: {
+        path: "/friends-invited",
+        isAuthenticated: true,
+    },
+    successfullInvites: {
+        path: "/succInvite",
+        isAuthenticated: true,
+    },
+    editExpense: {
+        path: "/edit-expense/:id",
+        isAuthenticated: true,
+    },
+    settleExpense: {
+        path: "/settle-expense",
+        isAuthenticated: true,
+    },
     group: {
         path: "/group",
         isAuthenticated: true,
@@ -23,12 +67,56 @@ export const routes = {
         path: "/delete-group/:id",
         isAuthenticated: true,
     },
+    viewNotification: {
+        path: "/view-notification",
+        isAuthenticated: true,
+    },
+    emailNotification: {
+        path: "/email-notification",
+        isAuthenticated: true,
+    },
+    notificationSettings: {
+        path: "/notification-settings",
+        isAuthenticated: true,
+    },
     reminders: {
         path: "/reminders",
         isAuthenticated: true,
     },
     createReminder: {
         path: "/create-reminder",
+        isAuthenticated: true,
+    },
+    exportGrid: {
+        path: "/export-grid",
+        isAuthenticated: true,
+    },
+    createSnapshot: {
+        path: "/create-snapshot",
+        isAuthenticated: true,
+    },
+    viewSnapshot: {
+        path: "/view-snapshot",
+        isAuthenticated: true,
+    },
+    addPaymentMethod: {
+        path: "/add-method",
+        isAuthenticated: true,
+    },
+    initiatePayment: {
+        path: "/initiate-payment",
+        isAuthenticated: true,
+    },
+    paymentStatus: {
+        path: "/payment-status",
+        isAuthenticated: true,
+    },
+    paymentHistory: {
+        path: "/payment-history",
+        isAuthenticated: true,
+    },
+    notFound: {
+        path: "/error",
         isAuthenticated: true,
     },
     createTag: {
@@ -59,18 +147,6 @@ export const routes = {
         path: "/view-receipts",
         isAuthenticated: true,
     },
-    viewCoupons: {
-        path: "/view-coupons",
-        isAuthenticated: true,
-    },
-    redeemCoupon: {
-        path: "/redeem-coupon",
-        isAuthenticated: true,
-    },
-    couponRedeemed: {
-        path: "/coupon-redeemed",
-        isAuthenticated: true,
-    },
     login: {
         path: "/login",
         isAuthenticated: true,
@@ -85,50 +161,6 @@ export const routes = {
     },
     passwordChanged: {
         path: "/password-changed",
-        isAuthenticated: true,
-    },
-    viewNotification: {
-        path: "/view-notification",
-        isAuthenticated: true,
-    },
-    emailNotification: {
-        path: "/email-notification",
-        isAuthenticated: true,
-    },
-    notificationSettings: {
-        path: "/notification-settings",
-        isAuthenticated: true,
-    },
-    exportGrid: {
-        path: "/export-grid",
-        isAuthenticated: true,
-    },
-    createSnapshot: {
-        path: "/create-snapshot",
-        isAuthenticated: true,
-    },
-    viewSnapshot: {
-        path: "/view-snapshots",
-        isAuthenticated: true,
-    },
-    addPaymentMethod: {
-        path: "/add-method",
-        isAuthenticated: true,
-    },
-    initiatePayment: {
-        path: "/initiate-payment",
-        isAuthenticated: true,
-    },
-    paymentStatus: {
-        path: "/payment-status",
-        isAuthenticated: true,
-    },
-    paymentHistory: {
-        path: "/payment-history",
-        isAuthenticated: true,
-    },
-    notFound: {
-        path: "/error",
         isAuthenticated: true,
     },
     analytics: {
@@ -179,7 +211,6 @@ export const routes = {
       path: "/settle-expense",
       isAuthenticated: true,
     }
-
 };
 
 export const setLocalStorage = (key, value) => {
