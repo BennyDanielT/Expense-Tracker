@@ -134,7 +134,7 @@ function ViewGroup() {
                                 </div>
                             </div>
                             <div className="d-flex justify-content-evenly">
-                                <Button className="mt-2">
+                                <Button className="mt-2" onClick={() => history.push(routes.settleExpense.path)}>
                                     Settle Up
                                 </Button>
                                 <Button className="mt-2" onClick={() => editGroup(result)}>
