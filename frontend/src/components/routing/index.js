@@ -3,9 +3,6 @@ import {routes} from "../../constants";
 import {Home} from "../Home";
 import {GroupHomePage} from "../group/GroupHomePage";
 import {CreateGroup} from "../group/CreateGroup";
-import RemindersGrid from "../PaymentReminders/RemindersGrid";
-import CreateReminder from "../PaymentReminders/CreateReminder";
-
 import { ViewGroup } from "../group/ViewGroup";
 import { EditGroup } from "../group/EditGroup";
 import { DeleteGroup } from "../group/DeleteGroup";
@@ -22,6 +19,18 @@ import { Login } from "../UserManagement/Login";
 import { Register } from "../UserManagement/Register";
 import { ForgotPassword } from "../UserManagement/ForgetPassword";
 import { PasswordChanged } from "../UserManagement/ChangePassword";
+import {CreateEditTag} from "../tags/CreateEditTag";
+import {ViewTagDetails} from "../tags/ViewTagDetails";
+import {ViewTags} from "../tags/ViewTags";
+import {AddNewReceipt} from "../receipts/AddNewReceipt";
+import {ViewReceiptDetails} from "../receipts/ViewReceiptDetails";
+import {ViewReceipts} from "../receipts/ViewReceipts";
+import {AnalyticsHome} from "../analytics/AnalyticsHome";
+import ExpenseTracking from "../analytics/ExpenseTracking";
+import SpendingTrends from "../analytics/SpendingAnalysis";
+import CreateReminder from "../paymentReminders/CreateReminder";
+import RemindersGrid from "../paymentReminders/RemindersGrid";
+import ExpenseAnalysis from "../analytics/ExpenseAnalysis";
 function Routing() {
   return (
     <BrowserRouter>
@@ -159,6 +168,9 @@ function Routing() {
           <Route exact path={routes.spendingTrends.path}>
               <SpendingTrends/>
           </Route>
+        <Route exact path={routes.expenseAnalysis.path}>
+          <ExpenseAnalysis/>
+        </Route>
       </Switch>
     </BrowserRouter>
   );
