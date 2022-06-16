@@ -2,16 +2,17 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Table, Button } from "react-bootstrap";
 import { routes } from "../../constants";
+import Swal from "sweetalert2";
 
 function ViewTags() {
   const [tags, setTags] = useState([
     {
       tagId: "110297",
-      name: "12sdfdf",
-      description: "the first tag",
+      name: "Books",
+      description: "Expenses around books and audio books",
       icon: {
         unified: "1f975",
-        emoji: "🥵",
+        emoji: "📚",
         originalUnified: "1f975",
         names: ["overheated face", "hot_face"],
         activeSkinTone: "neutral",
@@ -19,12 +20,12 @@ function ViewTags() {
       usage: "11",
     },
     {
-      tagId: "110297",
-      name: "tag123",
-      description: "the second one ",
+      tagId: "110298",
+      name: "Coffee",
+      description: "During lecture breaks",
       icon: {
         unified: "1f975",
-        emoji: "🥵",
+        emoji: "☕",
         originalUnified: "1f975",
         names: ["overheated face", "hot_face"],
         activeSkinTone: "neutral",
@@ -32,12 +33,12 @@ function ViewTags() {
       usage: "10",
     },
     {
-      tagId: "110297",
-      name: "12312asdgsdgs",
-      description: "third!!",
+      tagId: "110299",
+      name: "Rent",
+      description: "Monthly rental expenses",
       icon: {
         unified: "1f975",
-        emoji: "🥵",
+        emoji: "💵",
         originalUnified: "1f975",
         names: ["overheated face", "hot_face"],
         activeSkinTone: "neutral",
@@ -46,6 +47,22 @@ function ViewTags() {
     },
   ]);
   const history = useHistory();
+
+  function showDeleteAlert() {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Deleted!", "Tag has been deleted.", "success");
+      }
+    });
+  }
 
   const onClickFunctions = {
     viewTag: (tag) => {
@@ -63,7 +80,12 @@ function ViewTags() {
         padding: "30px",
       }}
     >
-      <h2>Tags</h2>
+      <div className="d-flex justify-content-between my-3">
+        <h2>Tags</h2>
+        <Button onClick={() => history.push("/create-tag")}>
+          <i className="fas fa-plus"></i>
+        </Button>
+      </div>
       <Table striped bordered hover responsive>
         <thead>
           <tr>
@@ -99,7 +121,7 @@ function ViewTags() {
                 >
                   <span className="fas fa-pen"></span>
                 </Button>
-                <Button variant="danger">
+                <Button variant="danger" onClick={showDeleteAlert}>
                   <span className="fas fa-trash"></span>
                 </Button>
               </td>

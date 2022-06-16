@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Button, Form, Row, Col, Container } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import "./receipts.css";
 
 function AddNewReceipt() {
@@ -7,10 +9,17 @@ function AddNewReceipt() {
   const [uploadError, setUploadError] = useState("");
   const [file, setFile] = useState("");
   const [preview, setPreview] = useState();
+  const history = useHistory();
 
   // Functions
   const onChangeFunctions = {
     formFile: (event) => {
+      const file = event.target.files[0];
+      if (!file || !file.type.includes("image")) {
+        event.preventDefault();
+        setUploadError("Only images are allowed");
+        return;
+      }
       setFile(event.target.files[0]);
       setPreview(URL.createObjectURL(event.target.files[0]));
       setUploadError("");
@@ -18,10 +27,14 @@ function AddNewReceipt() {
   };
 
   function onSubmit() {
-    if (file == "") {
+    if (file === "") {
       setUploadError("Please upload a receipt to continue.");
-    } else {
+      return;
     }
+    toast("New receipt added.");
+    setTimeout(() => {
+      history.goBack();
+    }, 2500);
   }
 
   // JSX
@@ -42,6 +55,7 @@ function AddNewReceipt() {
                     <Form.Label>Upload the receipt</Form.Label>
                     <Form.Control
                       type="file"
+                      accept="image/*"
                       onChange={onChangeFunctions.formFile}
                     />
                   </Form.Group>
@@ -49,7 +63,7 @@ function AddNewReceipt() {
                     {uploadError}
                   </Form.Text>
                 </div>
-                <Button variant="primary" onClick={onSubmit}>
+                <Button variant="primary" onClick={onSubmit} disabled={!file}>
                   Submit
                 </Button>
               </Col>
