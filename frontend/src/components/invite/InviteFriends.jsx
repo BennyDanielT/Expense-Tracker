@@ -30,7 +30,7 @@ export default function InviteFriends() {
           <Form.Control type="text" 
                         placeholder="abcd@xyz.com" />
         </Form.Group>
-        <Button variant="primary" type="button" onClick={()=> Swal.fire('Invitation sent successfully')} >
+        <Button className="mt-2" variant="primary" type="button" onClick={()=> Swal.fire('Invitation sent successfully')} >
            Send Invite
         </Button>
         
