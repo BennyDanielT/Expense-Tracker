@@ -9,7 +9,11 @@ a {
 
 body {
     background: #e1f5fe !important;
-    height: 100vh;
+    height: 100vh !important;
+}
+
+body.swal2-height-auto {
+    height: 100vh !important;
 }
 
 #root {
