@@ -38,7 +38,7 @@ export default function PaymentStatus() {
           Your payment didn't go through, please try again!
         </p>
       </Alert>
-      <Link to="/export-grid">
+      <Link to="/initiate-payment">
       <div class="d-flex justify-content-center">
       <button className="mt-2">
           Home
