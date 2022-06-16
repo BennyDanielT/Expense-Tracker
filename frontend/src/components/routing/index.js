@@ -10,8 +10,14 @@ import {ViewNotification} from "../notifications/ViewNotification";
 import {EmailNotification} from "../notifications/EmailNotification";
 import {NotificationSettings} from "../notifications/NotificationSettings";
 import Grid from "../ExportData/Grid";
-import {ViewCoupons} from "../CouponManagement/viewCoupons";
-import {ReedemCoupon} from "../CouponManagement/redeemCoupon";
+import CreateSnap from "../ExportData/CreateSnap";
+import ViewSnaps from "../ExportData/ViewSnaps.js";
+import PaymentMethod from "../Payments/PaymentMethod.js";
+import InitiatePayment from "../Payments/InitiatePayment.js";
+import PaymentHistory from "../Payments/PaymentHistory.js";
+import PaymentStatus from "../Payments/PaymentStatus.js";
+import { ViewCoupons } from "../CouponManagement/viewCoupons";
+import { ReedemCoupon } from "../CouponManagement/redeemCoupon";
 import Layout from "../CouponManagement/Layout/Layout";
 import NotFound from "../CouponManagement/notFound";
 import {SideBar} from "../SideBar";
@@ -106,9 +112,7 @@ function Routing() {
                     <Route exact path={routes.createReminder.path}>
                         <CreateReminder/>
                     </Route>
-                    <Route exact path={routes.exportGrid.path}>
-                        <Grid/>
-                    </Route>
+                    
                     <Route exact path={routes.createTag.path}>
                         <CreateEditTag setting="create"/>
                     </Route>
@@ -142,30 +146,32 @@ function Routing() {
                     <Route exact path={routes.expenseAnalysis.path}>
                         <ExpenseAnalysis/>
                     </Route>
-                    {/* <Route exact path={routes.createSnapshot.path}>
-                    <CreateSnapshot/>
-                </Route>
-                <Route exact path={routes.viewSnapshot.path}>
-                    <ViewSnapshot/>
-                </Route>
-                <Route exact path={routes.addPaymentMethod.path}>
-                    <AddMethod/>
-                </Route>
-                <Route exact path={routes.initiatePayment.path}>
-                    <InitiatePayment/>
-                </Route>
-                <Route exact path={routes.paymentStatus.path}>
-                    <PaymentStatus/>
-                </Route>
-                <Route exact path={routes.deleteGroup.path}>
-                    <DeleteGroup/>
-                </Route>
-                <Route exact path={routes.reminders.path}>
-                    <RemindersGrid/>
-                </Route>
-                <Route exact path={routes.paymentHistory.path}>
-                    <PaymentHistory/>
-                </Route> */}
+<Route exact path={routes.exportGrid.path}>
+                        <Grid/>
+                    </Route>
+
+        <Route exact path={routes.createSnapshot.path}>
+          <CreateSnap />
+        </Route>
+
+        <Route exact path={routes.viewSnapshot.path}>
+          <ViewSnaps />
+        </Route>
+        <Route exact path={routes.addPaymentMethod.path}>
+          <PaymentMethod />
+        </Route>
+
+        <Route exact path={routes.initiatePayment.path}>
+          <InitiatePayment />
+        </Route>
+
+        <Route exact path={routes.paymentStatus.path}>
+          <PaymentStatus />
+        </Route>
+
+        <Route exact path={routes.paymentHistory.path}>
+          <PaymentHistory />
+        </Route>
                 </Switch>
             </div>
         </BrowserRouter>
