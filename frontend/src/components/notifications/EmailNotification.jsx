@@ -113,9 +113,7 @@ function EmailNotification() {
             value: 3
         }
     ];
-
-    console.log(values);
-
+    
     const submitEmailNotificationType = (e) => {
         const callErrorFunctions = () => {
             setMainNotificationTypeError("Enter all the form fields to continue!!");

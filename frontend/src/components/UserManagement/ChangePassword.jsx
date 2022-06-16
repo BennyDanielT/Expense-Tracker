@@ -1,5 +1,7 @@
-import { Card, Button, ListGroup } from "react-bootstrap";
+import { Card, Button, ListGroup, Container } from "react-bootstrap";
 import { useState } from "react";
+import Swal from "sweetalert2";
+
 import { Link } from "react-router-dom";
 import Form from "./Utilities/FormHelper";
 import "./Style/main.css";
@@ -47,40 +49,26 @@ function PasswordChanged() {
     const validate = validateforgotPassword();
 
     if (validate) {
-      alert("Reset password link is sent to " + email);
+      Swal.fire("Yay!", "Reset password link is sent to " + email, "success");
       setValidate({});
       setEmail("");
     }
   };
 
   return (
-    <div className="row g-0 auth-wrapper">
-      <div className="col-12 col-md-5 col-lg-6 h-100 auth-background-col">
-        <div className="auth-background-holder"></div>
-        <div className="auth-background-mask"></div>
-      </div>
-
-      <div className="col-12 col-md-7 col-lg-6 auth-main-col text-center">
-        <div className="d-flex flex-column align-content-end">
-          <div className="auth-body mx-auto">
-            <div className="auth-form-container text-start">
-              <form
-                className="auth-form"
-                method="POST"
-                onSubmit={forgotPassword}
-                autoComplete={"off"}
-              >
+    <Container fluid="md">
+      <div className="row g-0 auth-wrapper">
+        <div className="col-12 col-md-7 col-lg-6 auth-main-col text-center">
+          <div className="d-flex flex-column align-content-end">
+            <div className="auth-body mx-auto">
+              <div className="auth-form-container text-start">
                 <div className="text-center">
                   <div className="text-center">
                     {/* <p>Yay! Logging you in to the dashboard✅</p> */}
                     <Card style={{ width: "28rem" }}>
                       <ListGroup variant="flush">
-                        <ListGroup.Item>
-                          Magic Token Verified : {generateString(9)}{" "}
-                        </ListGroup.Item>
-                        <ListGroup.Item>
-                          Logged in at : 13 June 2022, 4:30 AM
-                        </ListGroup.Item>
+                        <ListGroup.Item>Token Verified</ListGroup.Item>
+                        <ListGroup.Item>Logged in at : Today</ListGroup.Item>
                         <ListGroup.Item>
                           Device : Mozilla/5.0 (Macintosh){" "}
                         </ListGroup.Item>
@@ -91,15 +79,12 @@ function PasswordChanged() {
                     </Card>
                   </div>
                 </div>
-              </form>
-
-              <hr />
-              <div className="auth-option text-center pt-2"></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Container>
   );
 }
 

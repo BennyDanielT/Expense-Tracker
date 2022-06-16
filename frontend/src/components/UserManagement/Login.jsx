@@ -1,5 +1,7 @@
 import { Container, Card, Table, Button } from "react-bootstrap";
 import { useState } from "react";
+import Swal from "sweetalert2";
+
 import { Link } from "react-router-dom";
 import Form from "./Utilities/FormHelper";
 import "./Style/main.css";
@@ -45,7 +47,7 @@ function Login() {
       setValidate({});
       setEmail("");
       setPassword("");
-      alert("Successfully Login");
+      Swal.fire("Yay!", "Successfully Login", "success");
     }
   };
 
@@ -58,11 +60,6 @@ function Login() {
   };
   return (
     <div className="row g-0 auth-wrapper">
-      <div className="col-12 col-md-5 col-lg-6 h-100 auth-background-col">
-        <div className="auth-background-holder"></div>
-        <div className="auth-background-mask"></div>
-      </div>
-
       <div className="col-12 col-md-7 col-lg-6 auth-main-col text-center">
         <div className="d-flex flex-column align-content-end">
           <div className="auth-body mx-auto">
