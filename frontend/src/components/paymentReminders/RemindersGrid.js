@@ -129,7 +129,7 @@ export default function RemindersGrid() {
                 {Object.values(json).map(reminder =>
                     <div className="col-sm-10 col-12 col-md-10 col-lg-8 m-2">
 
-                        <div className="p-2 rounded-3  border" style={{backgroundColor: "#a5b4fc"}}>
+                        <div className="p-2 rounded-3  border" style={{backgroundColor: "#ffffff"}}>
                             <Row>
                                 <Col md={3} className="d-none d-md-block pt-4 ">
                                     <img className="w-75" alt="Reminder Icon"
