@@ -46,3 +46,11 @@ body.swal2-height-auto {
 .paypal-link, .razorpay-link, .stripe-link {
     cursor: pointer;
 }
+
+.white-anchor-tag a {
+    color: white;
+}
+
+.white-anchor-tag a:hover {
+    color: white;
+}

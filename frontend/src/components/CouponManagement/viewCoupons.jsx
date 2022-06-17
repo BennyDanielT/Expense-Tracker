@@ -2,6 +2,8 @@ import Header from "./Helpers/header";
 import Meta from "./Helpers/meta";
 import {Button, ButtonGroup, Card, Container,} from "react-bootstrap";
 import {stockData} from "./data/sample-data";
+import {Link} from "react-router-dom";
+import {routes} from "../../constants";
 
 function ViewCoupons() {
     // page content
@@ -10,7 +12,7 @@ function ViewCoupons() {
     return (
         <Container>
             <div>
-                <Meta />
+                <Meta/>
                 <Header description={pageDescription}/>
             </div>
             <div className="stock-container">
@@ -23,12 +25,16 @@ function ViewCoupons() {
                                     <Card.Title>{data.company}</Card.Title>
                                     <Card.Text>{data.description}</Card.Text>
 
-                                    <ButtonGroup aria-label="Basic example">
-                                        <Button href="redeem-coupon" variant="success">
-                                            Show Details
+                                    <ButtonGroup aria-label="Basic example" className="white-anchor-tag">
+                                        <Button variant="success">
+                                            <Link to={routes.redeemCoupon.path}>
+                                                Show Details
+                                            </Link>
                                         </Button>
-                                        <Button href={data.website} variant="primary">
-                                            Visit Website
+                                        <Button variant="primary">
+                                            <a href={data.website} target="_blank">
+                                                Visit Website
+                                            </a>
                                         </Button>
                                     </ButtonGroup>
                                 </Card.Body>
