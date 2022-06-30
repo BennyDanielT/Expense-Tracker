@@ -31,8 +31,8 @@ function ReedemCoupon() {
     return (
         <Container>
             <div>
-                <Meta title={pageTitle}/>
-                <Header head={pageTitle} description={pageDescription}/>
+                <Meta />
+                <Header description={pageDescription}/>
             </div>
             <Carousel variant="dark">
                 <Carousel.Item>
