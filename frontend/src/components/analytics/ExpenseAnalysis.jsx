@@ -64,9 +64,6 @@ function ExpenseAnalysis() {
                 <Grid item xs={12} sm={6} md={4}
                       style={{backgroundColor: "#ffffff", margin: "17px"}}>
 
-                    <Typography gutterBottom variant="h5" component="div">
-                        Group based expenses
-                    </Typography>
                     {Object.values(groupTrends).map(category =>
                         <Grid container
                               direction="row"

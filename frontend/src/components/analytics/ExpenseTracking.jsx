@@ -212,7 +212,7 @@ function ExpenseTracking() {
                       style={{backgroundColor: "#ffffff", margin: "17px"}}>
 
                     <Typography gutterBottom variant="h5" component="div">
-                        Expense Analysis - {trackingMode}
+                        Expense Tracking - {trackingMode}
                     </Typography>
                     {Object.values(analysisData).map(months =>
                         <Grid container
