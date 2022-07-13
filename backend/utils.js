@@ -20,7 +20,7 @@ export const createBucket = async (bucketName) => {
     const {data, error} = await supabase.storage.getBucket(bucketName);
 
     if (error) {
-        const {data, error} = await supabase.storage.createBucket('avatars');
+        const {data, error} = await supabase.storage.createBucket(bucketName);
         if (error) {
             return {error: error};
         }
