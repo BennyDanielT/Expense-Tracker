@@ -197,13 +197,13 @@ export default function InitiatePayment() {
         setMainErrors('Please enter all the fields without errors!');
       } else {
         setMainErrors('');
-        // console.log(values);
+        console.log(values);
         // Swal.fire('Initiated!', 'Your payment has been initiated', 'success');
         // history.push('/add-method');
-        // this.props.history.push({
-        //   pathname: '/add-method',
-        //   state: { values },
-        // });
+        history.push({
+          pathname: '/add-method',
+          state: { values },
+        });
 
         //  window.location.href = 'http://localhost:3000/PaymentMethod' + {amount};
         // import { useNavigate, useParams } from 'react-router-dom';

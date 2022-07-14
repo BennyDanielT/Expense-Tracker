@@ -25,14 +25,16 @@ app.get('/*', function (req, res) {
 });
 
 app.post('/create-payment-intent', async (req, res) => {
-  const items = req.body;
-  let amt = 88800;
-  // const items = JSON.parse(req.body);
-  // console.log(items.amount);
+  const i = req.body;
+  console.log(i.amount);
 
   // Create a PaymentIntent with the order amount and currency
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: amt,
+    amount: 88500,
+    // customer: items.lastName + ',' + items.firstName,
+    // description: items.payFor,
+    // receipt_email: items.email,
+    payment_method: 'Card',
     currency: 'cad',
     automatic_payment_methods: {
       enabled: true,

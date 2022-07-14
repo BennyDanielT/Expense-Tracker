@@ -46,7 +46,7 @@ export default function CheckoutForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    Swal.fire('Initiated!', 'Your payment has been initiated', 'success');
+    // Swal.fire('Initiated!', 'Your payment has been initiated', 'success');
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
@@ -59,11 +59,9 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: 'http://localhost:3000',
-        //  window.location.href = 'http://localhost:3000/payment-history' + {amount};
-        // import { useNavigate, useParams } from 'react-router-dom';
-        // const navigate = useNavigate();
-        // let { amount } = useParams();
+        return_url: 'http://localhost:3000/payment-status',
+        // cancel_url: 'http://localhost:3000/',
+        // return_url: 'http://localhost:3000/payment-history',
       },
     });
 
@@ -79,6 +77,7 @@ export default function CheckoutForm() {
     }
 
     setIsLoading(false);
+    console.log(message);
   };
 
   return (

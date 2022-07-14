@@ -15,11 +15,8 @@ const stripePromise = loadStripe(
 export default function PaymentMethod() {
   const [clientSecret, setClientSecret] = useState('');
 
-  // const navigate = useNavigate();
-  // let { amount } = useParams();
-
-  // const values = this.props.location.state;
-  // console.log(values);
+  const values = useLocation().state.values;
+  console.log(values);
 
   useEffect(() => {
     let headers = new Headers();
@@ -31,7 +28,7 @@ export default function PaymentMethod() {
     fetch('http://localhost:8080/create-payment-intent', {
       method: 'POST',
       headers: headers,
-      body: JSON.stringify({ items: [{ id: 'xl-tshirt' }] }),
+      body: JSON.stringify({ amount:values.amount }),
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
@@ -47,7 +44,7 @@ export default function PaymentMethod() {
 
   return (
     <div className='App'>
-      <div>Hey</div>
+      <div>Hey {JSON.stringify(values)}</div>
       <br></br>
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
@@ -57,45 +54,3 @@ export default function PaymentMethod() {
     </div>
   );
 }
-
-// import {Card} from "react-bootstrap";
-// import {Heading} from "../Heading/Heading";
-// import Swal from "sweetalert2";
-
-// export default function PaymentMethod() {
-
-//     const payPalClick = () => {
-//         Swal.fire(
-//             'PayPal',
-//             'PayPal API integration with the backend will be added here',
-//             'info'
-//         );
-//     };
-
-//     const stripeClick = () => {
-//         Swal.fire(
-//             'Stripe',
-//             'Stripe API integration with the backend will be added here',
-//             'info'
-//         );
-//     };
-
-//     const razorPayClick = () => {
-//         Swal.fire(
-//             'RazorPay',
-//             'RazorPay API integration with the backend will be added here',
-//             'info'
-//         );
-//     };
-
-//     return (
-//         <div className="m-4">
-//             <div className="mb-4">
-//                 <Heading>Add Payment Methods</Heading>
-//             </div>
-//             <Card className="p-4 mb-4 paypal-link" onClick={payPalClick}>PayPal</Card>
-//             <Card className="p-4 mb-4 stripe-link" onClick={stripeClick}>Stripe</Card>
-//             <Card className="p-4 razorpay-link" onClick={razorPayClick}>RazorPay</Card>
-//         </div>
-//     )
-// }
