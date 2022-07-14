@@ -12,6 +12,7 @@ export const userSignup = async (request, response) => {
       last_name: last_name,
       password: password,
     });
+    console.log(user);
     if (user.id) {
       const { data, error } = await supabase.from("profiles").insert([
         {
@@ -38,6 +39,8 @@ export const userSignin = async (request, response) => {
       email: email,
       password: password,
     });
+    console.log(user);
+
     return response.status(200).send({
       user,
     });
