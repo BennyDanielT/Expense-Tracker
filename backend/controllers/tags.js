@@ -50,6 +50,7 @@ export const createTag = async (request, response) => {
         status: 400,
       });
     }
+    console.log("returned");
     return response.status(200).send({
       message: "Created Successfully",
       data: { id: data[0].id },
@@ -122,6 +123,7 @@ export const updateTag = async (request, response) => {
         status: 400,
       });
     }
+    console.log("returned");
     return response.status(200).send({
       message: "Updated Successfully",
       data: data,
@@ -156,6 +158,7 @@ export const deleteTag = async (request, response) => {
             status: 400,
           });
         }
+        console.log("returned");
         return response.status(200).send({
           message: "Deleted Successfully",
           data: data[0],
@@ -205,6 +208,7 @@ export const viewTag = async (request, response) => {
         error: "Requested tag not found",
       });
     } else {
+      console.log("returned");
       return response.status(200).send({
         message: "Tag Details fetched successfully",
         data: data[0],
@@ -231,6 +235,7 @@ export const viewTags = async (request, response) => {
         status: 400,
       });
     }
+    console.log("returned");
     return response.status(200).send({ data: data, status: 200, error: null });
   } catch (e) {
     console.log(e);
@@ -272,3 +277,4 @@ function checkExistance(id) {
 }
 
 // TODO: path 404 not handled
+// TODO: FIX - viewTags should fetch only the ones with the user id

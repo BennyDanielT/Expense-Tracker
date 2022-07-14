@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom";
 import { Table, Button } from "react-bootstrap";
 import { routes } from "../../constants";
 import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { viewTags } from "../../redux/actions";
 
 function ViewTags() {
   const [tags, setTags] = useState([
@@ -46,7 +48,11 @@ function ViewTags() {
       usage: "1",
     },
   ]);
+
   const history = useHistory();
+  const dispatch = useDispatch();
+  const result = dispatch(viewTags());
+  console.log(result);
 
   function showDeleteAlert() {
     Swal.fire({
