@@ -1,7 +1,5 @@
 // https://stackoverflow.com/questions/19183180/how-to-save-an-image-to-localstorage-and-display-it-on-the-next-page
 
-import {useRef} from "react";
-
 export function getBase64Image(img) {
     const canvas = document.createElement("canvas");
     canvas.width = img.width;
@@ -17,14 +15,14 @@ export function getBase64Image(img) {
 export const dummyMembersData = [
     {
         label: "Abhishek",
-        value: "abhishek"
+        value: 1
     },
     {
         label: "Foo",
-        value: "foo"
+        value: 2
     },
     {
         label: "Bar",
-        value: "bar"
+        value: 3
     }
 ];
