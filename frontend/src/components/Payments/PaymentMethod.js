@@ -28,7 +28,8 @@ export default function PaymentMethod() {
     fetch('http://localhost:8080/create-payment-intent', {
       method: 'POST',
       headers: headers,
-      body: JSON.stringify({ amount:values.amount }),
+      body: { amount: values.amount },
+      // body: JSON.stringify({ amount: values.amount }),
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
