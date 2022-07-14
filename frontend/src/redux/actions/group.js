@@ -8,6 +8,8 @@ export const VIEW_GROUP = "VIEW_GROUP";
 export const VIEW_GROUP_RESPONSE = "VIEW_GROUP_RESPONSE";
 export const VIEW_GROUPS = "VIEW_GROUPS";
 export const VIEW_GROUPS_RESPONSE = "VIEW_GROUPS_RESPONSE";
+export const GET_USERS = "GET_USERS";
+export const GET_USERS_RESPONSE = "GET_USERS_RESPONSE";
 
 export const createGroup = (groupData) => ({
     type: CREATE_GROUP,
@@ -58,4 +60,14 @@ export const viewGroupResponse = (response) => ({
     type: VIEW_GROUP_RESPONSE,
     response
 });
+
+export const getUsers = () => ({
+    type: GET_USERS,
+});
+
+export const getUsersResponse = (response) => ({
+    type: GET_USERS_RESPONSE,
+    response
+});
+
 

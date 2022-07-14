@@ -2,7 +2,12 @@ import axios from "axios";
 import {put, takeLatest} from "redux-saga/effects";
 import {
     CREATE_GROUP,
-    createGroupResponse, DELETE_GROUP, EDIT_GROUP, editGroupResponse,
+    createGroupResponse,
+    DELETE_GROUP,
+    EDIT_GROUP,
+    editGroupResponse,
+    GET_USERS,
+    getUsersResponse,
     VIEW_GROUP,
     VIEW_GROUPS,
     viewGroupResponse,
@@ -88,4 +93,20 @@ function* deleteGroup(action) {
 
 export function* deleteGroupSaga() {
     yield takeLatest(DELETE_GROUP, deleteGroup);
+}
+
+function* getUsers(action) {
+    try {
+        const json = yield axios
+            .get(`/api/view-users/`)
+            .then((res) => res.data);
+        yield put(getUsersResponse(json));
+    } catch (err) {
+        showError(err);
+        yield put(getUsersResponse(err));
+    }
+}
+
+export function* getUsersSaga() {
+    yield takeLatest(GET_USERS, getUsers);
 }

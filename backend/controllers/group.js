@@ -123,9 +123,23 @@ export const viewGroup = async (request, response) => {
             .from('group')
             .select('*')
             .eq('id', id);
+
         if (error) {
             return response.status(400).send(error);
         }
+
+        const userResponse = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('user_id', data[0].user_ids[0]);
+
+        if (userResponse.error) {
+            return response.status(400).send(error);
+        }
+
+        delete data[0].user_ids;
+        data[0].users = userResponse.data;
+
         return response.send({success: data});
     } catch (e) {
         return response.status(500).send(errorCodeResponses["500"]);
@@ -136,6 +150,20 @@ export const viewGroups = async (request, response) => {
     try {
         const {data, error} = await supabase
             .from('group')
+            .select('*')
+        if (error) {
+            return response.status(400).send(error);
+        }
+        return response.send({success: data});
+    } catch (e) {
+        return response.status(500).send(errorCodeResponses["500"]);
+    }
+}
+
+export const viewUsers = async (request, response) => {
+    try {
+        const {data, error} = await supabase
+            .from('profiles')
             .select('*')
         if (error) {
             return response.status(400).send(error);

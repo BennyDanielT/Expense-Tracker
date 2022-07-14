@@ -208,7 +208,6 @@ export const showPopup = (type, title, msg, callback = () => {
 
 export const showError = (error) => {
     const status = error.response.status.toString();
-    console.log(error);
     if (status.match("4[0-9][0-9]")) {
         showPopup('error', 'Error', error.response.data.error);
     } else if (status.match("5[0-9][0-9]")) {
@@ -217,3 +216,18 @@ export const showError = (error) => {
         showPopup('error', 'Error', 'An error occurred. Please try again');
     }
 };
+
+export const imgToBase64 = (file, callback) => {
+    let base64String = "";
+    const reader = new FileReader();
+    reader.onload = function () {
+        base64String = reader.result.replace("data:", "")
+            .replace(/^.+,/, "");
+        callback(base64String);
+    }
+    reader.readAsDataURL(file);
+}
+
+export const getUserFullName = (user) => {
+    return user.first_name + " " + user.last_name;
+}
