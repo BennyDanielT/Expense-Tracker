@@ -3,7 +3,7 @@ import {errorCodeResponses, isFieldAbsent} from "../utils.js";
 
 export const createReminder = async (request, response) => {
 
-    const {name, amount, user_ids, desc, date} = request.body;
+    const {name, amount, user_id, desc, date} = request.body;
 
     try {
         const fields = [
@@ -17,7 +17,7 @@ export const createReminder = async (request, response) => {
             },
             {
                 label: "User Id",
-                value: user_ids
+                value: user_id
             },
             {
                 label: "Description",
@@ -38,7 +38,7 @@ export const createReminder = async (request, response) => {
         const {data, error} = await supabase
             .from('reminder')
             .insert([
-                {name, amount, user_ids, desc, date}
+                { name: name, amount: amount, date: date, description: desc, user_id: user_id }
             ]);
 
         if (error) {
@@ -54,7 +54,7 @@ export const createReminder = async (request, response) => {
 
 export const updateReminder = async (request, response) => {
 
-    const {name, amount, user_ids, desc, date} = request.body;
+    const {name, amount, user_id, desc, date} = request.body;
 
     const id = request.params.id;
 
@@ -74,7 +74,7 @@ export const updateReminder = async (request, response) => {
             },
             {
                 label: "User Id",
-                value: user_ids
+                value: user_id
             },
             {
                 label: "Description",
@@ -95,7 +95,7 @@ export const updateReminder = async (request, response) => {
         const {data, error} = await supabase
             .from('reminder')
             .update(
-                {name, amount, user_ids, desc, date}
+                { name: name, amount: amount, date: date, description: desc, user_id: user_id }
             ).match(
                 {id}
             )
