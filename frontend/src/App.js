@@ -3,6 +3,9 @@ import {Routing} from "./components/routing";
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {useEffect} from "react";
+import axios from "axios";
+import {Provider} from "react-redux";
+import {store} from "./redux/store";
 
 function App() {
 
@@ -24,13 +27,22 @@ function App() {
         }
 
         const observer = new MutationObserver(callback)
-        observer.observe(body, options)
+        observer.observe(body, options);
+
+
+        // axios params
+        if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+            axios.defaults.baseURL = "http://localhost:3001/";
+        }
+
     }, []);
 
     return (
         <div className="h-100 d-flex w-100">
-            <Routing/>
-            <ToastContainer/>
+            <Provider store={store}>
+                <Routing/>
+                <ToastContainer/>
+            </Provider>
         </div>
     );
 }

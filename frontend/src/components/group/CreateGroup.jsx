@@ -1,19 +1,18 @@
-import {useId, useState} from "react";
+import {useEffect, useState} from "react";
 import {Button, ButtonGroup, Form} from "react-bootstrap";
 import Select from "react-select";
-import {getLocalStorage, routes, setLocalStorage} from "../../constants";
-import Swal from "sweetalert2";
-import {useHistory} from "react-router-dom";
 import "./group.css";
 import {Heading} from "../Heading/Heading";
 import {dummyMembersData} from "./helpers";
+import {useDispatch, useSelector} from "react-redux";
+import {createGroup} from "../../redux/actions";
+import {isSuccessfulResponse, routes, showPopup} from "../../constants";
+import {useHistory} from "react-router-dom";
 
 function CreateGroup() {
-    const [values, setValues] = useState({name: "", icon: "", type: "home", members: null});
+    const [values, setValues] = useState({name: "", icon: "", type: "home", user_ids: null});
     const [errors, setErrors] = useState({});
     const [mainError, setMainError] = useState("");
-    const history = useHistory();
-    const uniqueId = useId();
 
     const onChangeFunctions = {
         'name': (e) => {
@@ -67,13 +66,32 @@ function CreateGroup() {
                 type: e.target.value
             });
         },
-        'members': (e) => {
+        'user_ids': (e) => {
             setValues({
                 ...values,
-                members: e.map((ele) => ele.value)
+                user_ids: e.map((ele) => ele.value)
             });
         }
     }
+
+    const dispatch = useDispatch();
+
+    const createGroupResponseData = useSelector(
+        (state) => state.group.createGroupResponseData
+    );
+
+    const isCreateGroupResponseReceived = useSelector(
+        (state) => state.group.isCreateGroupResponseReceived
+    );
+
+    const history = useHistory();
+
+    useEffect(() => {
+        if (isSuccessfulResponse(createGroupResponseData)) {
+            showPopup("success", "Success", "Group Successfully Created");
+            history.push(routes.viewGroup.path);
+        }
+    }, [isCreateGroupResponseReceived]);
 
     const submitForm = (e) => {
 
@@ -89,24 +107,10 @@ function CreateGroup() {
                     error = true
                 }
             });
+
             if (!error) {
                 setMainError("");
-                const groups = getLocalStorage("groups")
-                let newGroups = [];
-                if (groups) {
-                    newGroups = JSON.parse(groups);
-                }
-                newGroups.push({[uniqueId]: values});
-                setLocalStorage("groups", JSON.stringify(newGroups));
-                Swal.fire(
-                    'Group Created',
-                    'New Group is created',
-                    'success'
-                ).then((ele) => {
-                    setTimeout(() => {
-                        history.push(routes.group.path);
-                    }, 100);
-                });
+                dispatch(createGroup(values));
             } else {
                 callErrorFunctions();
             }
@@ -146,13 +150,13 @@ function CreateGroup() {
                     <Form.Label>Group Members</Form.Label>
                     <Select
                         isMulti
-                        name="members"
+                        name="user_ids"
                         options={dummyMembersData}
                         className="basic-multi-select"
                         classNamePrefix="select"
-                        onChange={onChangeFunctions['members']}
+                        onChange={onChangeFunctions['user_ids']}
                     />
-                    <div className="errors">{errors['members']}</div>
+                    <div className="errors">{errors['user_ids']}</div>
                 </Form.Group>
 
                 <div className="errors mb-3">{mainError}</div>
