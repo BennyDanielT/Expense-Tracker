@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 export const routes = {
     home: {
         path: "/",
@@ -187,4 +189,31 @@ export const setLocalStorage = (key, value) => {
 
 export const getLocalStorage = (key) => {
     return localStorage.getItem(key);
+};
+
+export const isSuccessfulResponse = (response) => {
+    return response?.success;
+};
+
+export const showPopup = (type, title, msg, callback = () => {
+}) => {
+    Swal.fire(
+        title,
+        msg,
+        type
+    ).then(() => {
+        callback();
+    });
+};
+
+export const showError = (error) => {
+    const status = error.response.status.toString();
+    console.log(error);
+    if (status.match("4[0-9][0-9]")) {
+        showPopup('error', 'Error', error.response.data.error);
+    } else if (status.match("5[0-9][0-9]")) {
+        showPopup('error', 'Error', 'Internal Server Error');
+    } else {
+        showPopup('error', 'Error', 'An error occurred. Please try again');
+    }
 };
