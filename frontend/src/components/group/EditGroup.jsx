@@ -3,9 +3,6 @@ import {Heading} from "../Heading/Heading";
 import {Button, Form} from "react-bootstrap";
 import {useState} from "react";
 import Select from "react-select";
-import {dummyMembersData} from "./helpers";
-import Swal from "sweetalert2";
-import {routes} from "../../constants";
 
 function EditGroup() {
     const location = useLocation();
@@ -91,13 +88,7 @@ function EditGroup() {
             });
             if (!error) {
                 setMainError("");
-                Swal.fire(
-                    'Edit',
-                    'Your group has been been successfully edited',
-                    'success'
-                ).then(() => {
-                    history.push(routes.group.path);
-                })
+                console.log(values);
             } else {
                 callErrorFunctions();
             }
@@ -129,8 +120,7 @@ function EditGroup() {
                     <Select
                         isMulti
                         name="colors"
-                        defaultValue={values.members}
-                        options={dummyMembersData}
+                        // defaultValue={values.members}
                         className="basic-multi-select"
                         classNamePrefix="select"
                         onChange={onChangeFunctions['members']}
