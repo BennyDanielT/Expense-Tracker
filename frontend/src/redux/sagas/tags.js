@@ -16,7 +16,7 @@ import { showError } from "../../constants";
 function* createTag(action) {
   try {
     const json = yield axios
-      .post("/api/create-tag/", action.tagData)
+      .post("http://localhost:3001/api/create-tag/", action.tagData)
       .then((res) => res.data);
     yield put(createTagResponse(json));
   } catch (err) {
@@ -46,7 +46,7 @@ export function* viewTagsSaga() {
 function* viewTag(action) {
   try {
     const json = yield axios
-      .get(`/api/view-tag/${action.id}`)
+      .get(`http://localhost:3001/api/view-tag/${action.id}`)
       .then((res) => res.data);
     yield put(viewTagResponse(json));
   } catch (err) {
