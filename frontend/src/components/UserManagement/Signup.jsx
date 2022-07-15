@@ -79,7 +79,7 @@ export function Signup() {
             {" "}
             <Button variant="primary" type="submit">
               {/* Login function for the sign */}
-              Login
+              Register
             </Button>{" "}
             <br></br> <br></br>
             Don't have an account? <Link to="/login">Login</Link>
