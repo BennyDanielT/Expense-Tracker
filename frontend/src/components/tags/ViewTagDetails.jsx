@@ -86,6 +86,9 @@ function ViewTagDetails() {
       </Card>
       <hr />
       <h3>Related Expenses</h3>
+      {/* {!isViewTagsResponseReceived ? (
+        <Loading />
+      ) : ( */}
       <Table striped bordered hover responsive>
         <thead>
           <tr>
@@ -108,6 +111,7 @@ function ViewTagDetails() {
           ))}
         </tbody>
       </Table>
+      {/* )} */}
     </div>
   );
 }
