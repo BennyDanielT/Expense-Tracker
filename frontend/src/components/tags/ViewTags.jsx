@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Table, Button } from "react-bootstrap";
-import { isSuccessfulResponse, routes } from "../../constants";
+import { routes } from "../../constants";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { viewTags } from "../../redux/actions";
@@ -20,10 +20,6 @@ function ViewTags() {
 
   const isViewTagsResponseReceived = useSelector(
     (state) => state.tag.isViewTagsResponseReceived
-  );
-
-  const prevIsViewTagsResponseReceived = usePrevious(
-    isViewTagsResponseReceived
   );
 
   useEffect(() => {

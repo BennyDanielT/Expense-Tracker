@@ -1,28 +1,104 @@
 import Picker from "emoji-picker-react";
-import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
 import "./tags.css";
+import { createTag, editTag } from "../../redux/actions";
+import { routes } from "../../constants";
+import { usePrevious } from "react-use";
 
 function CreateEditTag({ setting }) {
   const history = useHistory();
+  const location = useLocation();
+  let dispatch = useDispatch();
+
+  const createTagResponseData = useSelector(
+    (state) => state.tag.createTagResponseData
+  );
+
+  const isCreateTagResponseReceived = useSelector(
+    (state) => state.tag.isCreateTagResponseReceived
+  );
+
+  const prevIsCreateTagResponseReceived = usePrevious(
+    isCreateTagResponseReceived
+  );
+
+  useEffect(() => {
+    if (
+      prevIsCreateTagResponseReceived !== undefined &&
+      prevIsCreateTagResponseReceived !== isCreateTagResponseReceived &&
+      isCreateTagResponseReceived
+    ) {
+      if (createTagResponseData.error) {
+        toast(createTagResponseData.message);
+        history.push(routes.viewTags.path);
+      } else {
+        toast(createTagResponseData.message);
+        history.push(routes.viewTags.path);
+      }
+    }
+  }, [isCreateTagResponseReceived]);
+
+  const editTagResponseData = useSelector(
+    (state) => state.tag.editTagResponseData
+  );
+
+  const isEditTagResponseReceived = useSelector(
+    (state) => state.tag.isEditTagResponseReceived
+  );
+
+  const prevIsEditTagResponseReceived = usePrevious(isEditTagResponseReceived);
+
+  useEffect(() => {
+    if (
+      prevIsEditTagResponseReceived !== undefined &&
+      prevIsEditTagResponseReceived !== isEditTagResponseReceived &&
+      isEditTagResponseReceived
+    ) {
+      if (editTagResponseData.error) {
+        toast(editTagResponseData.message);
+        history.push(routes.viewTags.path);
+      } else {
+        toast(editTagResponseData.message);
+        history.push(routes.viewTags.path);
+      }
+    }
+  }, [isEditTagResponseReceived]);
+
+  const isUsersResponseReceived = useSelector(
+    (state) => state.tag.isUsersResponseReceived
+  );
+  const usersResponseData = useSelector((state) => state.tag.usersResponseData);
+
+  useEffect(() => {
+    console.log("--------------");
+    if (usersResponseData) {
+      console.log(usersResponseData);
+      // const array = [];
+      // usersResponseData['success'].forEach((ele) => {
+      //     array.push({label: getUserFullName(ele), value: ele.user_id});
+      // });
+      // setUsers(array);
+    }
+  }, [isUsersResponseReceived]);
+
   const [showPicker, setShowPicker] = useState(false);
   const [mode] = useState(setting);
   const [tagDetails, setTagDetails] = useState({
-    tagId: mode === "edit" ? "110297" : "",
-    name: mode === "edit" ? "Books" : "",
-    description: mode === "edit" ? "Expenses around books and audio books" : "",
-    icon:
-      mode === "edit"
-        ? {
-            unified: "1f975",
-            emoji: "🥵",
-            originalUnified: "1f975",
-            names: ["overheated face", "hot_face"],
-            activeSkinTone: "neutral",
-          }
-        : null,
-    usageCount: mode === "edit" ? 11 : null,
+    id: location.state?.tag?.id || "",
+    name: location.state?.tag?.name || "",
+    description: location.state?.tag?.description || "",
+    icon: location.state?.tag?.icon || {
+      activeSkinTone: "neutral",
+      emoji: "🏷️",
+      names: ["label"],
+      originalUnified: "1f3f7-fe0f",
+      unified: "1f3f7-fe0f",
+    },
+    usage: location.state?.tag?.usage_count || 0,
+    user_id: location.state?.tag?.user_id || 13,
   });
 
   const [tagError, setTagError] = useState(null);
@@ -32,6 +108,7 @@ function CreateEditTag({ setting }) {
 
   const onEmojiClick = (event, emojiObject) => {
     setChosenEmoji(emojiObject);
+    tagDetails.icon = emojiObject;
     setShowPicker(false);
   };
 
@@ -60,14 +137,13 @@ function CreateEditTag({ setting }) {
     if (isError) {
       return;
     }
-    toast(
-      mode === "create"
-        ? "Tag created successfully"
-        : "Tag updated successfully"
-    );
-    setTimeout(() => {
-      history.push("/view-tags");
-    }, 2000);
+
+    if (mode === "create") {
+      dispatch(createTag(tagDetails));
+    } else {
+      dispatch(editTag(tagDetails.id, tagDetails));
+    }
+    console.log(tagDetails);
   };
 
   return (
