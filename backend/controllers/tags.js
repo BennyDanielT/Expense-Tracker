@@ -33,6 +33,9 @@ export const createTag = async (request, response) => {
       });
     }
 
+    const user = supabase.auth.user(); // TODO: get logged in user id
+    console.log(user);
+
     const { data, error } = await supabase.from("tags").insert([
       {
         name: name,
@@ -228,7 +231,11 @@ export const viewTag = async (request, response) => {
 
 export const viewTags = async (request, response) => {
   try {
-    const { data, error } = await supabase.from("tags").select("*");
+    const user = supabase.auth.user(); // TODO: get logged in user id
+    const { data, error } = await supabase
+      .from("tags")
+      .select("*", { count: "exact" });
+    //   .eq("id", id); // use user id here
     if (error) {
       return response.status(400).send({
         error: error,

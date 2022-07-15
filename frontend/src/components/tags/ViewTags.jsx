@@ -96,7 +96,7 @@ function ViewTags() {
               <td>{index + 1}</td>
               <td>{tag.name}</td>
               <td>{tag.icon.emoji}</td>
-              <td>{tag.usage}</td>
+              <td>{tag.usage_count}</td>
               <td>
                 <Button
                   variant="primary"
