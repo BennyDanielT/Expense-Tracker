@@ -1,6 +1,7 @@
 import { Card, Button, ListGroup, Container } from "react-bootstrap";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import moment from "moment";
 
 import { Link } from "react-router-dom";
 import Form from "./Utilities/FormHelper";
@@ -68,7 +69,10 @@ function PasswordChanged() {
                     <Card style={{ width: "28rem" }}>
                       <ListGroup variant="flush">
                         <ListGroup.Item>Token Verified</ListGroup.Item>
-                        <ListGroup.Item>Logged in at : Today</ListGroup.Item>
+                        <ListGroup.Item>
+                          Logged in at :{" "}
+                          {moment().format("DD-MM-YYYY hh:mm:ss")}
+                        </ListGroup.Item>
                         <ListGroup.Item>
                           Device : Mozilla/5.0 (Macintosh){" "}
                         </ListGroup.Item>

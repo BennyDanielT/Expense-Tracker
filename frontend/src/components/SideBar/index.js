@@ -30,7 +30,7 @@ function SideBar() {
               <Link to={routes.register.path}>Register</Link>
             </MenuItem>
             <MenuItem>
-              <Link to={routes.forgotPassword.path}>Forgot Password</Link>
+              <Link to={routes.forgotPassword.path}>Magic Link</Link>
             </MenuItem>
             <MenuItem>
               <Link to={routes.passwordChanged.path}>Change Password</Link>
