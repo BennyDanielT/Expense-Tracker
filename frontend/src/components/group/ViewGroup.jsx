@@ -41,6 +41,7 @@ function ViewGroup() {
         dispatch(viewGroup(id, user().user.identities[0].user_id));
     }, []);
 
+    // show the success message only if view group response is received successfully
     useEffect(() => {
         if (prevIsViewGroupResponseReceived !== isViewGroupResponseReceived && isSuccessfulResponse(viewGroupResponseData)) {
             setCurrentGroup(viewGroupResponseData['success'][0]);

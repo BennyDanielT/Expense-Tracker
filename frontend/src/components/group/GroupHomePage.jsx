@@ -33,6 +33,7 @@ function GroupHomePage() {
         dispatch(viewGroups());
     }, []);
 
+    // show the success message only if view groups response is received successfully
     useEffect(() => {
         if (prevIsViewGroupsResponseReceived !== isViewGroupsResponseReceived && isSuccessfulResponse(viewGroupsResponseData)) {
             const res = [];

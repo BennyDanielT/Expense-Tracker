@@ -34,6 +34,7 @@ function DeleteGroup() {
 
     const prevIsDeleteGroupResponseReceived = usePrevious(isDeleteGroupResponseReceived);
 
+    // show the success message only if delete group response is received successfully
     useEffect(() => {
         if (prevIsDeleteGroupResponseReceived !== undefined && prevIsDeleteGroupResponseReceived !== isDeleteGroupResponseReceived && isSuccessfulResponse(deleteGroupResponseData)) {
             showPopup("success", "Success", "Group Successfully Deleted");

@@ -92,6 +92,7 @@ function EditGroup() {
 
     const prevIsViewGroupResponseReceived = usePrevious(isViewGroupResponseReceived);
 
+    // show the success message only if view group response is received successfully
     useEffect(() => {
         if (prevIsViewGroupResponseReceived !== isViewGroupResponseReceived && isSuccessfulResponse(viewGroupResponseData)) {
             const data = viewGroupResponseData['success'][0];
@@ -131,6 +132,7 @@ function EditGroup() {
 
     const prevIsEditGroupResponseReceived = usePrevious(isEditGroupResponseReceived);
 
+    // show the success message only if edit group response is received successfully
     useEffect(() => {
         if (prevIsEditGroupResponseReceived !== isEditGroupResponseReceived && prevIsEditGroupResponseReceived !== undefined) {
             if (isSuccessfulResponse(editGroupResponseData)) {
