@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteTag, viewTags } from "../../redux/actions";
 import { usePrevious } from "react-use";
+import { Loading } from "../Loading";
 
 function ViewTags() {
   const [tags, setTags] = useState([]);
@@ -108,54 +109,58 @@ function ViewTags() {
           <i className="fas fa-plus"></i>
         </Button>
       </div>
-      <Table striped bordered hover responsive>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Tags</th>
-            <th>Icon</th>
-            <th>Usage</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tags.map((tag, index) => (
-            <tr key={index}>
-              <td>{tag.id}</td>
-              <td>{tag.name}</td>
-              <td>{tag.icon.emoji}</td>
-              <td>{tag.usage_count}</td>
-              <td>
-                <Button
-                  variant="primary"
-                  onClick={() => {
-                    onClickFunctions["viewTag"](tag);
-                  }}
-                >
-                  <span className="fas fa-eye"></span>
-                </Button>
-                <Button
-                  variant="warning"
-                  className="mx-2"
-                  onClick={() => {
-                    onClickFunctions["editTag"](tag);
-                  }}
-                >
-                  <span className="fas fa-pen"></span>
-                </Button>
-                <Button
-                  variant="danger"
-                  onClick={() => {
-                    onClickFunctions["deleteTag"](tag);
-                  }}
-                >
-                  <span className="fas fa-trash"></span>
-                </Button>
-              </td>
+      {!isViewTagsResponseReceived ? (
+        <Loading />
+      ) : (
+        <Table striped bordered hover responsive>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Tags</th>
+              <th>Icon</th>
+              <th>Usage</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {tags.map((tag, index) => (
+              <tr key={index}>
+                <td>{tag.id}</td>
+                <td>{tag.name}</td>
+                <td>{tag.icon.emoji}</td>
+                <td>{tag.usage_count}</td>
+                <td>
+                  <Button
+                    variant="primary"
+                    onClick={() => {
+                      onClickFunctions["viewTag"](tag);
+                    }}
+                  >
+                    <span className="fas fa-eye"></span>
+                  </Button>
+                  <Button
+                    variant="warning"
+                    className="mx-2"
+                    onClick={() => {
+                      onClickFunctions["editTag"](tag);
+                    }}
+                  >
+                    <span className="fas fa-pen"></span>
+                  </Button>
+                  <Button
+                    variant="danger"
+                    onClick={() => {
+                      onClickFunctions["deleteTag"](tag);
+                    }}
+                  >
+                    <span className="fas fa-trash"></span>
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      )}
     </div>
   );
 }
