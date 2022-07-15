@@ -1,152 +1,158 @@
 import "./group.css";
 import {Heading} from "../Heading/Heading";
 import {Button, Card} from "react-bootstrap";
-import {useHistory} from "react-router-dom";
-import {routes} from "../../constants";
+import {useHistory, useParams} from "react-router-dom";
+import {getUserFullName, isSuccessfulResponse, routes} from "../../constants";
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {viewGroup} from "../../redux/actions";
+import {usePrevious} from "react-use";
+import {Loading} from "../Loading";
 
 function ViewGroup() {
 
-    const json = {
-        results: [
-            {
-                "id": 1,
-                "name": "Group 1",
-                "expenses": {
-                    "owed": "10.5",
-                    "details": [
-                        {
-                            "milk": {
-                                "lent": "2.10"
-                            }
-                        },
-                        {
-                            "birthday": {
-                                "owed": "12.15"
-                            }
-                        }
-                    ]
-                },
-                "members": ["foo", "bar"]
-            },
-            {
-                "id": 2,
-                "name": "Group 2",
-                "expenses": {
-                    "lent": "20.5",
-                    "details": [
-                        {
-                            "chocolates": {
-                                "lent": "10.5"
-                            }
-                        },
-                        {
-                            "biscuits": {
-                                "lent": "5"
-                            }
-                        },
-                        {
-                            "chips": {
-                                "lent": "5"
-                            }
-                        }
-                    ]
-                },
-                "members": ["foo"]
-            },
-            {
-                "id": 3,
-                "name": "Group 3",
-                "expenses": {},
-                "members": ["bar"]
-            },
-        ]
-    };
+    // const json = {
+    //     results: [
+    //         {
+    //             "id": 1,
+    //             "name": "Group 1",
+    //             "expenses": {
+    //                 "owed": "10.5",
+    //                 "details": [
+    //                     {
+    //                         "milk": {
+    //                             "lent": "2.10"
+    //                         }
+    //                     },
+    //                     {
+    //                         "birthday": {
+    //                             "owed": "12.15"
+    //                         }
+    //                     }
+    //                 ]
+    //             },
+    //             "members": ["foo", "bar"]
+    //         },
+    //         {
+    //             "id": 2,
+    //             "name": "Group 2",
+    //             "expenses": {
+    //                 "lent": "20.5",
+    //                 "details": [
+    //                     {
+    //                         "chocolates": {
+    //                             "lent": "10.5"
+    //                         }
+    //                     },
+    //                     {
+    //                         "biscuits": {
+    //                             "lent": "5"
+    //                         }
+    //                     },
+    //                     {
+    //                         "chips": {
+    //                             "lent": "5"
+    //                         }
+    //                     }
+    //                 ]
+    //             },
+    //             "members": ["foo"]
+    //         },
+    //         {
+    //             "id": 3,
+    //             "name": "Group 3",
+    //             "expenses": {},
+    //             "members": ["bar"]
+    //         },
+    //     ]
+    // };
 
     const history = useHistory();
 
+    const {id} = useParams();
+
+    const dispatch = useDispatch();
+
+    const viewGroupResponseData = useSelector(
+        (state) => state.group.viewGroupResponseData
+    );
+
+    const isViewGroupResponseReceived = useSelector(
+        (state) => state.group.isViewGroupResponseReceived
+    );
+
+    const prevIsViewGroupResponseReceived = usePrevious(isViewGroupResponseReceived);
+
+    const [currentGroup, setCurrentGroup] = useState({});
+
+    useEffect(() => {
+        dispatch(viewGroup(id, "4e8eea9b-2526-41e6-ad70-469e14b6d9a7"));
+    }, []);
+
+    useEffect(() => {
+        if (prevIsViewGroupResponseReceived !== isViewGroupResponseReceived && isSuccessfulResponse(viewGroupResponseData)) {
+            setCurrentGroup(viewGroupResponseData['success'][0]);
+        }
+    }, [isViewGroupResponseReceived]);
+
     const editGroup = (currentGroup) => {
-        history.push({pathname: routes.editGroup.path, state: currentGroup});
+        history.push({pathname: routes.editGroup.path.split(":")[0] + currentGroup.id});
     };
 
     const deleteGroup = (currentGroup) => {
-        history.push({pathname: routes.deleteGroup.path, state: currentGroup});
+        history.push({pathname: routes.deleteGroup.path.split(":")[0] + currentGroup.id});
     };
 
+    console.log(currentGroup);
 
     return (
         <div className="view-group">
             <Heading>View Group</Heading>
             <h2 className="mt-4 text-center">Members and Expenses</h2>
             <div className="m-5">
-                {json.results.map((result) => {
-                    return (
-                        <Card key={result.id} className="p-2 mb-3">
-                            <div className="d-flex flex-row justify-content-between p-3">
-                                <div>
-                                    <div><h4>{result.name}</h4></div>
-                                    <div>
-                                        <div>Current Group Members</div>
-                                        <ul>
-                                            {result.members.map((member) => {
-                                                return (
-                                                    <li key={member}>{member}</li>
-                                                )
-                                            })}
-                                        </ul>
-                                    </div>
+                {!isViewGroupResponseReceived ? <Loading/> :
+                    <Card className="p-2 mb-3">
+                        <div className="d-flex flex-row justify-content-between p-3">
+                            <div>
+                                <div className="d-flex justify-content-between">
+                                    <div><h4>{currentGroup.name}</h4></div>
+                                    <div><img src={`data:image/jpeg;base64, ${currentGroup.icon}`} alt="group"
+                                              width={40} height={40}/></div>
                                 </div>
                                 <div>
-                                    {/*{!result.expenses.owed && !result.expenses.lent ? "" :*/}
-                                    {/*    <div>*/}
-                                    {/*        <div className="mt-2 mb-2">*/}
-                                    {/*            <b>Detailed Report</b>*/}
-                                    {/*        </div>*/}
-                                    {/*        <div className="mb-3">*/}
-                                    {/*            {result.expenses?.details?.map((ele, index) => {*/}
-                                    {/*                const key = <span><b>{Object.keys(ele)[0]}</b></span>*/}
-                                    {/*                let value;*/}
-                                    {/*                if (Object.values(ele)[0].lent) {*/}
-                                    {/*                    value = <span>+{Object.values(ele)[0].lent}</span>*/}
-                                    {/*                } else {*/}
-                                    {/*                    value = <span>-{Object.values(ele)[0].owed}</span>*/}
-                                    {/*                }*/}
-
-                                    {/*                return (*/}
-                                    {/*                    <div key={index} className="d-flex justify-content-between">*/}
-                                    {/*                        <div style={{marginRight: "10px !important"}}>*/}
-                                    {/*                            {key}*/}
-                                    {/*                        </div>*/}
-                                    {/*                        <div>*/}
-                                    {/*                            {value}*/}
-                                    {/*                        </div>*/}
-                                    {/*                    </div>*/}
-                                    {/*                )*/}
-                                    {/*            })}*/}
-                                    {/*        </div>*/}
-                                    {/*    </div>*/}
-                                    {/*}*/}
-                                    <div>{!result.expenses.owed && !result.expenses.lent ?
-                                        <div className="settled-up">{"Hurray !! All settled up"}</div> :
-                                        result.expenses.owed ?
-                                            <div className="owed">{"Expense owed : " + result.expenses.owed}</div> :
-                                            <div
-                                                className="lent">{"Expense lent : " + result.expenses.lent}</div>}</div>
+                                    <div>Current Group Members</div>
+                                    <ul>
+                                        {currentGroup?.users?.map((user) => {
+                                            return (
+                                                <li key={user.id}>{getUserFullName(user)}</li>
+                                            )
+                                        })}
+                                    </ul>
                                 </div>
                             </div>
-                            <div className="d-flex justify-content-evenly">
-                                <Button className="mt-2" onClick={() => history.push(routes.settleExpense.path)}>
-                                    Settle Up
-                                </Button>
-                                <Button className="mt-2" onClick={() => editGroup(result)}>
-                                    Edit Group
-                                </Button>
-                                <Button className="mt-2" onClick={() => deleteGroup(result)}>
-                                    Delete Group
-                                </Button>
+                            <div>
+                                <div>{!currentGroup?.expenses?.lent.length && !currentGroup?.expenses?.owed.length ?
+                                    <div className="settled-up">{"Hurray !! All settled up"}</div> :
+                                    currentGroup?.expenses?.owed.length ?
+                                        <div
+                                            className="owed">{"Expense owed : " + currentGroup?.expenses?.owed.map((ele) => ele.amount).reduce((ele, ind) => ele + ind)}</div> :
+                                        <div
+                                            className="lent">{"Expense lent : " + currentGroup?.expenses?.lent.map((ele) => ele.amount).reduce((ele, ind) => ele + ind)}</div>}</div>
                             </div>
-                        </Card>
-                    )
-                })}
+                        </div>
+                        <div className="d-flex justify-content-evenly">
+                            <Button className="mt-2" onClick={() => history.push(routes.settleExpense.path)}>
+                                Settle Up
+                            </Button>
+                            <Button className="mt-2" onClick={() => editGroup(currentGroup)}>
+                                Edit Group
+                            </Button>
+                            <Button className="mt-2" onClick={() => deleteGroup(currentGroup)}>
+                                Delete Group
+                            </Button>
+                        </div>
+                    </Card>
+                }
             </div>
         </div>
     )

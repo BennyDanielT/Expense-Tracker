@@ -117,15 +117,50 @@ export const deleteGroup = async (request, response) => {
 
 export const viewGroup = async (request, response) => {
     const id = request.params.id;
+    const user = request.query.user;
 
     try {
         const {data, error} = await supabase
             .from('group')
             .select('*')
             .eq('id', id);
+
         if (error) {
             return response.status(400).send(error);
         }
+        const userResponse = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('user_id', data[0].user_ids[0]);
+
+        if (userResponse.error) {
+            return response.status(400).send(error);
+        }
+
+        delete data[0].user_ids;
+        data[0].users = userResponse.data;
+
+        const expenseResponse = await supabase
+            .from('expense')
+            .select('*')
+
+        if (expenseResponse.error) {
+            return response.status(400).send(expenseResponse.error);
+        }
+
+        const expenses = {lent: [], owed: []};
+
+        expenseResponse.data.forEach((exp) => {
+           if (exp.user_id === user) {
+               expenses['lent'].push(exp);
+           } else {
+               if (exp.user_ids.includes(user)) {
+                   expenses['owed'].push(exp);
+               }
+           }
+        });
+
+        data[0].expenses = expenses;
         return response.send({success: data});
     } catch (e) {
         return response.status(500).send(errorCodeResponses["500"]);
@@ -136,6 +171,20 @@ export const viewGroups = async (request, response) => {
     try {
         const {data, error} = await supabase
             .from('group')
+            .select('*')
+        if (error) {
+            return response.status(400).send(error);
+        }
+        return response.send({success: data});
+    } catch (e) {
+        return response.status(500).send(errorCodeResponses["500"]);
+    }
+}
+
+export const viewUsers = async (request, response) => {
+    try {
+        const {data, error} = await supabase
+            .from('profiles')
             .select('*')
         if (error) {
             return response.status(400).send(error);
