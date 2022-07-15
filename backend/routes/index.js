@@ -3,6 +3,7 @@ import {createGroup, deleteGroup, updateGroup, viewGroup, viewGroups, viewUsers}
 
 import {getCoupons} from "../controllers/coupons.js";
 import {userSignin, userSignup} from "../controllers/userManagement.js";
+import {createReminder, deleteReminder, updateReminder, viewReminders} from "../controllers/reminders.js";
 
 const router = express.Router();
 
@@ -18,5 +19,10 @@ router.post("/user-signup", userSignup);
 router.get("/get-coupons", getCoupons);
 router.post("/sign-in", userSignin);
 
+router.post("/create-reminder", createReminder);
+router.put("/update-reminder/:id", updateReminder);
+router.delete("/delete-reminder/:id", deleteReminder);
+router.post("/view-reminders", viewReminders);
 
-export {router};
+
+export {router}

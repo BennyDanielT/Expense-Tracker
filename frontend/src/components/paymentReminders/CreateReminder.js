@@ -1,10 +1,13 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {Button, Form} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.css';
 import {useHistory} from "react-router-dom";
-import {routes} from "../../constants";
 import {Alert, Snackbar} from "@mui/material";
 import DatePicker from "react-datepicker";
+import {useDispatch, useSelector} from "react-redux";
+import {createReminder} from "../../redux/actions";
+import {isSuccessfulResponse, routes, showPopup} from "../../constants";
+import {usePrevious} from "react-use";
 
 
 // Reference : https://www.npmjs.com/package/react-datetime-picker
@@ -38,15 +41,42 @@ export default function CreateReminder() {
     };
 
 
+    const dispatch = useDispatch();
+
+    const createReminderResponseData = useSelector(
+        (state) => {
+            return state.reminder.createReminderResponseData
+        }
+    );
+
+    const isCreateReminderResponseReceived = useSelector(
+        (state) => {
+            return state.reminder.isCreateReminderResponseReceived
+        }
+    );
+
+    const prevIsCreateReminderResponseReceived = usePrevious(isCreateReminderResponseReceived);
+
+    useEffect(() => {
+        if (prevIsCreateReminderResponseReceived !== undefined && prevIsCreateReminderResponseReceived !== isCreateReminderResponseReceived) {
+            if (isSuccessfulResponse(createReminderResponseData)) {
+                showPopup("success", "Success", "Payment Reminder Successfully Created");
+                history.push(routes.reminders.path);
+            }
+        }
+    }, [isCreateReminderResponseReceived]);
+
     const handleSubmit = (event) => {
         const form = event.currentTarget;
+        event.preventDefault();
+        event.stopPropagation();
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
         } else {
-            // set validations and navigate to reminders list
-            setSnackbar({message:"Payment Reminder Successfully Created!", severity:"success", visibility:true});
-            history.push(routes.reminders.path)
+            // TODO: Set dynamic user ID
+            dispatch(createReminder({name: reminderName, amount: reminderAmount, user_id: 1, desc: reminderDesc, date: date}));
+            console.log("dispatch completed")
         }
 
         setValidated(true);
