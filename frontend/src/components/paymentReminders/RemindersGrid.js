@@ -9,7 +9,7 @@ import StickyNote from "../../assets/sticky-notes.png";
 import Swal from "sweetalert2";
 import DatePicker from "react-datepicker";
 import {useDispatch, useSelector} from "react-redux";
-import {viewReminders} from "../../redux/actions";
+import {createReminder, deleteReminder, viewReminders} from "../../redux/actions";
 import {usePrevious} from "react-use";
 import moment from "moment";
 
@@ -41,7 +41,7 @@ export default function RemindersGrid() {
                 console.log("fetch data",JSON.stringify(viewRemindersResponseData))
                 setRemindersList(viewRemindersResponseData.success.filter(reminder => new Date(reminder.date) > new Date()).map(reminder => {
                     let dateFormatted = reminder
-                    dateFormatted.date = moment(new Date(reminder.date)).format('MMMM Do YYYY, h:mm a')
+                    dateFormatted.formattedDate = moment(new Date(reminder.date)).format('MMMM Do YYYY, h:mm a')
                     return dateFormatted
                 }))
             }
@@ -55,29 +55,31 @@ export default function RemindersGrid() {
     }, []);
 
 
-    const json = {
-        "reminder1": {
-            "name": "Electricity Bill",
-            "amount": "67",
-            "date": "5th June 1:30 PM",
-            "desc": "Reminder description Lorem ipsum dofdlor sit amet, consectetur adipiscing elit."
-        }, "reminder2": {
-            "name": "House Rent",
-            "amount": "405",
-            "date": "9th June 4:20 PM",
-            "desc": "Reminder description Lorem ipsum dofdlor sit amet, consectetur adipiscing elit."
-        }, "reminder3": {
-            "name": "Internet Bill",
-            "amount": "45",
-            "date": "12th June 9:30 AM",
-            "desc": "Reminder description Lorem ipsum dofdlor sit amet, consectetur adipiscing elit."
-        }, "reminder4": {
-            "name": "NSPower",
-            "amount": "120",
-            "date": "7th July 7:00 PM",
-            "desc": "Reminder description Lorem ipsum dofdlor sit amet, consectetur adipiscing elit."
+
+    const deleteReminderResponseData = useSelector(
+        (state) => {
+            return state.reminder.deleteReminderResponseData
         }
-    };
+    );
+
+    const isDeleteReminderResponseReceived = useSelector(
+        (state) => {
+            return state.reminder.isDeleteReminderResponseReceived
+        }
+    );
+
+    const prevIsDeleteReminderResponseReceived = usePrevious(isDeleteReminderResponseReceived);
+
+    useEffect(() => {
+        if (prevIsDeleteReminderResponseReceived !== undefined && prevIsDeleteReminderResponseReceived !== isDeleteReminderResponseReceived) {
+            if (isSuccessfulResponse(deleteReminderResponseData)) {
+                showPopup("success", "Success", "Payment Reminder Successfully Deleted!");
+                // history.replace(routes.reminders.path);
+                window.location.reload();
+            }
+        }
+    }, [isDeleteReminderResponseReceived]);
+
 
     const history = useHistory();
 
@@ -107,7 +109,7 @@ export default function RemindersGrid() {
         setSnackbar({message: "Payment Reminder Successfully Modified!", severity: "success", visibility: true});
     }
 
-    function showDeleteAlert() {
+    function showDeleteAlert(id) {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -118,7 +120,9 @@ export default function RemindersGrid() {
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire("Deleted!", "Payment Reminder has been deleted.", "success");
+                console.log("delete",id)
+                dispatch(deleteReminder(id));
+                // Swal.fire("Deleted!", "Payment Reminder has been deleted.", "success");
             }
         });
     }
@@ -147,10 +151,10 @@ export default function RemindersGrid() {
         const form = event.currentTarget;
         event.preventDefault();
         if (form.checkValidity() === false) {
-
             event.stopPropagation();
         } else {
             // set validations and navigate to reminders list
+            // TODO: EDIT
             handleClose();
             Swal.fire("Payment Reminder Changed!", "Payment Reminder has been successfully updated.", "success");
 
@@ -168,6 +172,9 @@ export default function RemindersGrid() {
                     onClick={() => history.push(routes.createReminder.path)}>Create Reminder
                 </Button>
             </Row>
+            <Row className="text-center" hidden={remindersList.length!==0}>
+                <label> No reminders found, please create a new Payment Reminder! </label>
+            </Row>
             <Row className=" m-0 ps-0 pe-0 pe-sm-5 ps-sm-5 pt-2 text-black justify-content-center container-fluid">
                 {remindersList.map(reminder =>
                     <div className="col-sm-10 col-12 col-md-10 col-lg-8 m-2">
@@ -181,7 +188,7 @@ export default function RemindersGrid() {
                                 <Col className="p-3">
                                     <Stack gap={1}>
                                         <Row style={{fontSize: 20, fontWeight: "bold"}}>
-                                            <Col>{reminder.date}</Col>
+                                            <Col>{reminder.formattedDate}</Col>
                                             <Col className="text-end"> ${reminder.amount}</Col>
 
                                         </Row>
@@ -189,7 +196,9 @@ export default function RemindersGrid() {
                                         <div>{reminder.desc}</div>
                                         <Stack direction="horizontal" className="justify-content-end" gap={2}>
                                             <Button variant="danger"
-                                                    onClick={showDeleteAlert}>Remove
+                                                    onClick={() => {
+                                                        setCurrentReminder(reminder);
+                                                        showDeleteAlert(reminder.id)}}>Remove
                                             </Button>
                                             <Button
                                                 onClick={() => {
@@ -197,7 +206,7 @@ export default function RemindersGrid() {
                                                     setReminderAmount(reminder.amount);
                                                     setReminderDesc(reminder.desc);
                                                     setReminderName(reminder.name);
-                                                    setDate(new Date("Thu Jun 16 2022 19:37:39 GMT-0300 (Atlantic Daylight Time)"))
+                                                    setDate(new Date(reminder.date))
                                                 }}>Edit
                                             </Button>
                                         </Stack>

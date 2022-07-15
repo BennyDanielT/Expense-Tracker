@@ -112,11 +112,12 @@ export const updateReminder = async (request, response) => {
 
 export const deleteReminder = async (request, response) => {
     const id = request.params.id;
+    console.log("delete id", id)
     try {
         const {data, error} = await supabase
             .from('reminder')
             .delete()
-            .match({id});
+            .match({id: id});
         if (error) {
             return response.status(400).send(error);
         }
