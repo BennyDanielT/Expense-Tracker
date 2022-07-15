@@ -198,7 +198,7 @@ function EditExpense() {
                     <Select
                         isMulti
                         name="colors"
-                        options={dummyGroupData}
+                        options={groups}
                         className="basic-multi-select"
                         classNamePrefix="select"
                         onChange={onChangeFunctions['expenses']}

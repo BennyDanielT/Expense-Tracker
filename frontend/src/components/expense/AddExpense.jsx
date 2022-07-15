@@ -213,6 +213,17 @@ function AddExepnse() {
                     </div>
                     <div className="errors">{errors['type']}</div>
                 </Form.Group>
+                <Form.Group className="mb-3 expense-tag" controlId="expenseType">
+                    <Form.Label>Tag</Form.Label>
+                    <div>
+                        <ButtonGroup aria-label="Group Types" onClick={onChangeFunctions['type']}>
+                            <Button variant="secondary selected" value={values["type"]}>Food</Button>
+                            <Button variant="secondary" value="trip">Trip</Button>
+                            <Button variant="secondary" value="others">Others</Button>
+                        </ButtonGroup>
+                    </div>
+                    <div className="errors">{errors['type']}</div>
+                </Form.Group>
                 <Form.Group className="mb-3" controlId="react-select-3-input">
                     <Form.Label>Available Groups</Form.Label>
                     <Select
