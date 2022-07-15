@@ -231,3 +231,9 @@ export const imgToBase64 = (file, callback) => {
 export const getUserFullName = (user) => {
     return user.first_name + " " + user.last_name;
 }
+
+const base64ToImg = async (url, filename, mimeType) => {
+    const res = await fetch(url);
+    const buf = await res.arrayBuffer();
+    return new File([buf], filename, {type: mimeType});
+};
