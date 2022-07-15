@@ -128,10 +128,12 @@ export const deleteReminder = async (request, response) => {
 }
 
 export const viewReminders = async (request, response) => {
+    const {user_id} = request.body;
     try {
         const {data, error} = await supabase
             .from('reminder')
             .select('*')
+            .eq('user_id', user_id);
         if (error) {
             return response.status(400).send(error);
         }
