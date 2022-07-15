@@ -4,7 +4,9 @@
 
 import { useRef, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
-
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Container from "react-bootstrap/Container";
 import { useAuth } from "../../contexts/Auth.js";
 
 export function Login() {
@@ -35,7 +37,7 @@ export function Login() {
   }
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      {/* <form onSubmit={handleSubmit}>
         <label htmlFor="input-email">Email</label>
         <input id="input-email" type="email" ref={emailRef} />
 
@@ -45,10 +47,40 @@ export function Login() {
         <br />
 
         <button type="submit">Login</button>
-      </form>
-      <p>
-        Don't have an account? <Link to="/signup">Sign Up</Link>
-      </p>
+      </form> */}
+      <Container>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              id="input-email"
+              type="email"
+              placeholder="Enter email"
+              ref={emailRef}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              id="input-password"
+              type="password"
+              placeholder="Password"
+              ref={passwordRef}
+            />
+          </Form.Group>
+
+          <div style={{ textAlign: "center" }}>
+            {" "}
+            <Button variant="primary" type="submit">
+              Login
+            </Button>{" "}
+            <br></br> <br></br>
+            Don't have an account? <Link to="/register">Sign Up</Link>
+          </div>
+        </Form>
+      </Container>
+      <p></p>
     </>
   );
 }
