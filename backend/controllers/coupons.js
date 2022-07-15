@@ -25,7 +25,7 @@ export const getCoupon = async (request, response) => {
       if (error) {
         return response.status(400).send(error);
       }
-      return response.send({ data });
+      return response.json(data);
     } else {
       return response.status(400).send(error);
     }
