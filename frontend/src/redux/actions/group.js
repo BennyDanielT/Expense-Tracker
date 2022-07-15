@@ -2,6 +2,8 @@
  * @author ${abhishekuppe}
  */
 
+// All the CRUD operations related to the group actions such as create, edit, view and delete group are added here
+
 export const CREATE_GROUP = "CREATE_GROUP";
 export const CREATE_GROUP_RESPONSE = "CREATE_GROUP_RESPONSE";
 export const EDIT_GROUP = "EDIT_GROUP";

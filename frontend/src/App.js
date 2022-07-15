@@ -28,6 +28,7 @@ function App() {
             })
         }
 
+        // Observing body tag changes for sweetalert2
         const observer = new MutationObserver(callback)
         observer.observe(body, options);
 

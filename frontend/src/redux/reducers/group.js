@@ -17,6 +17,7 @@ import {
     VIEW_GROUPS_RESPONSE
 } from "../actions";
 
+// Setting initial state of the reducer
 const initialState = {
     viewGroupResponseData: {},
     isViewGroupResponseReceived: false,
@@ -32,6 +33,7 @@ const initialState = {
     isUsersResponseReceived: false
 };
 
+// All the CRUD operations related to the group reducers such as create, edit, view and delete group are added here
 const group = (state = initialState, action) => {
     switch (action.type) {
         case CREATE_GROUP: {

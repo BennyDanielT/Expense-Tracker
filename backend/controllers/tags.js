@@ -1,6 +1,9 @@
 import { supabase } from "../models/index.js";
 import { errorCodeResponses, isFieldAbsent } from "../utils.js";
 
+// business logic to create a tag using supabase connection
+// it validates the request body sent to it before it is processed
+// error handling is also managed
 export const createTag = async (request, response) => {
   let name = request.body.name;
   let user_id = request.body.user_id;
@@ -70,6 +73,9 @@ export const createTag = async (request, response) => {
   }
 };
 
+// business logic to update a tag using supabase
+// it validates the request body sent to it before it is processed
+// error handling is also managed
 export const updateTag = async (request, response) => {
   let name = request.body.name;
   let user_id = request.body.user_id;
@@ -143,6 +149,10 @@ export const updateTag = async (request, response) => {
   }
 };
 
+// business logic to delete a tag using supabase connection
+// it validates the request body sent to it before it is processed
+// it also checks if the tag which is to be deleted exists or not
+// error handling is also managed
 export const deleteTag = async (request, response) => {
   const id = request.params.id;
 
@@ -188,6 +198,10 @@ export const deleteTag = async (request, response) => {
   }
 };
 
+// business logic to view a tag using supabase connection
+// it validates the request body sent to it before it is processed
+// it also checks if the tag which is to be viewed exists or not
+// error handling is also managed
 export const viewTag = async (request, response) => {
   const id = request.params.id;
 
@@ -229,6 +243,9 @@ export const viewTag = async (request, response) => {
   }
 };
 
+// business logic to fetch all the tags associated to a specific user using supabase connection
+// it validates the request body sent to it before it is processed
+// error handling is also managed
 export const viewTags = async (request, response) => {
   try {
     const user = supabase.auth.user(); // TODO: get logged in user id

@@ -15,6 +15,7 @@ import {usePrevious} from "react-use";
 import {Loading} from "../Loading";
 import {useAuth} from "../../contexts/Auth";
 
+// The component purpose is to delete a group with particular id. The user is also prompted with all the details before deleting the group.
 function DeleteGroup() {
 
     const [expenses, setExpenses] = useState();

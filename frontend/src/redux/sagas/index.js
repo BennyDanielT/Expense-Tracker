@@ -7,6 +7,8 @@ import * as groupSaga from "./group";
 import * as reminderSaga from "./reminder";
 import * as tagSaga from "./tags";
 
+
+// combining all the sagas
 function* rootSaga() {
   yield all(
     [
