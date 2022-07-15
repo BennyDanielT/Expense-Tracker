@@ -7,6 +7,7 @@ import {useHistory} from "react-router-dom";
 import "./expense.css";
 import {Heading} from "../Heading/Heading";
 import {dummyGroupData, dummyMembersData} from "./helpers";
+import {AddExepnse, getUsers} from "../../redux/actions";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
@@ -217,7 +218,7 @@ function AddExepnse() {
                     <Select
                         isMulti
                         name="colors"
-                        options={dummyGroupData}
+                        options={users}
                         className="basic-multi-select"
                         classNamePrefix="select"
                         onChange={onChangeFunctions['group_ids']}
