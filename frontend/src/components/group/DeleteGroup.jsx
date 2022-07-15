@@ -1,6 +1,10 @@
+/**
+ * @author ${abhishekuppe}
+ */
+
 import {useHistory, useParams} from "react-router-dom";
 import {Heading} from "../Heading/Heading";
-import "./group.css";
+import "../../css/group.css";
 import {Button, Card} from "react-bootstrap";
 import Swal from "sweetalert2";
 import {getUserFullName, isSuccessfulResponse, routes, showPopup} from "../../constants";
