@@ -110,11 +110,11 @@ function AddExepnse() {
     const dispatch = useDispatch();
 
     const createGroupResponseData = useSelector(
-        (state) => state.group.createGroupResponseData
+        (state) => state.expense.createGroupResponseData
     );
 
     const isCreateGroupResponseReceived = useSelector(
-        (state) => state.group.isCreateGroupResponseReceived
+        (state) => state.expense.isCreateGroupResponseReceived
     );
 
     const history = useHistory();
@@ -125,13 +125,13 @@ function AddExepnse() {
         if (prevIsCreateGroupResponseReceived !== undefined && prevIsCreateGroupResponseReceived !== isCreateGroupResponseReceived) {
             if (isSuccessfulResponse(createGroupResponseData)) {
                 showPopup("success", "Success", "Group Successfully Created");
-                history.push(routes.group.path);
+                history.push(routes.expense.path);
             }
         }
     }, [isCreateGroupResponseReceived]);
 
-    const isUsersResponseReceived = useSelector((state) => state.group.isUsersResponseReceived);
-    const usersResponseData = useSelector((state) => state.group.usersResponseData);
+    const isUsersResponseReceived = useSelector((state) => state.expense.isUsersResponseReceived);
+    const usersResponseData = useSelector((state) => state.expense.usersResponseData);
 
     useEffect(() => {
         dispatch(getUsers());
