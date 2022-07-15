@@ -1,52 +1,46 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Table, Button } from "react-bootstrap";
-import { routes } from "../../constants";
+import { isSuccessfulResponse, routes } from "../../constants";
 import Swal from "sweetalert2";
+import { useDispatch, useSelector } from "react-redux";
+import { viewTags } from "../../redux/actions";
+import { usePrevious } from "react-use";
 
 function ViewTags() {
-  const [tags, setTags] = useState([
-    {
-      tagId: "110297",
-      name: "Books",
-      description: "Expenses around books and audio books",
-      icon: {
-        unified: "1f975",
-        emoji: "📚",
-        originalUnified: "1f975",
-        names: ["overheated face", "hot_face"],
-        activeSkinTone: "neutral",
-      },
-      usage: "11",
-    },
-    {
-      tagId: "110298",
-      name: "Coffee",
-      description: "During lecture breaks",
-      icon: {
-        unified: "1f975",
-        emoji: "☕",
-        originalUnified: "1f975",
-        names: ["overheated face", "hot_face"],
-        activeSkinTone: "neutral",
-      },
-      usage: "10",
-    },
-    {
-      tagId: "110299",
-      name: "Rent",
-      description: "Monthly rental expenses",
-      icon: {
-        unified: "1f975",
-        emoji: "💵",
-        originalUnified: "1f975",
-        names: ["overheated face", "hot_face"],
-        activeSkinTone: "neutral",
-      },
-      usage: "1",
-    },
-  ]);
+  const [tags, setTags] = useState([]);
+
   const history = useHistory();
+
+  let dispatch = useDispatch();
+
+  const viewTagsResponseData = useSelector(
+    (state) => state.tag.viewTagsResponseData
+  );
+
+  const isViewTagsResponseReceived = useSelector(
+    (state) => state.tag.isViewTagsResponseReceived
+  );
+
+  const prevIsViewTagsResponseReceived = usePrevious(
+    isViewTagsResponseReceived
+  );
+
+  useEffect(() => {
+    dispatch(viewTags());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (
+      viewTagsResponseData &&
+      viewTagsResponseData.data &&
+      viewTagsResponseData.data.length
+    ) {
+      setTags(viewTagsResponseData.data);
+    } else {
+      setTags([]);
+    }
+  }, [viewTagsResponseData]);
 
   function showDeleteAlert() {
     Swal.fire({
@@ -102,7 +96,7 @@ function ViewTags() {
               <td>{index + 1}</td>
               <td>{tag.name}</td>
               <td>{tag.icon.emoji}</td>
-              <td>{tag.usage}</td>
+              <td>{tag.usage_count}</td>
               <td>
                 <Button
                   variant="primary"
