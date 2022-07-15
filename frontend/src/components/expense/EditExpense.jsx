@@ -1,13 +1,14 @@
 import {useHistory, useLocation} from "react-router-dom";
 import {Heading} from "../Heading/Heading";
 import {Button, Form} from "react-bootstrap";
-import {useState} from "react";
 import Select from "react-select";
 import {dummyMembersData, dummyGroupData} from "./helpers";
 import Swal from "sweetalert2";
 import {routes} from "../../constants";
+import {useEffect, useState} from "react";
+import {  useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {getUserFullName, imgToBase64, isSuccessfulResponse, routes, showPopup} from "../../constants";
+import {getUserFullName, imgToBase64, isSuccessfulResponse,  showPopup} from "../../constants";
 import {usePrevious} from "react-use";
 import {editExpense, getUsers, viewExpense} from "../../redux/actions";
 
@@ -193,18 +194,7 @@ function EditExpense() {
                     <div className="errors">{errors['icon']}</div>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="react-select-3-input">
-                    <Form.Label>Available Groups</Form.Label>
-                    <Select
-                        isMulti
-                        name="colors"
-                        options={groups}
-                        className="basic-multi-select"
-                        classNamePrefix="select"
-                        onChange={onChangeFunctions['expenses']}
-                    />
-                    <div className="errors">{errors['expenses']}</div>
-                </Form.Group>
+                
 
                 <Form.Group className="mb-3" controlId="react-select-3-input">
                     <Form.Label>Group Members</Form.Label>

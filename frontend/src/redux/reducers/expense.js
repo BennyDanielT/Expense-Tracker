@@ -5,8 +5,6 @@ import {
     DELETE_EXPENSE_RESPONSE,
     EDIT_EXPENSE,
     EDIT_EXPENSE_RESPONSE,
-    GET_USERS,
-    GET_USERS_RESPONSE,
     VIEW_EXPENSE,
     VIEW_EXPENSE_RESPONSE,
     VIEW_EXPENSES,
@@ -24,8 +22,7 @@ const initialState = {
     isDeleteExpenseResponseReceived: false,
     addExpenseResponseData: {},
     isAddExpenseResponseReceived: false,
-    usersResponseData: {},
-    isUsersResponseReceived: false
+
 };
 
 const expense = (state = initialState, action) => {
@@ -95,19 +92,7 @@ const expense = (state = initialState, action) => {
                 deleteExpenseResponseData: action.response
             }
         }
-        case GET_USERS: {
-            return {
-                ...state,
-                isUsersResponseReceived: false
-            }
-        }
-        case GET_USERS_RESPONSE: {
-            return {
-                ...state,
-                isUsersResponseReceived: true,
-                usersResponseData: action.response
-            }
-        }
+        
         default: {
             return {
                 ...state

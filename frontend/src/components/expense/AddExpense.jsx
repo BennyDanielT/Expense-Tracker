@@ -1,4 +1,5 @@
 import {useId, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {Button, ButtonGroup, Form} from "react-bootstrap";
 import Select from "react-select";
 import {getLocalStorage, routes, setLocalStorage} from "../../constants";
@@ -6,9 +7,13 @@ import Swal from "sweetalert2";
 import {useHistory} from "react-router-dom";
 import "./expense.css";
 import {Heading} from "../Heading/Heading";
+import {getUserFullName, imgToBase64,   showPopup} from "../../constants";
+import {usePrevious} from "react-use";
+import {useEffect} from "react";
 import {dummyGroupData, dummyMembersData} from "./helpers";
-import {AddExepnse, getUsers} from "../../redux/actions";
+import {addExpense, getUsers} from "../../redux/actions";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {isSuccessfulResponse} from "../../constants";
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 
@@ -168,7 +173,7 @@ function AddExepnse() {
                 setMainError("");
                 imgToBase64(values['image'], (res) => {
                     values['image'] = res;
-                    dispatch(createGroup(values));
+                    dispatch(addExpense(values));
                 });
             } else {
                 callErrorFunctions();

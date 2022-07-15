@@ -6,8 +6,6 @@ import {
     DELETE_EXPENSE,
     EDIT_EXPENSE,
     editExpenseResponse,
-    GET_USERS,
-    getUsersResponse,
     VIEW_EXPENSE,
     VIEW_EXPENSES,
     viewExpenseResponse,
@@ -95,18 +93,3 @@ export function* deleteExpenseSaga() {
     yield takeLatest(DELETE_EXPENSE, deleteExpense);
 }
 
-function* getUsers(action) {
-    try {
-        const json = yield axios
-            .get(`/api/view-users/`)
-            .then((res) => res.data);
-        yield put(getUsersResponse(json));
-    } catch (err) {
-        showError(err);
-        yield put(getUsersResponse(err));
-    }
-}
-
-export function* getUsersSaga() {
-    yield takeLatest(GET_USERS, getUsers);
-}

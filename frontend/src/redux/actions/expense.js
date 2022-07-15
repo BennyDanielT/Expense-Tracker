@@ -8,67 +8,59 @@ export const VIEW_EXPENSE = "VIEW_EXPENSE";
 export const VIEW_EXPENSE_RESPONSE = "VIEW_EXPENSE_RESPONSE";
 export const VIEW_EXPENSES = "VIEW_EXPENSES";
 export const VIEW_EXPENSES_RESPONSE = "VIEW_EXPENSES_RESPONSE";
-export const GET_USERS = "GET_USERS";
-export const GET_USERS_RESPONSE = "GET_USERS_RESPONSE";
 
-export const createGroup = (groupData) => ({
+
+export const addExpense = (groupData) => ({
     type: ADD_EXPENSE,
     groupData
 });
 
-export const createGroupResponse = (response) => ({
+export const addExpenseResponse = (response) => ({
     type: ADD_EXPENSE_RESPONSE,
     response
 });
 
-export const editGroup = (id, groupData) => ({
+export const editExpense = (id, groupData) => ({
     type: EDIT_EXPENSE,
     id,
     groupData
 });
 
-export const editGroupResponse = (response) => ({
+export const editExpenseResponse = (response) => ({
     type: EDIT_EXPENSE_RESPONSE,
     response
 });
 
-export const deleteGroup = (id) => ({
+export const deleteExpense = (id) => ({
     type: DELETE_EXPENSE,
     id
 });
 
-export const deleteGroupResponse = (response) => ({
+export const deleteExpenseResponse = (response) => ({
     type: DELETE_EXPENSE_RESPONSE,
     response
 });
 
-export const viewGroups = () => ({
+export const viewExpenses = () => ({
     type: VIEW_EXPENSES
 });
 
-export const viewGroupsResponse = (response) => ({
+export const viewExpensesResponse = (response) => ({
     type: VIEW_EXPENSES_RESPONSE,
     response
 });
 
-export const viewGroup = (id, user) => ({
+export const viewExpense = (id, user) => ({
     type: VIEW_EXPENSE,
     id,
     user
 });
 
-export const viewGroupResponse = (response) => ({
+export const viewExpenseResponse = (response) => ({
     type: VIEW_EXPENSE_RESPONSE,
     response
 });
 
-export const getUsers = () => ({
-    type: GET_USERS,
-});
 
-export const getUsersResponse = (response) => ({
-    type: GET_USERS_RESPONSE,
-    response
-});
 
 
