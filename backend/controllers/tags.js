@@ -285,3 +285,5 @@ function checkExistance(id) {
 
 // TODO: path 404 not handled
 // TODO: FIX - viewTags should fetch only the ones with the user id
+// TODO: check if the tag name exists already or not, while creating a new tag
+// TODO: edit tag "name" should not be editable

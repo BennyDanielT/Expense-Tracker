@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Table, Button } from "react-bootstrap";
-import { isSuccessfulResponse, routes } from "../../constants";
+import { routes } from "../../constants";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
-import { viewTags } from "../../redux/actions";
+import { deleteTag, viewTags } from "../../redux/actions";
 import { usePrevious } from "react-use";
 
 function ViewTags() {
@@ -14,16 +14,14 @@ function ViewTags() {
 
   let dispatch = useDispatch();
 
+  // View Tags request and processing
+
   const viewTagsResponseData = useSelector(
     (state) => state.tag.viewTagsResponseData
   );
 
   const isViewTagsResponseReceived = useSelector(
     (state) => state.tag.isViewTagsResponseReceived
-  );
-
-  const prevIsViewTagsResponseReceived = usePrevious(
-    isViewTagsResponseReceived
   );
 
   useEffect(() => {
@@ -42,21 +40,37 @@ function ViewTags() {
     }
   }, [viewTagsResponseData]);
 
-  function showDeleteAlert() {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
+  // Delete tag request and processing
+
+  const deleteTagResponseData = useSelector(
+    (state) => state.tag.deleteTagResponseData
+  );
+
+  const isDeleteTagResponseReceived = useSelector(
+    (state) => state.tag.isDeleteTagResponseReceived
+  );
+
+  const prevIsDeleteTagResponseReceived = usePrevious(
+    isDeleteTagResponseReceived
+  );
+
+  useEffect(() => {
+    if (
+      prevIsDeleteTagResponseReceived !== undefined &&
+      isDeleteTagResponseReceived
+    ) {
+      if (deleteTagResponseData.error) {
+        Swal.fire("Failure", deleteTagResponseData.message, "failure");
+      } else {
         Swal.fire("Deleted!", "Tag has been deleted.", "success");
+        setTags(
+          tags.filter((tag) => {
+            return tag.id != deleteTagResponseData.data.id;
+          })
+        );
       }
-    });
-  }
+    }
+  }, [isDeleteTagResponseReceived]);
 
   const onClickFunctions = {
     viewTag: (tag) => {
@@ -65,7 +79,21 @@ function ViewTags() {
     editTag: (tag) => {
       history.push(routes.editTag.path, { tag });
     },
-    deleteTag: () => {},
+    deleteTag: (tag) => {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(deleteTag(tag.id));
+        }
+      });
+    },
   };
 
   return (
@@ -93,7 +121,7 @@ function ViewTags() {
         <tbody>
           {tags.map((tag, index) => (
             <tr key={index}>
-              <td>{index + 1}</td>
+              <td>{tag.id}</td>
               <td>{tag.name}</td>
               <td>{tag.icon.emoji}</td>
               <td>{tag.usage_count}</td>
@@ -115,7 +143,12 @@ function ViewTags() {
                 >
                   <span className="fas fa-pen"></span>
                 </Button>
-                <Button variant="danger" onClick={showDeleteAlert}>
+                <Button
+                  variant="danger"
+                  onClick={() => {
+                    onClickFunctions["deleteTag"](tag);
+                  }}
+                >
                   <span className="fas fa-trash"></span>
                 </Button>
               </td>

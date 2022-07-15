@@ -4,6 +4,7 @@ import {
   CREATE_TAG,
   createTagResponse,
   DELETE_TAG,
+  deleteTagResponse,
   EDIT_TAG,
   editTagResponse,
   VIEW_TAG,
@@ -80,10 +81,10 @@ function* deleteTag(action) {
     const json = yield axios
       .delete(`/api/delete-tag/${action.id}`)
       .then((res) => res.data);
-    yield put(editTagResponse(json));
+    yield put(deleteTagResponse(json));
   } catch (err) {
     showError(err);
-    yield put(editTagResponse(err));
+    yield put(deleteTagResponse(err));
   }
 }
 
