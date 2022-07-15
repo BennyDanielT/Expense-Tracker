@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Form, Row, Col, Container } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import "./receipts.css";
+import "../../css/receipts.css";
 
 function AddNewReceipt() {
   // State

@@ -1,4 +1,4 @@
-import "./expense.css";
+import "../../css/expense.css";
 import {Heading} from "../Heading/Heading";
 import {Button, Card} from "react-bootstrap";
 import {useHistory} from "react-router-dom";

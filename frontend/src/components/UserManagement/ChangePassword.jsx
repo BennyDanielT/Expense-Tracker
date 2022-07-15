@@ -5,7 +5,7 @@ import moment from "moment";
 
 import { Link } from "react-router-dom";
 import Form from "./Utilities/FormHelper";
-import "./Style/main.css";
+import "../../css/user_management.css";
 function PasswordChanged() {
   const [email, setEmail] = useState("");
   const [validate, setValidate] = useState({});

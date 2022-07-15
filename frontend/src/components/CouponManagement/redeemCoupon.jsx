@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Footer from "./Helpers/footer";
 import Menu from "./Helpers/menu";
 import Meta from "./Helpers/meta";
-import "./style.css";
+import "../../css/coupon.css";
 import {
   Container,
   Row,

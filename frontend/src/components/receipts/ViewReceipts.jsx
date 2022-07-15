@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, Row, Col, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import "../receipts/receipts.css";
+import "../../css/receipts.css";
 
 function ViewReceipts() {
   const history = useHistory();

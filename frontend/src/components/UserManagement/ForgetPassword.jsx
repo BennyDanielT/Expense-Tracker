@@ -5,7 +5,7 @@ import { useAuth } from "../../contexts/Auth.js";
 
 import { Link } from "react-router-dom";
 import Form from "./Utilities/FormHelper";
-import "./Style/main.css";
+import "../../css/user_management.css";
 function ForgotPassword() {
   const { forgetPassword } = useAuth();
 

@@ -1,7 +1,7 @@
 import React from "react";
 import {Table} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
-import "../ExportData/Grid.css";
+import "../../css/Grid.css";
 
 const ref = React.createRef();
 

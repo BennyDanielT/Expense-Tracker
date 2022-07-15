@@ -2,7 +2,7 @@ import {useState} from "react";
 import {routes} from "../../constants";
 import {Button, Form} from "react-bootstrap";
 import {useHistory} from "react-router-dom";
-import "./expense.css";
+import "../../css/expense.css";
 import {Heading} from "../Heading/Heading";
 
 function ExpenseHomePage() {

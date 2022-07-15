@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import "./tags.css";
+import "../../css/tags.css";
 import { createTag, editTag } from "../../redux/actions";
 import { routes } from "../../constants";
 import { usePrevious } from "react-use";
