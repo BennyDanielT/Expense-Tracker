@@ -1,6 +1,10 @@
+/**
+ * @author ${abhishekuppe}
+ */
+
 import {useHistory, useParams} from "react-router-dom";
 import {Heading} from "../Heading/Heading";
-import "./group.css";
+import "../../css/group.css";
 import {Button, Card} from "react-bootstrap";
 import Swal from "sweetalert2";
 import {getUserFullName, isSuccessfulResponse, routes, showPopup} from "../../constants";
@@ -11,6 +15,7 @@ import {usePrevious} from "react-use";
 import {Loading} from "../Loading";
 import {useAuth} from "../../contexts/Auth";
 
+// The component purpose is to delete a group with particular id. The user is also prompted with all the details before deleting the group.
 function DeleteGroup() {
 
     const [expenses, setExpenses] = useState();

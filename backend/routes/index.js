@@ -1,6 +1,8 @@
 import express from "express";
 
 import { getCoupons } from "../controllers/coupons.js";
+import { getCoupon } from "../controllers/coupons.js";
+
 import { userSignin, userSignup } from "../controllers/userManagement.js";
 import {
   createReminder,
@@ -63,10 +65,11 @@ router.get("/view-tag/:id", viewTag);
 router.post("/user-signup", userSignup);
 // routing for the coupon management
 router.get("/get-coupons", getCoupons);
+router.get("/get-coupon/:id", getCoupon);
 router.post("/sign-in", userSignin);
 
 router.post("/create-reminder", createReminder);
-router.put("/update-reminder/:id", updateReminder);
+router.put("/edit-reminder", updateReminder);
 router.delete("/delete-reminder/:id", deleteReminder);
 router.post("/view-reminders", viewReminders);
 

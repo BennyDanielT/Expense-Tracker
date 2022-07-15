@@ -1,3 +1,7 @@
+/**
+ * @author ${abhishekuppe}
+ */
+
 import { combineReducers } from "redux";
 import group from "./group";
 import tag from "./tags";

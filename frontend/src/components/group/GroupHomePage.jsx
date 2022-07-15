@@ -1,14 +1,19 @@
+/**
+ * @author ${abhishekuppe}
+ */
+
 import {useEffect, useState} from "react";
 import {isSuccessfulResponse, routes} from "../../constants";
 import {Button, Form} from "react-bootstrap";
 import {useHistory} from "react-router-dom";
-import "./group.css";
+import "../../css/group.css";
 import {Heading} from "../Heading/Heading";
 import {viewGroups} from "../../redux/actions";
 import {useDispatch, useSelector} from "react-redux";
 import {usePrevious} from "react-use";
 import {Loading} from "../Loading";
 
+// The component lists all the groups created by the user.
 function GroupHomePage() {
     const [groups, updateGroups] = useState([]);
 

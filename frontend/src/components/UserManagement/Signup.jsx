@@ -2,6 +2,10 @@
 
 import { useRef, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Container from "react-bootstrap/Container";
+import Swal from "sweetalert2";
 
 import { useAuth } from "../../contexts/Auth.js";
 
@@ -25,7 +29,11 @@ export function Signup() {
     const { error } = await signUp({ email, password });
 
     if (error) {
-      alert("error signing in");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Oops! Atleast 8 characters please",
+      });
     } else {
       // Redirect user to Dashboard
       history.push("/");
@@ -33,7 +41,7 @@ export function Signup() {
   }
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      {/* <form onSubmit={handleSubmit}>
         <label htmlFor="input-email">Email</label>
         <input id="input-email" type="email" ref={emailRef} />
 
@@ -43,10 +51,41 @@ export function Signup() {
         <br />
 
         <button type="submit">Sign up</button>
-      </form>
-      <p>
-        Already have an account? <Link to="/login">Log In</Link>
-      </p>
+      </form> */}
+      <Container>
+        {/* Handles the user signuop for the user */}
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              id="input-email"
+              type="email"
+              placeholder="Enter email"
+              ref={emailRef}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              id="input-password"
+              type="password"
+              placeholder="Password"
+              ref={passwordRef}
+            />
+          </Form.Group>
+
+          <div style={{ textAlign: "center" }}>
+            {" "}
+            <Button variant="primary" type="submit">
+              {/* Login function for the sign */}
+              Register
+            </Button>{" "}
+            <br></br> <br></br>
+            Don't have an account? <Link to="/login">Login</Link>
+          </div>
+        </Form>
+      </Container>
     </>
   );
 }

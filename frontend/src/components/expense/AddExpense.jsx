@@ -5,7 +5,7 @@ import Select from "react-select";
 import {getLocalStorage, routes, setLocalStorage} from "../../constants";
 import Swal from "sweetalert2";
 import {useHistory} from "react-router-dom";
-import "./expense.css";
+import "../../css/expense.css";
 import {Heading} from "../Heading/Heading";
 import {getUserFullName, imgToBase64,   showPopup} from "../../constants";
 import {usePrevious} from "react-use";

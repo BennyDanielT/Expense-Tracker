@@ -2,6 +2,7 @@ import { supabase } from "../models/index.js";
 import { errorCodeResponses, isFieldAbsent } from "../utils.js";
 import * as _ from "lodash";
 
+// Fetch all coupons from the database
 export const getCoupons = async (request, response) => {
   try {
     const { data, error } = await supabase.from("coupons").select("*");
@@ -14,6 +15,7 @@ export const getCoupons = async (request, response) => {
   }
 };
 
+// fetch particular coupons from the database
 export const getCoupon = async (request, response) => {
   try {
     let id = request.params.id.trim();
@@ -25,7 +27,7 @@ export const getCoupon = async (request, response) => {
       if (error) {
         return response.status(400).send(error);
       }
-      return response.send({ data });
+      return response.json(data);
     } else {
       return response.status(400).send(error);
     }

@@ -17,9 +17,8 @@ export const createReminderResponse = (response) => ({
     response
 });
 
-export const editReminder = (id, reminderData) => ({
+export const editReminder = (reminderData) => ({
     type: EDIT_REMINDER,
-    id,
     reminderData
 });
 

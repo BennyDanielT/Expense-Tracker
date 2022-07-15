@@ -1,4 +1,8 @@
-import "./group.css";
+/**
+ * @author ${abhishekuppe}
+ */
+
+import "../../css/group.css";
 import {Heading} from "../Heading/Heading";
 import {Button, Card} from "react-bootstrap";
 import {useHistory, useParams} from "react-router-dom";
@@ -10,6 +14,7 @@ import {usePrevious} from "react-use";
 import {Loading} from "../Loading";
 import {useAuth} from "../../contexts/Auth";
 
+// The component purpose is to view a particular group based on group id.
 function ViewGroup() {
 
     const history = useHistory();

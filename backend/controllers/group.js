@@ -1,6 +1,12 @@
+/**
+ * @author ${abhishekuppe}
+ */
+
 import {supabase} from "../models/index.js";
 import {errorCodeResponses, isFieldAbsent} from "../utils.js";
 
+
+// The controller creates a group in database with based on the group details
 export const createGroup = async (request, response) => {
 
     const {name, type, user_ids, icon} = request.body;
@@ -47,7 +53,7 @@ export const createGroup = async (request, response) => {
     }
 }
 
-
+// The controller updates a group in database with based on the group details
 export const updateGroup = async (request, response) => {
 
     const {name, user_ids, icon} = request.body;
@@ -98,6 +104,7 @@ export const updateGroup = async (request, response) => {
     }
 }
 
+// The controller deletes the group in database with based on the group id
 export const deleteGroup = async (request, response) => {
     const id = request.params.id;
     try {
@@ -115,6 +122,7 @@ export const deleteGroup = async (request, response) => {
     }
 }
 
+// The controller views the group in database with based on the group id
 export const viewGroup = async (request, response) => {
     const id = request.params.id;
     const user = request.query.user;
@@ -167,6 +175,7 @@ export const viewGroup = async (request, response) => {
     }
 }
 
+// The controller view all the groups in database
 export const viewGroups = async (request, response) => {
     try {
         const {data, error} = await supabase
@@ -181,6 +190,7 @@ export const viewGroups = async (request, response) => {
     }
 }
 
+// The controller view all the users in database
 export const viewUsers = async (request, response) => {
     try {
         const {data, error} = await supabase

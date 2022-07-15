@@ -8,6 +8,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {createReminder} from "../../redux/actions";
 import {isSuccessfulResponse, routes, showPopup} from "../../constants";
 import {usePrevious} from "react-use";
+import {useAuth} from "../../contexts/Auth";
+import {supabase} from "../../supabase";
 
 
 // Reference : https://www.npmjs.com/package/react-datetime-picker
@@ -19,7 +21,7 @@ export default function CreateReminder() {
     const [date, setDate] = useState(new Date());
     const [validated, setValidated] = useState(false);
     const [snackbar, setSnackbar] = useState({message:"", severity:"success", visibility:false});
-
+    const {user} = useAuth();
     const history = useHistory();
 
     const handleReminderName = (e) => {
@@ -61,7 +63,7 @@ export default function CreateReminder() {
         if (prevIsCreateReminderResponseReceived !== undefined && prevIsCreateReminderResponseReceived !== isCreateReminderResponseReceived) {
             if (isSuccessfulResponse(createReminderResponseData)) {
                 showPopup("success", "Success", "Payment Reminder Successfully Created");
-                history.push(routes.reminders.path);
+                history.replace(routes.reminders.path);
             }
         }
     }, [isCreateReminderResponseReceived]);
@@ -70,13 +72,14 @@ export default function CreateReminder() {
         const form = event.currentTarget;
         event.preventDefault();
         event.stopPropagation();
-        if (form.checkValidity() === false) {
+        if(date <= new Date()){
+            alert("Reminder cannot be set in past.")
+        }
+        else if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
         } else {
-            // TODO: Set dynamic user ID
-            dispatch(createReminder({name: reminderName, amount: reminderAmount, user_id: 1, desc: reminderDesc, date: date}));
-            console.log("dispatch completed")
+            dispatch(createReminder({name: reminderName, amount: reminderAmount, user_id: user().user.identities[0].user_id, desc: reminderDesc, date: date, email: supabase.auth.user().email}));
         }
 
         setValidated(true);
@@ -85,6 +88,14 @@ export default function CreateReminder() {
 
     const handleChange = (newValue) => {
         setDate(newValue);
+    };
+
+    // Code Reference: https://stackoverflow.com/questions/59826534/react-datepicker-mintime-and-maxtime-not-works
+    const filterPassedTime = (time) => {
+        const currentDate = new Date();
+        const selectedDate = new Date(time);
+
+        return currentDate.getTime() < selectedDate.getTime();
     };
     return (
         <div className="container-fluid col-md-6 col-12 col-sm-10 mt-4 p-4" style={{backgroundColor: 'white'}}>
@@ -139,6 +150,8 @@ export default function CreateReminder() {
                         showTimeSelect
                         selected={date}
                         onChange={setDate}
+                        minDate={new Date()}
+                        filterTime={filterPassedTime}
                         dateFormat="Pp"
                     />
                 </Form.Group>
