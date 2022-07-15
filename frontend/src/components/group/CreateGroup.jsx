@@ -13,6 +13,7 @@ import {getUserFullName, imgToBase64, isSuccessfulResponse, routes, showPopup} f
 import {useHistory} from "react-router-dom";
 import {usePrevious} from "react-use";
 
+// The component purpose is to create a group with all the form details entered by the user
 function CreateGroup() {
     const [values, setValues] = useState({name: "", icon: "", type: "home", user_ids: null});
     const [errors, setErrors] = useState({});

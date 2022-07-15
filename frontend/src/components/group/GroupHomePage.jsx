@@ -13,6 +13,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {usePrevious} from "react-use";
 import {Loading} from "../Loading";
 
+// The component lists all the groups created by the user.
 function GroupHomePage() {
     const [groups, updateGroups] = useState([]);
 

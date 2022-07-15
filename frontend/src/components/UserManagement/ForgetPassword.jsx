@@ -11,7 +11,7 @@ function ForgotPassword() {
 
   const [email, setEmail] = useState("");
   const [validate, setValidate] = useState({});
-
+  // Validates the password after the validation.
   const validateforgotPassword = () => {
     let isValid = true;
 
