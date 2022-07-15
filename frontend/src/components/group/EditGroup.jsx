@@ -12,6 +12,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {usePrevious} from "react-use";
 import {getUserFullName, imgToBase64, isSuccessfulResponse, routes, showPopup} from "../../constants";
 
+// The component purpose is to edit a group with all the form details entered by the user
 function EditGroup() {
     const location = useLocation();
 

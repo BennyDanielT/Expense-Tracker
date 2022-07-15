@@ -4,6 +4,7 @@ export const errorCodeResponses = {
     500: "An error occurred. Please try again!"
 }
 
+// The function check if a field is present or not in a JSON object
 export const isFieldAbsent = (fields) => {
     let fieldAbsent = false;
 
@@ -14,18 +15,4 @@ export const isFieldAbsent = (fields) => {
         }
     }
     return fieldAbsent;
-}
-
-export const createBucket = async (bucketName) => {
-    const {data, error} = await supabase.storage.getBucket(bucketName);
-
-    if (error) {
-        const {data, error} = await supabase.storage.createBucket(bucketName);
-        if (error) {
-            return {error: error};
-        }
-        return {success: data};
-    } else {
-        return {success: data};
-    }
 }
