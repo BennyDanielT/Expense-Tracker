@@ -34,7 +34,6 @@ import {
   editExpense,
   viewExpense,
   viewExpenses,
-  viewUsers,
 } from "../controllers/expense.js";
 
 const router = express.Router();
@@ -53,7 +52,6 @@ router.put("/edit-expense/:id", editExpense);
 router.delete("/delete-expense/:id", deleteExpense);
 router.get("/view-expenses", viewExpenses);
 router.get("/view-expense/:id", viewExpense);
-router.get("/view-users", viewUsers);
 
 // tags routes
 router.post("/create-tag", createTag);

@@ -33,12 +33,12 @@ function AddExepnse() {
             if (!value.length) {
                 setErrors({
                     ...errors,
-                    name: "Group name is a required field"
+                    name: "Expense name is a required field"
                 });
             } else if (value.length > 50) {
                 setErrors({
                     ...errors,
-                    name: "Group name shouldn't be more than 50 characters"
+                    name: "Expense name shouldn't be more than 50 characters"
                 });
             } else {
                 setErrors({
@@ -114,35 +114,37 @@ function AddExepnse() {
 
     const dispatch = useDispatch();
 
-    const createGroupResponseData = useSelector(
-        (state) => state.expense.createGroupResponseData
+    const addExpenseResponseData = useSelector(
+        (state) => state.expense.addExpenseResponseData
     );
 
-    const isCreateGroupResponseReceived = useSelector(
-        (state) => state.expense.isCreateGroupResponseReceived
+    const isAddExpenseResponseReceived = useSelector(
+        (state) => state.expense.isAddExpenseResponseReceived
     );
 
     const history = useHistory();
 
-    const prevIsCreateGroupResponseReceived = usePrevious(isCreateGroupResponseReceived);
+    const prevIsAddExpenseResponseReceived = usePrevious(isAddExpenseResponseReceived);
 
     useEffect(() => {
-        if (prevIsCreateGroupResponseReceived !== undefined && prevIsCreateGroupResponseReceived !== isCreateGroupResponseReceived) {
-            if (isSuccessfulResponse(createGroupResponseData)) {
-                showPopup("success", "Success", "Group Successfully Created");
+        if (prevIsAddExpenseResponseReceived !== undefined && prevIsAddExpenseResponseReceived !== isAddExpenseResponseReceived) {
+            if (isSuccessfulResponse(addExpenseResponseData)) {
+                showPopup("success", "Success", "Expense Successfully Created");
                 history.push(routes.expense.path);
             }
         }
-    }, [isCreateGroupResponseReceived]);
+    }, [isAddExpenseResponseReceived]);
 
     const isUsersResponseReceived = useSelector((state) => state.expense.isUsersResponseReceived);
     const usersResponseData = useSelector((state) => state.expense.usersResponseData);
+
 
     useEffect(() => {
         dispatch(getUsers());
     }, []);
 
     const [users, setUsers] = useState([]);
+    const [groups, setGroups] = useState([]);
 
     useEffect(() => {
         if (isSuccessfulResponse(usersResponseData)) {
@@ -234,12 +236,12 @@ function AddExepnse() {
                     <Select
                         isMulti
                         name="colors"
-                        options={users}
+                        options={groups}
                         className="basic-multi-select"
                         classNamePrefix="select"
-                        onChange={onChangeFunctions['group_ids']}
+                        onChange={onChangeFunctions['groups']}
                     />
-                    <div className="errors">{errors['group_ids']}</div>
+                    <div className="errors">{errors['groups']}</div>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="react-select-3-input">
                     <Form.Label>Group Members</Form.Label>
