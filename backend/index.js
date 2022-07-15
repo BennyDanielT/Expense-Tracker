@@ -2,6 +2,7 @@ import express from "express";
 import bodyparser from "body-parser";
 import cors from "cors";
 import {router} from "./routes/index.js";
+import path from "path";
 
 const PORT = process.env.PORT || 3001;
 
@@ -13,6 +14,14 @@ app.use(bodyparser.urlencoded({extended: false}));
 
 app.use("/api/", router);
 
+// serve react app in backend
+app.use(express.static(path.join('build')))
+app.get("*", function (request, response) {
+    response.sendFile('index.html', {root: path.join('build')})
+});
+
 app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 });
+
+
