@@ -20,7 +20,7 @@ router.get("/get-coupons", getCoupons);
 router.post("/sign-in", userSignin);
 
 router.post("/create-reminder", createReminder);
-router.put("/update-reminder/:id", updateReminder);
+router.put("/edit-reminder", updateReminder);
 router.delete("/delete-reminder/:id", deleteReminder);
 router.post("/view-reminders", viewReminders);
 

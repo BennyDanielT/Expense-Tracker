@@ -9,7 +9,7 @@ import StickyNote from "../../assets/sticky-notes.png";
 import Swal from "sweetalert2";
 import DatePicker from "react-datepicker";
 import {useDispatch, useSelector} from "react-redux";
-import {createReminder, deleteReminder, viewReminders} from "../../redux/actions";
+import {deleteReminder, editReminder, viewReminders} from "../../redux/actions";
 import {usePrevious} from "react-use";
 import moment from "moment";
 
@@ -38,7 +38,6 @@ export default function RemindersGrid() {
         if (prevIsViewRemindersResponseReceived !== undefined && prevIsViewRemindersResponseReceived !== isViewRemindersResponseReceived) {
             if (isSuccessfulResponse(viewRemindersResponseData)) {
                 // showPopup("success", "Success", "Payment Reminder Successfully fetched");
-                console.log("fetch data",JSON.stringify(viewRemindersResponseData))
                 setRemindersList(viewRemindersResponseData.success.filter(reminder => new Date(reminder.date) > new Date()).map(reminder => {
                     let dateFormatted = reminder
                     dateFormatted.formattedDate = moment(new Date(reminder.date)).format('MMMM Do YYYY, h:mm a')
@@ -51,6 +50,7 @@ export default function RemindersGrid() {
 
 
     useEffect(() => {
+        // TODO: Replace with user id
         dispatch(viewReminders({user_id: 1}));
     }, []);
 
@@ -80,16 +80,39 @@ export default function RemindersGrid() {
         }
     }, [isDeleteReminderResponseReceived]);
 
+    const editReminderResponseData = useSelector(
+        (state) => {
+            return state.reminder.editReminderResponseData
+        }
+    );
+
+    const isEditReminderResponseReceived = useSelector(
+        (state) => {
+            return state.reminder.isEditReminderResponseReceived
+        }
+    );
+
+    const prevIsEditReminderResponseReceived = usePrevious(isEditReminderResponseReceived);
+
+    useEffect(() => {
+        if (prevIsEditReminderResponseReceived !== undefined && prevIsEditReminderResponseReceived !== isEditReminderResponseReceived) {
+            if (isSuccessfulResponse(editReminderResponseData)) {
+                showPopup("success", "Success", "Payment Reminder Successfully Modified!");
+                window.location.reload();
+            }
+        }
+    }, [isEditReminderResponseReceived]);
+
 
     const history = useHistory();
 
-    const [editReminder, setEditReminder] = useState({reminder: "", show: false});
+    const [updateReminder, setUpdateReminder] = useState({reminder: "", show: false});
 
-    const handleClose = () => setEditReminder(prevState => {
+    const handleClose = () => setUpdateReminder(prevState => {
         return {reminder: prevState.reminder, show: false}
     });
-    const handleShow = () => setEditReminder(prevState => {
-        return {reminder: prevState.reminder, show: true}
+    const handleShow = (reminder) => setUpdateReminder(prevState => {
+        return {reminder: reminder, show: true}
     });
 
     const [currentReminder, setCurrentReminder] = useState(null)
@@ -105,7 +128,7 @@ export default function RemindersGrid() {
     const handleCreateReminder = () => this.props.history.push('/create-reminder')
 
     function handleEditSuccess() {
-        setEditReminder({reminder: "", show: false});
+        setUpdateReminder({reminder: "", show: false});
         setSnackbar({message: "Payment Reminder Successfully Modified!", severity: "success", visibility: true});
     }
 
@@ -120,9 +143,7 @@ export default function RemindersGrid() {
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log("delete",id)
                 dispatch(deleteReminder(id));
-                // Swal.fire("Deleted!", "Payment Reminder has been deleted.", "success");
             }
         });
     }
@@ -153,10 +174,10 @@ export default function RemindersGrid() {
         if (form.checkValidity() === false) {
             event.stopPropagation();
         } else {
-            // set validations and navigate to reminders list
-            // TODO: EDIT
+            // TODO: EDIT user id
+            dispatch(editReminder({id:updateReminder.reminder.id, name: reminderName, amount: reminderAmount, user_id: 1, desc: reminderDesc, date: date}));
             handleClose();
-            Swal.fire("Payment Reminder Changed!", "Payment Reminder has been successfully updated.", "success");
+            // Swal.fire("Payment Reminder Changed!", "Payment Reminder has been successfully updated.", "success");
 
         }
 
@@ -202,7 +223,7 @@ export default function RemindersGrid() {
                                             </Button>
                                             <Button
                                                 onClick={() => {
-                                                    handleShow();
+                                                    handleShow(reminder);
                                                     setReminderAmount(reminder.amount);
                                                     setReminderDesc(reminder.desc);
                                                     setReminderName(reminder.name);
@@ -241,7 +262,7 @@ export default function RemindersGrid() {
 
             {/* Modify reminder modal*/}
 
-            <Modal size="lg" show={editReminder.show} onHide={handleClose}>
+            <Modal size="lg" show={updateReminder.show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Update Payment Reminder</Modal.Title>
                 </Modal.Header>

@@ -38,7 +38,7 @@ export const createReminder = async (request, response) => {
         const {data, error} = await supabase
             .from('reminder')
             .insert([
-                { name: name, amount: amount, date: date, description: desc, user_id: user_id }
+                { name: name, amount: amount, date: date, desc: desc, user_id: user_id }
             ]);
 
         if (error) {
@@ -54,9 +54,7 @@ export const createReminder = async (request, response) => {
 
 export const updateReminder = async (request, response) => {
 
-    const {name, amount, user_id, desc, date} = request.body;
-
-    const id = request.params.id;
+    const {id, name, amount, user_id, desc, date} = request.body;
 
     try {
         const fields = [
@@ -95,9 +93,9 @@ export const updateReminder = async (request, response) => {
         const {data, error} = await supabase
             .from('reminder')
             .update(
-                { name: name, amount: amount, date: date, description: desc, user_id: user_id }
+                { name: name, amount: amount, date: date, desc: desc, user_id: user_id }
             ).match(
-                {id}
+                {id:id}
             )
 
         if (error) {
@@ -112,7 +110,6 @@ export const updateReminder = async (request, response) => {
 
 export const deleteReminder = async (request, response) => {
     const id = request.params.id;
-    console.log("delete id", id)
     try {
         const {data, error} = await supabase
             .from('reminder')

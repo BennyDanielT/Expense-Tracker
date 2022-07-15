@@ -43,7 +43,7 @@ export function* viewRemindersSaga() {
 function* editReminder(action) {
     try {
         const json = yield axios
-            .put(`/api/edit-reminder/${action.id}`, action.reminderData)
+            .put("/api/edit-reminder/", action.reminderData)
             .then((res) => res.data);
         yield put(editReminderResponse(json));
     } catch (err) {

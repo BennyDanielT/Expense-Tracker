@@ -76,7 +76,6 @@ export default function CreateReminder() {
         } else {
             // TODO: Set dynamic user ID
             dispatch(createReminder({name: reminderName, amount: reminderAmount, user_id: 1, desc: reminderDesc, date: date}));
-            console.log("dispatch completed")
         }
 
         setValidated(true);
