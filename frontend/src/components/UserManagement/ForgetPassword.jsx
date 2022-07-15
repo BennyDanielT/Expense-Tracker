@@ -1,11 +1,14 @@
 import { Container, Card, Table, Button } from "react-bootstrap";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { useAuth } from "../../contexts/Auth.js";
 
 import { Link } from "react-router-dom";
 import Form from "./Utilities/FormHelper";
 import "./Style/main.css";
 function ForgotPassword() {
+  const { forgetPassword } = useAuth();
+
   const [email, setEmail] = useState("");
   const [validate, setValidate] = useState({});
 
@@ -30,12 +33,14 @@ function ForgotPassword() {
     return isValid;
   };
 
-  const forgotPassword = (e) => {
+  const forgotPassword = async (e) => {
     e.preventDefault();
 
     const validate = validateforgotPassword();
 
     if (validate) {
+      const { error } = await forgetPassword(email);
+      console.log(error);
       Swal.fire("Yay!", "Reset password link is sent to " + email, "success");
 
       setValidate({});

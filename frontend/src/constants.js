@@ -10,7 +10,7 @@ export const routes = {
     isAuthenticated: true,
   },
   redeemCoupon: {
-    path: "/redeem-coupon",
+    path: "/redeem-coupon/:id",
     isAuthenticated: true,
   },
   couponRedeemed: {
