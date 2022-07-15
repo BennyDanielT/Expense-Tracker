@@ -53,6 +53,7 @@ export function Signup() {
         <button type="submit">Sign up</button>
       </form> */}
       <Container>
+        {/* Handles the user signuop for the user */}
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
@@ -77,6 +78,7 @@ export function Signup() {
           <div style={{ textAlign: "center" }}>
             {" "}
             <Button variant="primary" type="submit">
+              {/* Login function for the sign */}
               Login
             </Button>{" "}
             <br></br> <br></br>
