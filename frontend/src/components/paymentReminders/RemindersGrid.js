@@ -1,16 +1,59 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import {Col, Container, Form, Modal, Row, Stack} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import {useState} from "react";
-import {routes} from "../../constants";
+import {useEffect, useState} from "react";
+import {isSuccessfulResponse, routes, showPopup} from "../../constants";
 import {useHistory} from "react-router-dom";
 import {Alert, Snackbar} from "@mui/material";
 import StickyNote from "../../assets/sticky-notes.png";
 import Swal from "sweetalert2";
 import DatePicker from "react-datepicker";
+import {useDispatch, useSelector} from "react-redux";
+import {viewReminders} from "../../redux/actions";
+import {usePrevious} from "react-use";
+import moment from "moment";
 
 
 export default function RemindersGrid() {
+
+    const [remindersList, setRemindersList] = useState([]);
+
+    const dispatch = useDispatch();
+
+    const viewRemindersResponseData = useSelector(
+        (state) => {
+            return state.reminder.viewRemindersResponseData
+        }
+    );
+
+    const isViewRemindersResponseReceived = useSelector(
+        (state) => {
+            return state.reminder.isViewRemindersResponseReceived
+        }
+    );
+
+    const prevIsViewRemindersResponseReceived = usePrevious(isViewRemindersResponseReceived);
+
+    useEffect(() => {
+        if (prevIsViewRemindersResponseReceived !== undefined && prevIsViewRemindersResponseReceived !== isViewRemindersResponseReceived) {
+            if (isSuccessfulResponse(viewRemindersResponseData)) {
+                // showPopup("success", "Success", "Payment Reminder Successfully fetched");
+                console.log("fetch data",JSON.stringify(viewRemindersResponseData))
+                setRemindersList(viewRemindersResponseData.success.filter(reminder => new Date(reminder.date) > new Date()).map(reminder => {
+                    let dateFormatted = reminder
+                    dateFormatted.date = moment(new Date(reminder.date)).format('MMMM Do YYYY, h:mm a')
+                    return dateFormatted
+                }))
+            }
+        }
+
+    }, [isViewRemindersResponseReceived]);
+
+
+    useEffect(() => {
+        dispatch(viewReminders({user_id: 1}));
+    }, []);
+
 
     const json = {
         "reminder1": {
@@ -126,7 +169,7 @@ export default function RemindersGrid() {
                 </Button>
             </Row>
             <Row className=" m-0 ps-0 pe-0 pe-sm-5 ps-sm-5 pt-2 text-black justify-content-center container-fluid">
-                {Object.values(json).map(reminder =>
+                {remindersList.map(reminder =>
                     <div className="col-sm-10 col-12 col-md-10 col-lg-8 m-2">
 
                         <div className="p-2 rounded-3  border" style={{backgroundColor: "#ffffff"}}>
