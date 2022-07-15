@@ -179,21 +179,23 @@ function Routing() {
             </Layout>
           </Route>
           <AuthProvider>
-            <Route exact path={routes.login.path}>
-              <Layout>
-                <Login />
-              </Layout>
-            </Route>
-            <Route exact path={routes.register.path}>
-              <Layout>
-                <Signup />
-              </Layout>
-            </Route>
-            <PrivateRoute exact path={routes.dashboard.path}>
-              <Layout>
-                <Dashboard />
-              </Layout>
-            </PrivateRoute>
+            <Switch>
+              <Route exact path={routes.login.path}>
+                <Layout>
+                  <Login />
+                </Layout>
+              </Route>
+              <Route exact path={routes.register.path}>
+                <Layout>
+                  <Signup />
+                </Layout>
+              </Route>
+              <PrivateRoute exact path={routes.dashboard.path}>
+                <Layout>
+                  <Dashboard />
+                </Layout>
+              </PrivateRoute>
+            </Switch>
           </AuthProvider>
           <Route exact path={routes.forgotPassword.path}>
             <Layout>

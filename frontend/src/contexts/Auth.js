@@ -4,9 +4,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { supabase } from "../supabase";
 
 const AuthContext = React.createContext();
-export function useAuth() {
-  return useContext(AuthContext);
-}
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
@@ -44,4 +42,7 @@ export function AuthProvider({ children }) {
       {!loading && children}
     </AuthContext.Provider>
   );
+}
+export function useAuth() {
+  return useContext(AuthContext);
 }
