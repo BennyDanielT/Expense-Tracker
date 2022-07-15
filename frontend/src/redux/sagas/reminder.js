@@ -2,7 +2,7 @@ import axios from "axios";
 import {put, takeLatest} from "redux-saga/effects";
 import {
     CREATE_REMINDER,
-    createReminderResponse, DELETE_REMINDER, EDIT_REMINDER, editReminderResponse,
+    createReminderResponse, DELETE_REMINDER, deleteReminderResponse, EDIT_REMINDER, editReminderResponse,
     VIEW_REMINDERS,
     viewRemindersResponse
 } from "../actions";
@@ -43,7 +43,7 @@ export function* viewRemindersSaga() {
 function* editReminder(action) {
     try {
         const json = yield axios
-            .put(`/api/edit-reminder/${action.id}`, action.reminderData)
+            .put("/api/edit-reminder/", action.reminderData)
             .then((res) => res.data);
         yield put(editReminderResponse(json));
     } catch (err) {
@@ -59,12 +59,12 @@ export function* editReminderSaga() {
 function* deleteReminder(action) {
     try {
         const json = yield axios
-            .delete("/api/delete-reminder/", action.user_id)
+            .delete(`/api/delete-reminder/${action.id}`)
             .then((res) => res.data);
-        yield put(editReminderResponse(json));
+        yield put(deleteReminderResponse(json));
     } catch (err) {
         showError(err);
-        yield put(editReminderResponse(err));
+        yield put(deleteReminderResponse(err));
     }
 }
 
