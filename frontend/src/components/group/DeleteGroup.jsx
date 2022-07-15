@@ -9,6 +9,7 @@ import {deleteGroup, viewGroup} from "../../redux/actions";
 import {useDispatch, useSelector} from "react-redux";
 import {usePrevious} from "react-use";
 import {Loading} from "../Loading";
+import {useAuth} from "../../contexts/Auth";
 
 function DeleteGroup() {
 
@@ -74,8 +75,10 @@ function DeleteGroup() {
 
     const dispatch = useDispatch();
 
+    const {user} = useAuth();
+
     useEffect(() => {
-        dispatch(viewGroup(id, "4e8eea9b-2526-41e6-ad70-469e14b6d9a7"));
+        dispatch(viewGroup(id, user().user.identities[0].user_id));
     }, []);
 
     useEffect(() => {
@@ -86,7 +89,6 @@ function DeleteGroup() {
             let expenses;
             let detailedExpense = '';
 
-            console.log(data);
             if (!data?.expenses?.lent.length && !data?.expenses?.owed.length) {
                 expenses = <div>Hurray !! No expenses</div>
             } else if (data?.expenses?.lent.length) {

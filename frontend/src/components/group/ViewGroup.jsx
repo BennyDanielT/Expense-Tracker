@@ -8,64 +8,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {viewGroup} from "../../redux/actions";
 import {usePrevious} from "react-use";
 import {Loading} from "../Loading";
+import {useAuth} from "../../contexts/Auth";
 
 function ViewGroup() {
-
-    // const json = {
-    //     results: [
-    //         {
-    //             "id": 1,
-    //             "name": "Group 1",
-    //             "expenses": {
-    //                 "owed": "10.5",
-    //                 "details": [
-    //                     {
-    //                         "milk": {
-    //                             "lent": "2.10"
-    //                         }
-    //                     },
-    //                     {
-    //                         "birthday": {
-    //                             "owed": "12.15"
-    //                         }
-    //                     }
-    //                 ]
-    //             },
-    //             "members": ["foo", "bar"]
-    //         },
-    //         {
-    //             "id": 2,
-    //             "name": "Group 2",
-    //             "expenses": {
-    //                 "lent": "20.5",
-    //                 "details": [
-    //                     {
-    //                         "chocolates": {
-    //                             "lent": "10.5"
-    //                         }
-    //                     },
-    //                     {
-    //                         "biscuits": {
-    //                             "lent": "5"
-    //                         }
-    //                     },
-    //                     {
-    //                         "chips": {
-    //                             "lent": "5"
-    //                         }
-    //                     }
-    //                 ]
-    //             },
-    //             "members": ["foo"]
-    //         },
-    //         {
-    //             "id": 3,
-    //             "name": "Group 3",
-    //             "expenses": {},
-    //             "members": ["bar"]
-    //         },
-    //     ]
-    // };
 
     const history = useHistory();
 
@@ -85,8 +30,10 @@ function ViewGroup() {
 
     const [currentGroup, setCurrentGroup] = useState({});
 
+    const {user} = useAuth();
+
     useEffect(() => {
-        dispatch(viewGroup(id, "4e8eea9b-2526-41e6-ad70-469e14b6d9a7"));
+        dispatch(viewGroup(id, user().user.identities[0].user_id));
     }, []);
 
     useEffect(() => {
@@ -102,8 +49,6 @@ function ViewGroup() {
     const deleteGroup = (currentGroup) => {
         history.push({pathname: routes.deleteGroup.path.split(":")[0] + currentGroup.id});
     };
-
-    console.log(currentGroup);
 
     return (
         <div className="view-group">
