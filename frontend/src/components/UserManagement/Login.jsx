@@ -1,6 +1,7 @@
 // src/components/Login.js
 
 // src/components/Login.js
+import Swal from "sweetalert2";
 
 import { useRef, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
@@ -29,9 +30,14 @@ export function Login() {
     const { error } = await signIn({ email, password });
 
     if (error) {
-      alert("error signing in");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Wrong password",
+      });
     } else {
       // Redirect user to Dashboard
+
       history.push("/");
     }
   }
