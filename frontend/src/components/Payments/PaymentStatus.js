@@ -1,11 +1,13 @@
 import { Alert } from 'react-bootstrap';
 import { routes } from '../../constants';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 
 export default function PaymentStatus() {
   const history = useHistory();
   const location = useLocation();
-  const status = 'success';
+  let status = '';
+  let params = useParams();
+  status = params.status;
 
   function Success(props) {
     return (
@@ -46,9 +48,15 @@ export default function PaymentStatus() {
   }
 
   function Message() {
+    if (status == 'success') {
+      return (
+        <div>
+          <Success />
+        </div>
+      );
+    }
     return (
       <div>
-        <Success />
         <Failure />
       </div>
     );
