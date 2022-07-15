@@ -2,7 +2,7 @@ import Header from "./Helpers/header";
 import Footer from "./Helpers/footer";
 import Menu from "./Helpers/menu";
 import Meta from "./Helpers/meta";
-import "./style.css";
+import "../../css/coupon.css";
 import {
     Container,
     Row,

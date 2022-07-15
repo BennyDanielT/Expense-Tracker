@@ -2,7 +2,7 @@ import Header from "./Helpers/header";
 
 import Meta from "./Helpers/meta";
 import {Container, Card, Table} from "react-bootstrap";
-import "./style.css";
+import "../../css/coupon.css";
 
 function CouponRedeemed() {
     // page content

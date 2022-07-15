@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card, Table, Button } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
-import "./tags.css";
+import "../../css/tags.css";
 
 function ViewTagDetails() {
   const [errors, setErrors] = useState({});
