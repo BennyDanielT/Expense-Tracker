@@ -12,12 +12,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {deleteReminder, editReminder, viewReminders} from "../../redux/actions";
 import {usePrevious} from "react-use";
 import moment from "moment";
+import {useAuth} from "../../contexts/Auth";
 
 
 export default function RemindersGrid() {
 
     const [remindersList, setRemindersList] = useState([]);
-
+    const {user} = useAuth();
     const dispatch = useDispatch();
 
     const viewRemindersResponseData = useSelector(
@@ -50,8 +51,7 @@ export default function RemindersGrid() {
 
 
     useEffect(() => {
-        // TODO: Replace with user id
-        dispatch(viewReminders({user_id: 1}));
+        dispatch(viewReminders({user_id: user().user.identities[0].user_id}));
     }, []);
 
 
@@ -174,8 +174,7 @@ export default function RemindersGrid() {
         if (form.checkValidity() === false) {
             event.stopPropagation();
         } else {
-            // TODO: EDIT user id
-            dispatch(editReminder({id:updateReminder.reminder.id, name: reminderName, amount: reminderAmount, user_id: 1, desc: reminderDesc, date: date}));
+            dispatch(editReminder({id:updateReminder.reminder.id, name: reminderName, amount: reminderAmount, user_id: user().user.identities[0].user_id, desc: reminderDesc, date: date}));
             handleClose();
             // Swal.fire("Payment Reminder Changed!", "Payment Reminder has been successfully updated.", "success");
 

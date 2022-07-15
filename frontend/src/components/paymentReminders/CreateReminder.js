@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {createReminder} from "../../redux/actions";
 import {isSuccessfulResponse, routes, showPopup} from "../../constants";
 import {usePrevious} from "react-use";
+import {useAuth} from "../../contexts/Auth";
 
 
 // Reference : https://www.npmjs.com/package/react-datetime-picker
@@ -19,7 +20,7 @@ export default function CreateReminder() {
     const [date, setDate] = useState(new Date());
     const [validated, setValidated] = useState(false);
     const [snackbar, setSnackbar] = useState({message:"", severity:"success", visibility:false});
-
+    const {user} = useAuth();
     const history = useHistory();
 
     const handleReminderName = (e) => {
@@ -74,8 +75,7 @@ export default function CreateReminder() {
             event.preventDefault();
             event.stopPropagation();
         } else {
-            // TODO: Set dynamic user ID
-            dispatch(createReminder({name: reminderName, amount: reminderAmount, user_id: 1, desc: reminderDesc, date: date}));
+            dispatch(createReminder({name: reminderName, amount: reminderAmount, user_id: user().user.identities[0].user_id, desc: reminderDesc, date: date}));
         }
 
         setValidated(true);
