@@ -8,64 +8,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {viewGroup} from "../../redux/actions";
 import {usePrevious} from "react-use";
 import {Loading} from "../Loading";
+import {useAuth} from "../../contexts/Auth";
 
 function ViewGroup() {
-
-    // const json = {
-    //     results: [
-    //         {
-    //             "id": 1,
-    //             "name": "Group 1",
-    //             "expenses": {
-    //                 "owed": "10.5",
-    //                 "details": [
-    //                     {
-    //                         "milk": {
-    //                             "lent": "2.10"
-    //                         }
-    //                     },
-    //                     {
-    //                         "birthday": {
-    //                             "owed": "12.15"
-    //                         }
-    //                     }
-    //                 ]
-    //             },
-    //             "members": ["foo", "bar"]
-    //         },
-    //         {
-    //             "id": 2,
-    //             "name": "Group 2",
-    //             "expenses": {
-    //                 "lent": "20.5",
-    //                 "details": [
-    //                     {
-    //                         "chocolates": {
-    //                             "lent": "10.5"
-    //                         }
-    //                     },
-    //                     {
-    //                         "biscuits": {
-    //                             "lent": "5"
-    //                         }
-    //                     },
-    //                     {
-    //                         "chips": {
-    //                             "lent": "5"
-    //                         }
-    //                     }
-    //                 ]
-    //             },
-    //             "members": ["foo"]
-    //         },
-    //         {
-    //             "id": 3,
-    //             "name": "Group 3",
-    //             "expenses": {},
-    //             "members": ["bar"]
-    //         },
-    //     ]
-    // };
 
     const history = useHistory();
 
@@ -85,8 +30,10 @@ function ViewGroup() {
 
     const [currentGroup, setCurrentGroup] = useState({});
 
+    const {user} = useAuth();
+
     useEffect(() => {
-        dispatch(viewGroup(id));
+        dispatch(viewGroup(id, user().user.identities[0].user_id));
     }, []);
 
     useEffect(() => {
@@ -96,11 +43,11 @@ function ViewGroup() {
     }, [isViewGroupResponseReceived]);
 
     const editGroup = (currentGroup) => {
-        history.push({pathname: routes.editGroup.path.split(":")[0] + currentGroup.id, state: currentGroup.id});
+        history.push({pathname: routes.editGroup.path.split(":")[0] + currentGroup.id});
     };
 
     const deleteGroup = (currentGroup) => {
-        history.push({pathname: routes.deleteGroup.path.split(":")[0] + currentGroup.id, state: currentGroup.id});
+        history.push({pathname: routes.deleteGroup.path.split(":")[0] + currentGroup.id});
     };
 
     return (
@@ -129,12 +76,13 @@ function ViewGroup() {
                                 </div>
                             </div>
                             <div>
-                                {/*<div>{!result.expenses.owed && !result.expenses.lent ?*/}
-                                {/*    <div className="settled-up">{"Hurray !! All settled up"}</div> :*/}
-                                {/*    result.expenses.owed ?*/}
-                                {/*        <div className="owed">{"Expense owed : " + result.expenses.owed}</div> :*/}
-                                {/*        <div*/}
-                                {/*            className="lent">{"Expense lent : " + result.expenses.lent}</div>}</div>*/}
+                                <div>{!currentGroup?.expenses?.lent.length && !currentGroup?.expenses?.owed.length ?
+                                    <div className="settled-up">{"Hurray !! All settled up"}</div> :
+                                    currentGroup?.expenses?.owed.length ?
+                                        <div
+                                            className="owed">{"Expense owed : " + currentGroup?.expenses?.owed.map((ele) => ele.amount).reduce((ele, ind) => ele + ind)}</div> :
+                                        <div
+                                            className="lent">{"Expense lent : " + currentGroup?.expenses?.lent.map((ele) => ele.amount).reduce((ele, ind) => ele + ind)}</div>}</div>
                             </div>
                         </div>
                         <div className="d-flex justify-content-evenly">

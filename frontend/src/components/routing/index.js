@@ -31,7 +31,8 @@ import SuccInvites from "../invite/SuccessfulInvites";
 import FriendsInvited from "../invite/FriendsInvited";
 import {SideBar} from "../SideBar";
 import {Login} from "../UserManagement/Login";
-import {Register} from "../UserManagement/Register";
+import {Signup} from "../UserManagement/Signup";
+import {Dashboard} from "../UserManagement/Dashboard";
 import {ForgotPassword} from "../UserManagement/ForgetPassword";
 import {PasswordChanged} from "../UserManagement/ChangePassword";
 import {CreateEditTag} from "../tags/CreateEditTag";
@@ -47,6 +48,7 @@ import ExpenseAnalysis from "../analytics/ExpenseAnalysis";
 import RemindersGrid from "../paymentReminders/RemindersGrid";
 import CreateReminder from "../paymentReminders/CreateReminder";
 import HomePage from "../HomePage";
+import {PrivateRoute} from "../../components/PrivateRoute.js";
 
 function Routing() {
     return (
@@ -54,294 +56,319 @@ function Routing() {
             <SideBar/>
             <div className="main">
                 <Switch>
-                    <Route exact path={routes.home.path}>
+                    <PrivateRoute exact path={routes.home.path}>
                         <Layout>
                             <HomePage/>
                         </Layout>
-                    </Route>
+                    </PrivateRoute>
 
-                    <Route exact path={routes.viewCoupons.path}>
+                    <PrivateRoute exact path={routes.viewCoupons.path}>
                         <Layout>
                             <ViewCoupons/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.notFound.path}>
+                    </PrivateRoute>
+
+                    <PrivateRoute exact path={routes.notFound.path}>
                         <Layout>
                             <NotFound/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.redeemCoupon.path}>
+                    </PrivateRoute>
+
+                    <PrivateRoute exact path={routes.redeemCoupon.path}>
                         <Layout>
                             <ReedemCoupon/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.couponRedeemed.path}>
+                    </PrivateRoute>
+
+                    <PrivateRoute exact path={routes.couponRedeemed.path}>
                         <Layout>
                             <CouponRedeemed/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.expense.path}>
+                    </PrivateRoute>
+
+                    <PrivateRoute exact path={routes.expense.path}>
                         <Layout>
                             <ExpenseHomePage/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.addExpense.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.addExpense.path}>
                         <Layout>
                             <AddExepnse/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.viewExpense.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.viewExpense.path}>
                         <Layout>
                             <ViewExpense/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.editExpense.path}>
+                    </PrivateRoute>
+
+                    <PrivateRoute exact path={routes.editExpense.path}>
                         <Layout>
                             <EditExpense/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.settleExpense.path}>
+                    </PrivateRoute>
+
+                    <PrivateRoute exact path={routes.settleExpense.path}>
                         <Layout>
                             <SettleExpense/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.inviteFriends.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.inviteFriends.path}>
                         <Layout>
                             <InviteFriends/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.successfullInvites.path}>
+                    </PrivateRoute>
+
+                    <PrivateRoute exact path={routes.successfullInvites.path}>
                         <Layout>
                             <SuccInvites/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.friendsInvited.path}>
+                    </PrivateRoute>
+
+                    <PrivateRoute exact path={routes.friendsInvited.path}>
                         <Layout>
                             <FriendsInvited/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.group.path}>
+                    </PrivateRoute>
+
+                    <PrivateRoute exact path={routes.group.path}>
                         <Layout>
                             <GroupHomePage/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.createGroup.path}>
+                    </PrivateRoute>
+
+                    <PrivateRoute exact path={routes.createGroup.path}>
                         <Layout>
                             <CreateGroup/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.viewGroup.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.viewGroup.path}>
                         <Layout>
                             <ViewGroup/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.editGroup.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.editGroup.path}>
                         <Layout>
                             <EditGroup/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.deleteGroup.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.deleteGroup.path}>
                         <Layout>
                             <DeleteGroup/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.viewNotification.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.viewNotification.path}>
                         <Layout>
                             <ViewNotification/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.viewCoupons.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.viewCoupons.path}>
                         <Layout>
                             <ViewCoupons/>
                         </Layout>
-                    </Route>
+                    </PrivateRoute>
                     <Route exact path={routes.notFound.path}>
                         <Layout>
                             <NotFound/>
                         </Layout>
                     </Route>
-                    <Route exact path={routes.redeemCoupon.path}>
+                    <PrivateRoute exact path={routes.redeemCoupon.path}>
                         <Layout>
                             <ReedemCoupon/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.couponRedeemed.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.couponRedeemed.path}>
                         <Layout>
                             <CouponRedeemed/>
                         </Layout>
-                    </Route>
+                    </PrivateRoute>
 
-                    <Route exact path={routes.group.path}>
+                    <PrivateRoute exact path={routes.group.path}>
                         <Layout>
                             <GroupHomePage/>
                         </Layout>
+                    </PrivateRoute>
 
-                    </Route>
                     <Route exact path={routes.login.path}>
                         <Layout>
                             <Login/>
                         </Layout>
                     </Route>
+
                     <Route exact path={routes.register.path}>
                         <Layout>
-                            <Register/>
+                            <Signup/>
                         </Layout>
                     </Route>
-                    <Route exact path={routes.forgotPassword.path}>
+
+                    <PrivateRoute exact path={routes.dashboard.path}>
+                        <Layout>
+                            <Dashboard/>
+                        </Layout>
+                    </PrivateRoute>
+
+                    <PrivateRoute exact path={routes.forgotPassword.path}>
                         <Layout>
                             <ForgotPassword/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.passwordChanged.path}>
+                    </PrivateRoute>
+
+                    <PrivateRoute exact path={routes.passwordChanged.path}>
                         <Layout>
                             <PasswordChanged/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.createGroup.path}>
+                    </PrivateRoute>
+
+                    <PrivateRoute exact path={routes.createGroup.path}>
                         <Layout>
                             <CreateGroup/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.viewGroup.path}>
+                    </PrivateRoute>
+
+                    <PrivateRoute exact path={routes.viewGroup.path}>
                         <Layout>
                             <ViewGroup/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.editGroup.path}>
+                    </PrivateRoute>
+
+                    <PrivateRoute exact path={routes.editGroup.path}>
                         <Layout>
                             <EditGroup/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.deleteGroup.path}>
+                    </PrivateRoute>
+
+                    <PrivateRoute exact path={routes.deleteGroup.path}>
                         <Layout>
                             <DeleteGroup/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.viewNotification.path}>
+                    </PrivateRoute>
+
+                    <PrivateRoute exact path={routes.viewNotification.path}>
                         <Layout>
                             <ViewNotification/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.emailNotification.path}>
+                    </PrivateRoute>
+
+                    <PrivateRoute exact path={routes.emailNotification.path}>
                         <Layout>
                             <EmailNotification/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.notificationSettings.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.notificationSettings.path}>
                         <Layout>
                             <NotificationSettings/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.reminders.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.reminders.path}>
                         <Layout>
                             <RemindersGrid/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.createReminder.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.createReminder.path}>
                         <Layout>
                             <CreateReminder/>
                         </Layout>
-                    </Route>
+                    </PrivateRoute>
 
-                    <Route exact path={routes.createTag.path}>
+                    <PrivateRoute exact path={routes.createTag.path}>
                         <Layout>
                             <CreateEditTag setting="create"/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.editTag.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.editTag.path}>
                         <Layout>
                             <CreateEditTag setting="edit"/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.viewTagDetails.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.viewTagDetails.path}>
                         <Layout>
                             <ViewTagDetails/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.viewTags.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.viewTags.path}>
                         <Layout>
                             <ViewTags/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.addReceipt.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.addReceipt.path}>
                         <Layout>
                             <AddNewReceipt/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.viewReceiptDetails.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.viewReceiptDetails.path}>
                         <Layout>
                             <ViewReceiptDetails/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.viewReceipts.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.viewReceipts.path}>
                         <Layout>
                             <ViewReceipts/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.analytics.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.analytics.path}>
                         <Layout>
                             <AnalyticsHome/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.expenseTracking.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.expenseTracking.path}>
                         <Layout>
                             <ExpenseTracking/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.spendingTrends.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.spendingTrends.path}>
                         <Layout>
                             <SpendingTrends/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.expenseAnalysis.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.expenseAnalysis.path}>
                         <Layout>
                             <ExpenseAnalysis/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.exportGrid.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.exportGrid.path}>
                         <Layout>
                             <Grid/>
                         </Layout>
-                    </Route>
+                    </PrivateRoute>
 
-                    <Route exact path={routes.createSnapshot.path}>
+                    <PrivateRoute exact path={routes.createSnapshot.path}>
                         <Layout>
                             <CreateSnap/>
                         </Layout>
-                    </Route>
+                    </PrivateRoute>
 
-                    <Route exact path={routes.viewSnapshot.path}>
+                    <PrivateRoute exact path={routes.viewSnapshot.path}>
                         <Layout>
                             <ViewSnaps/>
                         </Layout>
-                    </Route>
-                    <Route exact path={routes.addPaymentMethod.path}>
+                    </PrivateRoute>
+                    <PrivateRoute exact path={routes.addPaymentMethod.path}>
                         <Layout>
                             <PaymentMethod/>
                         </Layout>
-                    </Route>
+                    </PrivateRoute>
 
-                    <Route exact path={routes.initiatePayment.path}>
+                    <PrivateRoute exact path={routes.initiatePayment.path}>
                         <Layout>
                             <InitiatePayment/>
                         </Layout>
-                    </Route>
+                    </PrivateRoute>
 
-                    <Route exact path={routes.paymentStatus.path}>
+                    <PrivateRoute exact path={routes.paymentStatus.path}>
                         <Layout>
                             <PaymentStatus/>
                         </Layout>
-                    </Route>
+                    </PrivateRoute>
 
-                    <Route exact path={routes.paymentHistory.path}>
+                    <PrivateRoute exact path={routes.paymentHistory.path}>
                         <Layout>
                             <PaymentHistory/>
                         </Layout>
-                    </Route>
+                    </PrivateRoute>
                 </Switch>
             </div>
         </BrowserRouter>
-    )
+    );
 }
 
-export {Routing}
+export {Routing};

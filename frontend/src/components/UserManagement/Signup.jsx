@@ -1,18 +1,16 @@
-// src/components/Login.js
-
-// src/components/Login.js
+// src/components/Signup.js
 
 import { useRef, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 
 import { useAuth } from "../../contexts/Auth.js";
 
-export function Login() {
+export function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
 
   // Get signUp function from the auth context
-  const { signIn } = useAuth();
+  const { signUp } = useAuth();
 
   const history = useHistory();
 
@@ -23,8 +21,8 @@ export function Login() {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
-    // Calls `signIn` function from the context
-    const { error } = await signIn({ email, password });
+    // Calls `signUp` function from the context
+    const { error } = await signUp({ email, password });
 
     if (error) {
       alert("error signing in");
@@ -44,10 +42,10 @@ export function Login() {
 
         <br />
 
-        <button type="submit">Login</button>
+        <button type="submit">Sign up</button>
       </form>
       <p>
-        Don't have an account? <Link to="/signup">Sign Up</Link>
+        Already have an account? <Link to="/login">Log In</Link>
       </p>
     </>
   );

@@ -50,7 +50,7 @@ export function* viewGroupsSaga() {
 function* viewGroup(action) {
     try {
         const json = yield axios
-            .get(`/api/view-group/${action.id}`)
+            .get(`/api/view-group/${action.id}?user=${action.user}`)
             .then((res) => res.data);
         yield put(viewGroupResponse(json));
     } catch (err) {
@@ -66,7 +66,7 @@ export function* viewGroupSaga() {
 function* editGroup(action) {
     try {
         const json = yield axios
-            .put(`/api/edit-group/${action.id}`, action.groupData)
+            .put(`/api/update-group/${action.id}`, action.groupData)
             .then((res) => res.data);
         yield put(editGroupResponse(json));
     } catch (err) {

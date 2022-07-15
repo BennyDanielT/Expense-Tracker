@@ -34,7 +34,6 @@ function GroupHomePage() {
             viewGroupsResponseData['success'].forEach((ele) => {
                 res.push({name: ele.name, id: ele.id});
             });
-            console.log(res);
             updateGroups(res);
         }
     }, [isViewGroupsResponseReceived]);
@@ -52,7 +51,7 @@ function GroupHomePage() {
             <div className="current-groups m-4">
                 <div className="mb-4 mt-4"><b>Current Groups</b></div>
                 <div className="groups-list mb-4">
-                    {!isViewGroupsResponseReceived ? <Loading /> :
+                    {!isViewGroupsResponseReceived ? <Loading/> :
                         groups.length ? groups.map((group) => {
                             return (
                                 <div key={group.name} className="m-2">

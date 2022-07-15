@@ -19,45 +19,50 @@ function ViewTagDetails() {
 
   const [expenses, setExpense] = useState([
     {
-      expenseId: "1234",
+      id: "1234",
+      name: "expense_1",
       amount: 1102,
       tag: {
         tagId: "1234",
         name: "some tag",
       },
-      splitType: "equally",
-      distributedBetween: {
-        id: "192873",
-        name: "friend1",
-      },
-    },
-    {
-      expenseId: "1111",
-      amount: 1234,
-      tag: {
-        tagId: "1234",
-        name: "some tag",
-      },
-      splitType: "custom",
-      distributedBetween: {
-        id: "9273",
-        name: "group 1",
-      },
-    },
-    {
-      expenseId: "0998",
-      amount: 876,
-      tag: {
-        tagId: "1234",
-        name: "some tag",
-      },
-      splitType: "equally",
-      distributedBetween: {
-        id: "192873",
-        name: "friend 11",
-      },
+      type: "equally",
+      group_ids: [],
+      user_ids: [111],
     },
   ]);
+
+  // Fetch all related expenses request and processing
+
+  // const deleteTagResponseData = useSelector(
+  //   (state) => state.tag.deleteTagResponseData
+  // );
+
+  // const isDeleteTagResponseReceived = useSelector(
+  //   (state) => state.tag.isDeleteTagResponseReceived
+  // );
+
+  // const prevIsDeleteTagResponseReceived = usePrevious(
+  //   isDeleteTagResponseReceived
+  // );
+
+  // useEffect(() => {
+  //   if (
+  //     prevIsDeleteTagResponseReceived !== undefined &&
+  //     isDeleteTagResponseReceived
+  //   ) {
+  //     if (deleteTagResponseData.error) {
+  //       Swal.fire("Failure", deleteTagResponseData.message, "failure");
+  //     } else {
+  //       Swal.fire("Deleted!", "Tag has been deleted.", "success");
+  //       setTags(
+  //         tags.filter((tag) => {
+  //           return tag.id != deleteTagResponseData.data.id;
+  //         })
+  //       );
+  //     }
+  //   }
+  // }, [isDeleteTagResponseReceived]);
 
   return (
     <div
@@ -81,28 +86,32 @@ function ViewTagDetails() {
       </Card>
       <hr />
       <h3>Related Expenses</h3>
+      {/* {!isViewTagsResponseReceived ? (
+        <Loading />
+      ) : ( */}
       <Table striped bordered hover responsive>
         <thead>
           <tr>
             <th>#</th>
             <th>Expense Id</th>
             <th>Amount</th>
-            <th>Split</th>
-            <th>Distributed Between</th>
+            <th>Type</th>
+            <th>U/G</th>
           </tr>
         </thead>
         <tbody>
           {expenses.map((expense, index) => (
             <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{expense.expenseId}</td>
+              <td>{expense.id}</td>
+              <td>{expense.name}</td>
               <td>{expense.amount}</td>
-              <td>{expense.splitType}</td>
-              <td>{expense.distributedBetween.name}</td>
+              <td>{expense.type}</td>
+              <td>{expense.group_ids.length > 0 ? "G" : "U"}</td>
             </tr>
           ))}
         </tbody>
       </Table>
+      {/* )} */}
     </div>
   );
 }
