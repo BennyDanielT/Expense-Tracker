@@ -1,4 +1,8 @@
-import "./group.css";
+/**
+ * @author ${abhishekuppe}
+ */
+
+import "../../css/group.css";
 import {Heading} from "../Heading/Heading";
 import {Button, Card} from "react-bootstrap";
 import {useHistory, useParams} from "react-router-dom";
