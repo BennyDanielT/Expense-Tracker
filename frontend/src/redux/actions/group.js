@@ -51,9 +51,10 @@ export const viewGroupsResponse = (response) => ({
     response
 });
 
-export const viewGroup = (id) => ({
+export const viewGroup = (id, user) => ({
     type: VIEW_GROUP,
-    id
+    id,
+    user
 });
 
 export const viewGroupResponse = (response) => ({

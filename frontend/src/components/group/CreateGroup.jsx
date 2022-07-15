@@ -92,7 +92,7 @@ function CreateGroup() {
         if (prevIsCreateGroupResponseReceived !== undefined && prevIsCreateGroupResponseReceived !== isCreateGroupResponseReceived) {
             if (isSuccessfulResponse(createGroupResponseData)) {
                 showPopup("success", "Success", "Group Successfully Created");
-                history.push(routes.viewGroup.path);
+                history.push(routes.group.path);
             }
         }
     }, [isCreateGroupResponseReceived]);

@@ -86,7 +86,7 @@ function ViewGroup() {
     const [currentGroup, setCurrentGroup] = useState({});
 
     useEffect(() => {
-        dispatch(viewGroup(id));
+        dispatch(viewGroup(id, "4e8eea9b-2526-41e6-ad70-469e14b6d9a7"));
     }, []);
 
     useEffect(() => {
@@ -96,12 +96,14 @@ function ViewGroup() {
     }, [isViewGroupResponseReceived]);
 
     const editGroup = (currentGroup) => {
-        history.push({pathname: routes.editGroup.path.split(":")[0] + currentGroup.id, state: currentGroup.id});
+        history.push({pathname: routes.editGroup.path.split(":")[0] + currentGroup.id});
     };
 
     const deleteGroup = (currentGroup) => {
-        history.push({pathname: routes.deleteGroup.path.split(":")[0] + currentGroup.id, state: currentGroup.id});
+        history.push({pathname: routes.deleteGroup.path.split(":")[0] + currentGroup.id});
     };
+
+    console.log(currentGroup);
 
     return (
         <div className="view-group">
@@ -129,12 +131,13 @@ function ViewGroup() {
                                 </div>
                             </div>
                             <div>
-                                {/*<div>{!result.expenses.owed && !result.expenses.lent ?*/}
-                                {/*    <div className="settled-up">{"Hurray !! All settled up"}</div> :*/}
-                                {/*    result.expenses.owed ?*/}
-                                {/*        <div className="owed">{"Expense owed : " + result.expenses.owed}</div> :*/}
-                                {/*        <div*/}
-                                {/*            className="lent">{"Expense lent : " + result.expenses.lent}</div>}</div>*/}
+                                <div>{!currentGroup?.expenses?.lent.length && !currentGroup?.expenses?.owed.length ?
+                                    <div className="settled-up">{"Hurray !! All settled up"}</div> :
+                                    currentGroup?.expenses?.owed.length ?
+                                        <div
+                                            className="owed">{"Expense owed : " + currentGroup?.expenses?.owed.map((ele) => ele.amount).reduce((ele, ind) => ele + ind)}</div> :
+                                        <div
+                                            className="lent">{"Expense lent : " + currentGroup?.expenses?.lent.map((ele) => ele.amount).reduce((ele, ind) => ele + ind)}</div>}</div>
                             </div>
                         </div>
                         <div className="d-flex justify-content-evenly">

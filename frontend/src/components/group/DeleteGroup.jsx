@@ -1,29 +1,43 @@
-import {useHistory, useLocation} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {Heading} from "../Heading/Heading";
 import "./group.css";
 import {Button, Card} from "react-bootstrap";
 import Swal from "sweetalert2";
-import {routes} from "../../constants";
+import {getUserFullName, isSuccessfulResponse, routes, showPopup} from "../../constants";
+import {useEffect, useState} from "react";
+import {deleteGroup, viewGroup} from "../../redux/actions";
+import {useDispatch, useSelector} from "react-redux";
+import {usePrevious} from "react-use";
+import {Loading} from "../Loading";
 
 function DeleteGroup() {
-    const location = useLocation();
 
-    const values = location.state;
+    const [expenses, setExpenses] = useState();
+    const [detailedExpenses, setDetailedExpenses] = useState();
 
-    let expenses;
-    if (values.expenses.owed) {
-        expenses = <div>Total Expenses owed : <b>{values.expenses.owed}</b></div>
-    } else if (values.expenses.lent) {
-        expenses = <div>Total Expenses lent : <b>{values.expenses.lent}</b></div>
-    } else {
-        expenses = <div>Hurray !! No expenses</div>
-    }
 
     const history = useHistory();
 
-    const deleteGroup = () => {
+    const isDeleteGroupResponseReceived = useSelector(
+        (state) => state.group.isDeleteGroupResponseReceived
+    );
+
+    const deleteGroupResponseData = useSelector(
+        (state) => state.group.deleteGroupResponseData
+    );
+
+    const prevIsDeleteGroupResponseReceived = usePrevious(isDeleteGroupResponseReceived);
+
+    useEffect(() => {
+        if (prevIsDeleteGroupResponseReceived !== undefined && prevIsDeleteGroupResponseReceived !== isDeleteGroupResponseReceived && isSuccessfulResponse(deleteGroupResponseData)) {
+            showPopup("success", "Success", "Group Successfully Deleted");
+            history.push(routes.group.path);
+        }
+    }, [isDeleteGroupResponseReceived]);
+
+    const deleteGroupPopUp = () => {
         Swal.fire({
-            title: `Are you sure want to delete ${values.name}?`,
+            title: `Are you sure want to delete ${groupDetails?.name}?`,
             text: "You won't be able to revert!",
             icon: 'warning',
             showCancelButton: true,
@@ -32,6 +46,7 @@ function DeleteGroup() {
             confirmButtonText: 'Delete'
         }).then((result) => {
             if (result.isConfirmed) {
+                dispatch(deleteGroup(id));
                 Swal.fire(
                     'Deleted!',
                     'Your group has been deleted.',
@@ -43,71 +58,130 @@ function DeleteGroup() {
         })
     }
 
-    return (
-        <div className="delete-group p-4">
-            <Heading>Delete Group</Heading>
-            <div className="mt-4 mb-4">You are about to delete the group <b>{values.name} </b>
-                with the following details
-            </div>
-            <Card className="p-2 mb-4">
-                <div>
-                    <div>The group has the following members. If you delete the group all the group members will be
-                        automatically removed.
-                    </div>
+    const [groupDetails, setGroupDetails] = useState({});
 
-                    <ul>
-                        {values.members.map((member) => {
-                            return (
-                                <li key={member}>
-                                    <b>{member}</b>
-                                </li>
-                            )
-                        })}
-                    </ul>
-                </div>
-            </Card>
+    const {id} = useParams();
 
-            <Card className="p-2 mb-4">
-                <div>
-                    <div className="mb-2">The group expenses are as following. If you delete the group all the expenses
-                        will
-                        be
-                        deleted.
-                    </div>
-                    <div>{expenses}</div>
-                </div>
-            </Card>
+    const viewGroupResponseData = useSelector(
+        (state) => state.group.viewGroupResponseData
+    );
 
+    const isViewGroupResponseReceived = useSelector(
+        (state) => state.group.isViewGroupResponseReceived
+    );
 
-            <Card className="p-2">
-                <div>
-                    <div>Detailed Report of Expenses</div>
-                    {values.expenses?.details.map((expense, index) => {
-                        const key = <span><b>{Object.keys(expense)[0]}</b></span>
-                        let value;
-                        if (Object.values(expense)[0].lent) {
-                            value = <span>+{Object.values(expense)[0].lent}</span>
-                        } else {
-                            value = <span>-{Object.values(expense)[0].owed}</span>
-                        }
+    const prevIsViewGroupResponseReceived = usePrevious(isViewGroupResponseReceived);
 
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(viewGroup(id, "4e8eea9b-2526-41e6-ad70-469e14b6d9a7"));
+    }, []);
+
+    useEffect(() => {
+        if (prevIsViewGroupResponseReceived !== isViewGroupResponseReceived && isSuccessfulResponse(viewGroupResponseData)) {
+            const data = viewGroupResponseData['success'][0];
+            setGroupDetails(data);
+
+            let expenses;
+            let detailedExpense = '';
+
+            console.log(data);
+            if (!data?.expenses?.lent.length && !data?.expenses?.owed.length) {
+                expenses = <div>Hurray !! No expenses</div>
+            } else if (data?.expenses?.lent.length) {
+                expenses = <div>Total Expenses lent
+                    : <b> {data?.expenses?.lent.map((ele) => ele.amount).reduce((ele, ind) => ele + ind)}</b></div>
+                detailedExpense = (<div>
+                    {data.expenses.lent.map((ele, index) => {
                         return (
                             <div key={index} className="d-flex justify-content-between">
                                 <div style={{marginRight: "10px !important"}}>
-                                    {key}
+                                    {ele.name}
                                 </div>
                                 <div>
-                                    {value}
+                                    {`+${ele.amount}`}
                                 </div>
                             </div>
                         )
-                    })}
-                </div>
-            </Card>
+                    })} </div>);
 
-            <Button variant="danger" className="mt-4" onClick={deleteGroup}>
-                Delete {values.name}
-            </Button>
+            } else {
+                expenses = <div>Total Expenses lent
+                    : <b> {data?.expenses?.owed.map((ele) => ele.amount).reduce((ele, ind) => ele + ind)}</b></div>
+                detailedExpense = (<div>
+                    {data.expenses.lent.map((ele, index) => {
+                        return (
+                            <div key={index} className="d-flex justify-content-between">
+                                <div style={{marginRight: "10px !important"}}>
+                                    {ele.name}
+                                </div>
+                                <div>
+                                    {`-${ele.amount}`}
+                                </div>
+                            </div>
+                        )
+                    })} </div>);
+            }
+
+            setExpenses(expenses);
+            setDetailedExpenses(detailedExpense);
+        }
+    }, [isViewGroupResponseReceived]);
+
+
+    return (
+        <div className="delete-group p-4">
+            <Heading>Delete Group</Heading>
+            {!isViewGroupResponseReceived ? <Loading/> :
+                <>
+                    <div className="mt-4 mb-4">You are about to delete the group <b>{groupDetails.name} </b>
+                        with the following details
+                    </div>
+                    <Card className="p-2 mb-4">
+                        <div>
+                            <div>The group has the following members. If you delete the group all the group members will
+                                be
+                                automatically removed.
+                            </div>
+
+                            <ul>
+                                {groupDetails?.users?.map((user) => {
+                                    return (
+                                        <li key={user.id}>
+                                            <b>{getUserFullName(user)}</b>
+                                        </li>
+                                    )
+                                })}
+                            </ul>
+                        </div>
+                    </Card>
+
+                    <Card className="p-2 mb-4">
+                        <div>
+                            <div className="mb-2">The group expenses are as following. If you delete the group all the
+                                expenses
+                                will
+                                be
+                                deleted.
+                            </div>
+                            <div>{expenses}</div>
+                        </div>
+                    </Card>
+
+
+                    <Card className="p-2">
+                        <div>
+                            <div>Detailed Report of Expenses</div>
+                            {detailedExpenses}
+                        </div>
+                    </Card>
+
+                    <Button variant="danger" className="mt-4" onClick={deleteGroupPopUp}>
+                        Delete {groupDetails.name}
+                    </Button>
+                </>
+            }
         </div>
     )
 }
