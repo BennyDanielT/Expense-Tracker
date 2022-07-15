@@ -1,8 +1,14 @@
+/**
+ * @author ${devarshivyas}
+ */
+
 import { useState } from "react";
 import { Card, Table, Button } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
 import "../../css/tags.css";
 
+// function responsible to create the component to view a specific tag's details
+// list of the expenses which are associated with this tag are displayed by this component
 function ViewTagDetails() {
   const [errors, setErrors] = useState({});
   const [mainError, setMainError] = useState("");
@@ -33,6 +39,8 @@ function ViewTagDetails() {
   ]);
 
   // Fetch all related expenses request and processing
+  // hook to check if the data is received from the backend
+  // UI is updated accordingly
 
   // const deleteTagResponseData = useSelector(
   //   (state) => state.tag.deleteTagResponseData

@@ -1,3 +1,9 @@
+/**
+ * @author ${devarshivyas}
+ */
+
+// All the CRUD operations related to the tag actions such as create, edit, view and delete tag are added here
+
 export const CREATE_TAG = "CREATE_TAG";
 export const CREATE_TAG_RESPONSE = "CREATE_TAG_RESPONSE";
 export const EDIT_TAG = "EDIT_TAG";

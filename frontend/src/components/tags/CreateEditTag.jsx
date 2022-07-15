@@ -1,3 +1,7 @@
+/**
+ * @author ${devarshivyas}
+ */
+
 import Picker from "emoji-picker-react";
 import { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
@@ -7,6 +11,11 @@ import "../../css/tags.css";
 import { createTag, editTag } from "../../redux/actions";
 import { routes } from "../../constants";
 import { usePrevious } from "react-use";
+
+// function responsible to create the component to create and update the tags
+// same component is used for both; a flag called "mode" will be passed which calling this component
+// if mode == create then the component will function to create a tag
+// if mode == edit then the component will function to edit a tag
 
 function CreateEditTag({ setting }) {
   const history = useHistory();
@@ -25,6 +34,8 @@ function CreateEditTag({ setting }) {
     isCreateTagResponseReceived
   );
 
+  // hook to check if the data is received from the backend
+  // UI is updated accordingly
   useEffect(() => {
     if (
       prevIsCreateTagResponseReceived !== undefined &&
@@ -51,6 +62,8 @@ function CreateEditTag({ setting }) {
 
   const prevIsEditTagResponseReceived = usePrevious(isEditTagResponseReceived);
 
+  // hook to check if the data is received from the backend
+  // UI is updated accordingly
   useEffect(() => {
     if (
       prevIsEditTagResponseReceived !== undefined &&
@@ -112,6 +125,9 @@ function CreateEditTag({ setting }) {
     setShowPicker(false);
   };
 
+  // when submit form button is clicked, the form's inputs are validated
+  // only if the form and its values pass the validation tests successfully, the form data is submitted
+  // using the dispatch function to an api in the backend
   const submitForm = (e) => {
     setTagError(null);
     let isError = false;
