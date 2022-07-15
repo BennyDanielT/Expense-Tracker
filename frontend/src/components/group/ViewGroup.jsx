@@ -14,6 +14,7 @@ import {usePrevious} from "react-use";
 import {Loading} from "../Loading";
 import {useAuth} from "../../contexts/Auth";
 
+// The component purpose is to view a particular group based on group id.
 function ViewGroup() {
 
     const history = useHistory();

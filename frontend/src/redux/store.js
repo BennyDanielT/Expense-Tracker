@@ -17,6 +17,7 @@ const logger = createLogger({
     predicate: () => process.env.NODE_ENV === "development"
 });
 
+// Creating the redux store
 export const store = createStore(
     rootReducer,
     {},
