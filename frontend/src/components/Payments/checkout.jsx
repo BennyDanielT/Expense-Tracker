@@ -5,6 +5,7 @@ import {
   useElements,
 } from '@stripe/react-stripe-js';
 import Swal from 'sweetalert2';
+import { Link, useHistory } from 'react-router-dom';
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -13,7 +14,8 @@ export default function CheckoutForm() {
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  let redirectURL = '';
+  let redirectURL = 'http://localhost:3000/payment-status/success';
+  let history = useHistory();
 
   useEffect(() => {
     if (!stripe) {
@@ -72,8 +74,14 @@ export default function CheckoutForm() {
 
     if (error.type === 'card_error' || error.type === 'validation_error') {
       setMessage(error.message);
+      history.push({
+        pathname: '/payment-status/failure',
+      });
     } else {
       setMessage('An unexpected error occurred.');
+      history.push({
+        pathname: '/payment-status/failure',
+      });
     }
 
     setIsLoading(false);
