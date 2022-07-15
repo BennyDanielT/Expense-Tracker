@@ -230,7 +230,7 @@ function AddExepnse() {
                     <Select
                         isMulti
                         name="colors"
-                        options={dummyMembersData}
+                        options={users}
                         className="basic-multi-select"
                         classNamePrefix="select"
                         onChange={onChangeFunctions['user_ids']}
