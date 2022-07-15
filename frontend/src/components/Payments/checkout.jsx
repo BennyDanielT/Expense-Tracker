@@ -54,6 +54,23 @@ export default function CheckoutForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Swal.fire('Initiated!', 'Your payment has been initiated', 'success');
+    // Swal.fire({
+    //         title: `Instance: ${snap.date}`,
+    //         icon: 'question',
+    //         html: `<div class="mb-3">${account}</div> ${amount}<div class="mt-3 mb-3">${title}</div>`,
+    //         denyButtonText: "Delete Snapshot",
+    //         showCloseButton: true,
+    //         showDenyButton: true,
+    //         showConfirmButton: false,
+    //         showCancelButton:true,
+    //         preDeny() {
+    //             Swal.fire(
+    //                 'Deleted!',
+    //                 'Snapshot has been deleted.',
+    //                 'success'
+    //             );
+    //         }
+    //     })
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
@@ -65,10 +82,7 @@ export default function CheckoutForm() {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        // Make sure to change this to your payment completion page
         return_url: redirectURL,
-        // cancel_url: 'http://localhost:3000/',
-        // return_url: 'http://localhost:3000/payment-history',
       },
     });
 
