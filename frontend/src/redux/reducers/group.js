@@ -5,6 +5,8 @@ import {
     DELETE_GROUP_RESPONSE,
     EDIT_GROUP,
     EDIT_GROUP_RESPONSE,
+    GET_USERS,
+    GET_USERS_RESPONSE,
     VIEW_GROUP,
     VIEW_GROUP_RESPONSE,
     VIEW_GROUPS,
@@ -21,7 +23,9 @@ const initialState = {
     deleteGroupResponseData: {},
     isDeleteGroupResponseReceived: false,
     createGroupResponseData: {},
-    isCreateGroupResponseReceived: false
+    isCreateGroupResponseReceived: false,
+    usersResponseData: {},
+    isUsersResponseReceived: false
 };
 
 const group = (state = initialState, action) => {
@@ -89,6 +93,19 @@ const group = (state = initialState, action) => {
                 ...state,
                 isDeleteGroupResponseReceived: true,
                 deleteGroupResponseData: action.response
+            }
+        }
+        case GET_USERS: {
+            return {
+                ...state,
+                isUsersResponseReceived: false
+            }
+        }
+        case GET_USERS_RESPONSE: {
+            return {
+                ...state,
+                isUsersResponseReceived: true,
+                usersResponseData: action.response
             }
         }
         default: {

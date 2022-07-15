@@ -11,18 +11,3 @@ export function getBase64Image(img) {
     const dataURL = canvas.toDataURL("image/png");
     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
 }
-
-export const dummyMembersData = [
-    {
-        label: "Abhishek",
-        value: 1
-    },
-    {
-        label: "Foo",
-        value: 2
-    },
-    {
-        label: "Bar",
-        value: 3
-    }
-];
