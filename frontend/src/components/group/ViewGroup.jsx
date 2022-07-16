@@ -38,7 +38,7 @@ function ViewGroup() {
     const {user} = useAuth();
 
     useEffect(() => {
-        dispatch(viewGroup(id, user().user.identities[0].user_id));
+        dispatch(viewGroup(id, user().user.identities[0].id));
     }, []);
 
     // show the success message only if view group response is received successfully

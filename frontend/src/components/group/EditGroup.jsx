@@ -98,7 +98,7 @@ function EditGroup() {
             const data = viewGroupResponseData['success'][0];
             const users = [];
             data.users.forEach((ele) => {
-                users.push({label: getUserFullName(ele), value: ele.user_id});
+                users.push({label: getUserFullName(ele), value: ele.id});
             });
             setValues({...values, name: data.name, users});
         }
@@ -115,7 +115,7 @@ function EditGroup() {
             if (isSuccessfulResponse(usersResponseData)) {
                 const array = [];
                 usersResponseData['success'].forEach((ele) => {
-                    array.push({label: getUserFullName(ele), value: ele.user_id});
+                    array.push({label: getUserFullName(ele), value: ele.id});
                 });
                 setUsers(array);
             }

@@ -117,7 +117,7 @@ function CreateGroup() {
         if (isSuccessfulResponse(usersResponseData)) {
             const array = [];
             usersResponseData['success'].forEach((ele) => {
-                array.push({label: getUserFullName(ele), value: ele.user_id});
+                array.push({label: getUserFullName(ele), value: ele.id});
             });
             setUsers(array);
         }
