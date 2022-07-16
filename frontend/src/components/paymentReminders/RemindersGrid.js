@@ -1,10 +1,13 @@
+/**
+ * @author ${Vatsal Yadav}
+ */
+
 import 'bootstrap/dist/css/bootstrap.css';
 import {Col, Container, Form, Modal, Row, Stack} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import {useEffect, useState} from "react";
 import {isSuccessfulResponse, routes, showPopup} from "../../constants";
 import {useHistory} from "react-router-dom";
-import {Alert, Snackbar} from "@mui/material";
 import StickyNote from "../../assets/sticky-notes.png";
 import Swal from "sweetalert2";
 import DatePicker from "react-datepicker";
@@ -15,7 +18,7 @@ import moment from "moment";
 import {useAuth} from "../../contexts/Auth";
 import {supabase} from "../../supabase";
 
-
+// The component purpose is to view a list of payment reminders and provide ability for modifying and deleting them
 export default function RemindersGrid() {
 
     const [remindersList, setRemindersList] = useState([]);
@@ -36,6 +39,7 @@ export default function RemindersGrid() {
 
     const prevIsViewRemindersResponseReceived = usePrevious(isViewRemindersResponseReceived);
 
+    // show the success message only if view reminders response is received successfully
     useEffect(() => {
         if (prevIsViewRemindersResponseReceived !== undefined && prevIsViewRemindersResponseReceived !== isViewRemindersResponseReceived) {
             if (isSuccessfulResponse(viewRemindersResponseData)) {
@@ -72,6 +76,7 @@ export default function RemindersGrid() {
 
     const prevIsDeleteReminderResponseReceived = usePrevious(isDeleteReminderResponseReceived);
 
+    // show the success message only if delete reminder response is received successfully and refresh the reminders list
     useEffect(() => {
         if (prevIsDeleteReminderResponseReceived !== undefined && prevIsDeleteReminderResponseReceived !== isDeleteReminderResponseReceived) {
             if (isSuccessfulResponse(deleteReminderResponseData)) {
@@ -96,6 +101,7 @@ export default function RemindersGrid() {
 
     const prevIsEditReminderResponseReceived = usePrevious(isEditReminderResponseReceived);
 
+    // show the success message only if edit reminder response is received successfully and refresh the reminders list
     useEffect(() => {
         if (prevIsEditReminderResponseReceived !== undefined && prevIsEditReminderResponseReceived !== isEditReminderResponseReceived) {
             if (isSuccessfulResponse(editReminderResponseData)) {
@@ -119,21 +125,13 @@ export default function RemindersGrid() {
 
     const [currentReminder, setCurrentReminder] = useState(null)
     const [show, setShow] = useState(false);
-    const [snackbar, setSnackbar] = useState({message: "", severity: "success", visibility: false});
 
     const handleDeleteClose = () => {
         setShow(false);
-        setSnackbar({message: "Payment Reminder Successfully Deleted!", severity: "success", visibility: true});
-    }
-    const handleDeleteShow = () => setShow(true);
-    /*const handleCreateReminder = () => createReminder("/createReminder");*/
-    const handleCreateReminder = () => this.props.history.push('/create-reminder')
-
-    function handleEditSuccess() {
-        setUpdateReminder({reminder: "", show: false});
-        setSnackbar({message: "Payment Reminder Successfully Modified!", severity: "success", visibility: true});
     }
 
+
+    // Prompt user to verify payment reminder deletion
     function showDeleteAlert(id) {
         Swal.fire({
             title: "Are you sure?",
@@ -169,7 +167,7 @@ export default function RemindersGrid() {
         }
     };
 
-
+    // Submit modified reminder details
     const handleSubmit = (event) => {
         const form = event.currentTarget;
         event.preventDefault();
@@ -181,13 +179,12 @@ export default function RemindersGrid() {
         } else {
             dispatch(editReminder({id:updateReminder.reminder.id, name: reminderName, amount: reminderAmount, user_id: user().user.identities[0].user_id, desc: reminderDesc, date: date, email: supabase.auth.user().email}));
             handleClose();
-            // Swal.fire("Payment Reminder Changed!", "Payment Reminder has been successfully updated.", "success");
-
         }
-
         setValidated(true);
 
     };
+
+    // filter the selected time that is passed
     const filterPassedTime = (time) => {
         const currentDate = new Date();
         const selectedDate = new Date(time);
@@ -206,6 +203,9 @@ export default function RemindersGrid() {
             <Row className="text-center" hidden={remindersList.length!==0}>
                 <label> No reminders found, please create a new Payment Reminder! </label>
             </Row>
+
+            {/* Payment reminders list */}
+
             <Row className=" m-0 ps-0 pe-0 pe-sm-5 ps-sm-5 pt-2 text-black justify-content-center container-fluid">
                 {remindersList.map(reminder =>
                     <div className="col-sm-10 col-12 col-md-10 col-lg-8 m-2">
@@ -340,24 +340,8 @@ export default function RemindersGrid() {
 
                     </Form>
                 </Modal.Body>
-                {/*<Modal.Footer>*/}
-                {/*    <Button variant="secondary" onClick={handleClose}>*/}
-                {/*        Close*/}
-                {/*    </Button>*/}
-                {/*    <Button variant="primary" onClick={handleEditSuccess}>*/}
-                {/*        Save Changes*/}
-                {/*    </Button>*/}
-                {/*</Modal.Footer>*/}
             </Modal>
 
-            <Snackbar anchorOrigin={{vertical: "top", horizontal: "right"}}
-                      open={snackbar.visibility} autoHideDuration={3000}
-                      onClose={() => setSnackbar({message: "", severity: "success", visibility: false})}>
-                <Alert onClose={() => setSnackbar({message: "", severity: "success", visibility: false})}
-                       severity={snackbar.severity} sx={{width: '100%'}}>
-                    {snackbar.message}
-                </Alert>
-            </Snackbar>
 
         </Container>
     );

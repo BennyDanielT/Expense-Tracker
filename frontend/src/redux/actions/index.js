@@ -1,5 +1,5 @@
 /**
- * @author ${abhishekuppe}
+ * @author ${abhishekuppe, Vatsal Yadav}
  */
 
 export * from "./group.js";

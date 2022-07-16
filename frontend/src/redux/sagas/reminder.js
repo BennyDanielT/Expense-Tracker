@@ -1,3 +1,7 @@
+/**
+ * @author ${Vatsal Yadav}
+ */
+
 import axios from "axios";
 import {put, takeLatest} from "redux-saga/effects";
 import {
@@ -8,6 +12,7 @@ import {
 } from "../actions";
 import {showError} from "../../constants";
 
+// All the CRUD operations related to the payment reminders sagas such as create, edit, view and delete payment reminder are added here
 function* createReminder(action) {
     try {
         const json = yield axios
