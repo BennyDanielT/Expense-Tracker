@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import Popup from './Popup';
-import "../invite/popup.css";
+import "../../css/popup.css";
 import { Card } from 'react-bootstrap';
 import { ListGroup } from 'react-bootstrap';
 

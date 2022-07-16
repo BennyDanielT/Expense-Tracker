@@ -1,10 +1,15 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {Button, Form} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.css';
 import {useHistory} from "react-router-dom";
-import {routes} from "../../constants";
 import {Alert, Snackbar} from "@mui/material";
 import DatePicker from "react-datepicker";
+import {useDispatch, useSelector} from "react-redux";
+import {createReminder} from "../../redux/actions";
+import {isSuccessfulResponse, routes, showPopup} from "../../constants";
+import {usePrevious} from "react-use";
+import {useAuth} from "../../contexts/Auth";
+import {supabase} from "../../supabase";
 
 
 // Reference : https://www.npmjs.com/package/react-datetime-picker
@@ -16,7 +21,7 @@ export default function CreateReminder() {
     const [date, setDate] = useState(new Date());
     const [validated, setValidated] = useState(false);
     const [snackbar, setSnackbar] = useState({message:"", severity:"success", visibility:false});
-
+    const {user} = useAuth();
     const history = useHistory();
 
     const handleReminderName = (e) => {
@@ -38,15 +43,43 @@ export default function CreateReminder() {
     };
 
 
+    const dispatch = useDispatch();
+
+    const createReminderResponseData = useSelector(
+        (state) => {
+            return state.reminder.createReminderResponseData
+        }
+    );
+
+    const isCreateReminderResponseReceived = useSelector(
+        (state) => {
+            return state.reminder.isCreateReminderResponseReceived
+        }
+    );
+
+    const prevIsCreateReminderResponseReceived = usePrevious(isCreateReminderResponseReceived);
+
+    useEffect(() => {
+        if (prevIsCreateReminderResponseReceived !== undefined && prevIsCreateReminderResponseReceived !== isCreateReminderResponseReceived) {
+            if (isSuccessfulResponse(createReminderResponseData)) {
+                showPopup("success", "Success", "Payment Reminder Successfully Created");
+                history.replace(routes.reminders.path);
+            }
+        }
+    }, [isCreateReminderResponseReceived]);
+
     const handleSubmit = (event) => {
         const form = event.currentTarget;
-        if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+        if(date <= new Date()){
+            alert("Reminder cannot be set in past.")
+        }
+        else if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
         } else {
-            // set validations and navigate to reminders list
-            setSnackbar({message:"Payment Reminder Successfully Created!", severity:"success", visibility:true});
-            history.push(routes.reminders.path)
+            dispatch(createReminder({name: reminderName, amount: reminderAmount, user_id: user().user.identities[0].user_id, desc: reminderDesc, date: date, email: supabase.auth.user().email}));
         }
 
         setValidated(true);
@@ -55,6 +88,14 @@ export default function CreateReminder() {
 
     const handleChange = (newValue) => {
         setDate(newValue);
+    };
+
+    // Code Reference: https://stackoverflow.com/questions/59826534/react-datepicker-mintime-and-maxtime-not-works
+    const filterPassedTime = (time) => {
+        const currentDate = new Date();
+        const selectedDate = new Date(time);
+
+        return currentDate.getTime() < selectedDate.getTime();
     };
     return (
         <div className="container-fluid col-md-6 col-12 col-sm-10 mt-4 p-4" style={{backgroundColor: 'white'}}>
@@ -109,6 +150,8 @@ export default function CreateReminder() {
                         showTimeSelect
                         selected={date}
                         onChange={setDate}
+                        minDate={new Date()}
+                        filterTime={filterPassedTime}
                         dateFormat="Pp"
                     />
                 </Form.Group>

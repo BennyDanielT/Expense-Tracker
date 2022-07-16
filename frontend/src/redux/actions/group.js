@@ -1,3 +1,9 @@
+/**
+ * @author ${abhishekuppe}
+ */
+
+// All the CRUD operations related to the group actions such as create, edit, view and delete group are added here
+
 export const CREATE_GROUP = "CREATE_GROUP";
 export const CREATE_GROUP_RESPONSE = "CREATE_GROUP_RESPONSE";
 export const EDIT_GROUP = "EDIT_GROUP";
@@ -8,6 +14,8 @@ export const VIEW_GROUP = "VIEW_GROUP";
 export const VIEW_GROUP_RESPONSE = "VIEW_GROUP_RESPONSE";
 export const VIEW_GROUPS = "VIEW_GROUPS";
 export const VIEW_GROUPS_RESPONSE = "VIEW_GROUPS_RESPONSE";
+export const GET_USERS = "GET_USERS";
+export const GET_USERS_RESPONSE = "GET_USERS_RESPONSE";
 
 export const createGroup = (groupData) => ({
     type: CREATE_GROUP,
@@ -40,8 +48,9 @@ export const deleteGroupResponse = (response) => ({
     response
 });
 
-export const viewGroups = () => ({
-    type: VIEW_GROUPS
+export const viewGroups = (id) => ({
+    type: VIEW_GROUPS,
+    id
 });
 
 export const viewGroupsResponse = (response) => ({
@@ -49,13 +58,24 @@ export const viewGroupsResponse = (response) => ({
     response
 });
 
-export const viewGroup = (id) => ({
+export const viewGroup = (id, user) => ({
     type: VIEW_GROUP,
-    id
+    id,
+    user
 });
 
 export const viewGroupResponse = (response) => ({
     type: VIEW_GROUP_RESPONSE,
     response
 });
+
+export const getUsers = () => ({
+    type: GET_USERS,
+});
+
+export const getUsersResponse = (response) => ({
+    type: GET_USERS_RESPONSE,
+    response
+});
+
 

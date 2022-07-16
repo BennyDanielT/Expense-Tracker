@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {Alert, Button, Form} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import DateTimePicker from 'react-datetime-picker';
-import "../ExportData/CreateSnap.css";
+import "../../css/CreateSnap.css";
 import DatePicker from "react-datepicker";
 import ReactDOMServer from "react-dom/server";
 import Swal from "sweetalert2";

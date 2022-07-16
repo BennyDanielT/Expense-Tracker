@@ -1,8 +1,17 @@
-import { combineReducers } from 'redux';
-import transaction from './transaction';
-import group from './group';
+/**
+ * @author ${abhishekuppe}
+ */
+
+import { combineReducers } from "redux";
+import group from "./group";
+import tag from "./tags";
+import reminder from "./reminder";
+import expense from "./expense";
+
 
 export const rootReducer = combineReducers({
   group,
-  transaction,
+  reminder,
+  tag,
+  expense
 });

@@ -1,14 +1,19 @@
+/**
+ * @author ${abhishekuppe}
+ */
+
 import {useEffect, useState} from "react";
 import {Button, ButtonGroup, Form} from "react-bootstrap";
 import Select from "react-select";
-import "./group.css";
+import "../../css/group.css";
 import {Heading} from "../Heading/Heading";
-import {dummyMembersData} from "./helpers";
 import {useDispatch, useSelector} from "react-redux";
-import {createGroup} from "../../redux/actions";
-import {isSuccessfulResponse, routes, showPopup} from "../../constants";
+import {createGroup, getUsers} from "../../redux/actions";
+import {getUserFullName, imgToBase64, isSuccessfulResponse, routes, showPopup} from "../../constants";
 import {useHistory} from "react-router-dom";
+import {usePrevious} from "react-use";
 
+// The component purpose is to create a group with all the form details entered by the user
 function CreateGroup() {
     const [values, setValues] = useState({name: "", icon: "", type: "home", user_ids: null});
     const [errors, setErrors] = useState({});
@@ -86,12 +91,37 @@ function CreateGroup() {
 
     const history = useHistory();
 
+    const prevIsCreateGroupResponseReceived = usePrevious(isCreateGroupResponseReceived);
+
+    // show the success message only if create group response is received successfully
     useEffect(() => {
-        if (isSuccessfulResponse(createGroupResponseData)) {
-            showPopup("success", "Success", "Group Successfully Created");
-            history.push(routes.viewGroup.path);
+        if (prevIsCreateGroupResponseReceived !== undefined && prevIsCreateGroupResponseReceived !== isCreateGroupResponseReceived) {
+            if (isSuccessfulResponse(createGroupResponseData)) {
+                showPopup("success", "Success", "Group Successfully Created");
+                history.push(routes.group.path);
+            }
         }
     }, [isCreateGroupResponseReceived]);
+
+    const isUsersResponseReceived = useSelector((state) => state.group.isUsersResponseReceived);
+    const usersResponseData = useSelector((state) => state.group.usersResponseData);
+
+    useEffect(() => {
+        dispatch(getUsers());
+    }, []);
+
+    const [users, setUsers] = useState([]);
+
+    // useEffect after the users api is successful
+    useEffect(() => {
+        if (isSuccessfulResponse(usersResponseData)) {
+            const array = [];
+            usersResponseData['success'].forEach((ele) => {
+                array.push({label: getUserFullName(ele), value: ele.id});
+            });
+            setUsers(array);
+        }
+    }, [isUsersResponseReceived]);
 
     const submitForm = (e) => {
 
@@ -110,7 +140,10 @@ function CreateGroup() {
 
             if (!error) {
                 setMainError("");
-                dispatch(createGroup(values));
+                imgToBase64(values['icon'], (res) => {
+                    values['icon'] = res;
+                    dispatch(createGroup(values));
+                });
             } else {
                 callErrorFunctions();
             }
@@ -151,7 +184,7 @@ function CreateGroup() {
                     <Select
                         isMulti
                         name="user_ids"
-                        options={dummyMembersData}
+                        options={users}
                         className="basic-multi-select"
                         classNamePrefix="select"
                         onChange={onChangeFunctions['user_ids']}

@@ -1,26 +1,24 @@
-import {useHistory, useLocation} from "react-router-dom";
+/**
+ * @author ${abhishekuppe}
+ */
+
+import {useHistory, useLocation, useParams} from "react-router-dom";
 import {Heading} from "../Heading/Heading";
 import {Button, Form} from "react-bootstrap";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Select from "react-select";
-import {dummyMembersData} from "./helpers";
-import Swal from "sweetalert2";
-import {routes} from "../../constants";
+import {editGroup, getUsers, viewGroup} from "../../redux/actions";
+import {useDispatch, useSelector} from "react-redux";
+import {usePrevious} from "react-use";
+import {getUserFullName, imgToBase64, isSuccessfulResponse, routes, showPopup} from "../../constants";
 
+// The component purpose is to edit a group with all the form details entered by the user
 function EditGroup() {
     const location = useLocation();
 
-    const apiData = location.state;
-
     const [mainError, setMainError] = useState("");
 
-    const actualMembers = [];
-
-    apiData.members.forEach((ele) => {
-        actualMembers.push({label: ele.slice(0, 1).toUpperCase() + ele.slice(1), value: ele});
-    });
-
-    const [values, setValues] = useState({name: apiData.name, members: actualMembers, icon: null});
+    const [values, setValues] = useState({name: null, users: [], icon: null});
     const [errors, setErrors] = useState({});
 
     const onChangeFunctions = {
@@ -65,22 +63,90 @@ function EditGroup() {
                 })
             }
         },
-        'members': (e) => {
+        'users': (e) => {
             setValues({
                 ...values,
-                members: e.map((ele) => ele.value)
+                users: e
             });
         }
     };
 
     const history = useHistory();
 
-    const editGroup = (e) => {
+    const dispatch = useDispatch();
+
+    const {id} = useParams();
+
+    useEffect(() => {
+        dispatch(getUsers());
+        dispatch(viewGroup(id));
+    }, []);
+
+    const viewGroupResponseData = useSelector(
+        (state) => state.group.viewGroupResponseData
+    );
+
+    const isViewGroupResponseReceived = useSelector(
+        (state) => state.group.isViewGroupResponseReceived
+    );
+
+    const prevIsViewGroupResponseReceived = usePrevious(isViewGroupResponseReceived);
+
+    // show the success message only if view group response is received successfully
+    useEffect(() => {
+        if (prevIsViewGroupResponseReceived !== isViewGroupResponseReceived && isSuccessfulResponse(viewGroupResponseData)) {
+            const data = viewGroupResponseData['success'][0];
+            const users = [];
+            data.users.forEach((ele) => {
+                users.push({label: getUserFullName(ele), value: ele.id});
+            });
+            setValues({...values, name: data.name, users});
+        }
+    }, [isViewGroupResponseReceived]);
+
+    const isUsersResponseReceived = useSelector((state) => state.group.isUsersResponseReceived);
+    const usersResponseData = useSelector((state) => state.group.usersResponseData);
+    const prevIsUsersResponseReceived = usePrevious(isUsersResponseReceived);
+
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        if (prevIsUsersResponseReceived !== undefined && isUsersResponseReceived !== prevIsUsersResponseReceived) {
+            if (isSuccessfulResponse(usersResponseData)) {
+                const array = [];
+                usersResponseData['success'].forEach((ele) => {
+                    array.push({label: getUserFullName(ele), value: ele.id});
+                });
+                setUsers(array);
+            }
+        }
+    }, [isUsersResponseReceived]);
+
+    const editGroupResponseData = useSelector(
+        (state) => state.group.editGroupResponseData
+    );
+
+    const isEditGroupResponseReceived = useSelector(
+        (state) => state.group.isEditGroupResponseReceived
+    );
+
+    const prevIsEditGroupResponseReceived = usePrevious(isEditGroupResponseReceived);
+
+    // show the success message only if edit group response is received successfully
+    useEffect(() => {
+        if (prevIsEditGroupResponseReceived !== isEditGroupResponseReceived && prevIsEditGroupResponseReceived !== undefined) {
+            if (isSuccessfulResponse(editGroupResponseData)) {
+                showPopup("success", "Success", "Group Edited Successfully");
+                history.push(routes.group.path);
+            }
+        }
+    }, [isEditGroupResponseReceived]);
+
+    const submitForm = (e) => {
 
         const callErrorFunctions = () => {
             setMainError("Enter all the form fields to continue!!");
         }
-
         e.preventDefault();
         if (Object.keys(values).length) {
             let error = false;
@@ -91,13 +157,11 @@ function EditGroup() {
             });
             if (!error) {
                 setMainError("");
-                Swal.fire(
-                    'Edit',
-                    'Your group has been been successfully edited',
-                    'success'
-                ).then(() => {
-                    history.push(routes.group.path);
-                })
+                imgToBase64(values['icon'], (res) => {
+                    values['icon'] = res;
+                    values['user_ids'] = values['users'].map((ele) => ele.value);
+                    dispatch(editGroup(id, values));
+                });
             } else {
                 callErrorFunctions();
             }
@@ -108,7 +172,7 @@ function EditGroup() {
 
     return (
         <div className="edit-group p-4">
-            <Form.Label><Heading>Edit Group</Heading></Form.Label>
+            <Form.Label><Heading>Edit Group {values.name}</Heading></Form.Label>
             <Form>
                 <Form.Group className="mb-3" controlId="groupName">
                     <Form.Label>Group Name</Form.Label>
@@ -120,7 +184,9 @@ function EditGroup() {
                 <Form.Group className="mb-3" controlId="groupIcon">
                     <Form.Label>Group Icon</Form.Label>
                     <Form.Control type="file" accept="image/*" placeholder="Add group icon"
-                                  onChange={onChangeFunctions['icon']}/>
+                                  onChange={onChangeFunctions['icon']}
+                                  alt="group"
+                                  width={40} height={40}/>
                     <div className="errors">{errors['icon']}</div>
                 </Form.Group>
 
@@ -129,20 +195,20 @@ function EditGroup() {
                     <Select
                         isMulti
                         name="colors"
-                        defaultValue={values.members}
-                        options={dummyMembersData}
+                        options={users}
+                        value={values.users}
                         className="basic-multi-select"
                         classNamePrefix="select"
-                        onChange={onChangeFunctions['members']}
+                        onChange={onChangeFunctions['users']}
                     />
-                    <div className="errors">{errors['members']}</div>
+                    <div className="errors">{errors['users']}</div>
                 </Form.Group>
 
                 <div className="errors mb-3">{mainError}</div>
 
                 <div className="d-flex justify-content-center">
-                    <Button className="mt-4" onClick={editGroup}>
-                        Edit {apiData.name}
+                    <Button className="mt-4" onClick={submitForm}>
+                        Edit Group {values.name}
                     </Button>
                 </div>
             </Form>

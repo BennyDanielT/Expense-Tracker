@@ -1,3 +1,7 @@
+/**
+ * @author ${abhishekuppe}
+ */
+
 import {
     CREATE_GROUP,
     CREATE_GROUP_RESPONSE,
@@ -5,12 +9,15 @@ import {
     DELETE_GROUP_RESPONSE,
     EDIT_GROUP,
     EDIT_GROUP_RESPONSE,
+    GET_USERS,
+    GET_USERS_RESPONSE,
     VIEW_GROUP,
     VIEW_GROUP_RESPONSE,
     VIEW_GROUPS,
     VIEW_GROUPS_RESPONSE
 } from "../actions";
 
+// Setting initial state of the reducer
 const initialState = {
     viewGroupResponseData: {},
     isViewGroupResponseReceived: false,
@@ -21,9 +28,12 @@ const initialState = {
     deleteGroupResponseData: {},
     isDeleteGroupResponseReceived: false,
     createGroupResponseData: {},
-    isCreateGroupResponseReceived: false
+    isCreateGroupResponseReceived: false,
+    usersResponseData: {},
+    isUsersResponseReceived: false
 };
 
+// All the CRUD operations related to the group reducers such as create, edit, view and delete group are added here
 const group = (state = initialState, action) => {
     switch (action.type) {
         case CREATE_GROUP: {
@@ -89,6 +99,19 @@ const group = (state = initialState, action) => {
                 ...state,
                 isDeleteGroupResponseReceived: true,
                 deleteGroupResponseData: action.response
+            }
+        }
+        case GET_USERS: {
+            return {
+                ...state,
+                isUsersResponseReceived: false
+            }
+        }
+        case GET_USERS_RESPONSE: {
+            return {
+                ...state,
+                isUsersResponseReceived: true,
+                usersResponseData: action.response
             }
         }
         default: {

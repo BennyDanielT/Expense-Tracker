@@ -1,50 +1,120 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import {Col, Container, Form, Modal, Row, Stack} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import {useState} from "react";
-import {routes} from "../../constants";
+import {useEffect, useState} from "react";
+import {isSuccessfulResponse, routes, showPopup} from "../../constants";
 import {useHistory} from "react-router-dom";
 import {Alert, Snackbar} from "@mui/material";
 import StickyNote from "../../assets/sticky-notes.png";
 import Swal from "sweetalert2";
 import DatePicker from "react-datepicker";
+import {useDispatch, useSelector} from "react-redux";
+import {deleteReminder, editReminder, viewReminders} from "../../redux/actions";
+import {usePrevious} from "react-use";
+import moment from "moment";
+import {useAuth} from "../../contexts/Auth";
+import {supabase} from "../../supabase";
 
 
 export default function RemindersGrid() {
 
-    const json = {
-        "reminder1": {
-            "name": "Electricity Bill",
-            "amount": "67",
-            "date": "5th June 1:30 PM",
-            "desc": "Reminder description Lorem ipsum dofdlor sit amet, consectetur adipiscing elit."
-        }, "reminder2": {
-            "name": "House Rent",
-            "amount": "405",
-            "date": "9th June 4:20 PM",
-            "desc": "Reminder description Lorem ipsum dofdlor sit amet, consectetur adipiscing elit."
-        }, "reminder3": {
-            "name": "Internet Bill",
-            "amount": "45",
-            "date": "12th June 9:30 AM",
-            "desc": "Reminder description Lorem ipsum dofdlor sit amet, consectetur adipiscing elit."
-        }, "reminder4": {
-            "name": "NSPower",
-            "amount": "120",
-            "date": "7th July 7:00 PM",
-            "desc": "Reminder description Lorem ipsum dofdlor sit amet, consectetur adipiscing elit."
+    const [remindersList, setRemindersList] = useState([]);
+    const {user} = useAuth();
+    const dispatch = useDispatch();
+
+    const viewRemindersResponseData = useSelector(
+        (state) => {
+            return state.reminder.viewRemindersResponseData
         }
-    };
+    );
+
+    const isViewRemindersResponseReceived = useSelector(
+        (state) => {
+            return state.reminder.isViewRemindersResponseReceived
+        }
+    );
+
+    const prevIsViewRemindersResponseReceived = usePrevious(isViewRemindersResponseReceived);
+
+    useEffect(() => {
+        if (prevIsViewRemindersResponseReceived !== undefined && prevIsViewRemindersResponseReceived !== isViewRemindersResponseReceived) {
+            if (isSuccessfulResponse(viewRemindersResponseData)) {
+                // showPopup("success", "Success", "Payment Reminder Successfully fetched");
+                setRemindersList(viewRemindersResponseData.success.filter(reminder => new Date(reminder.date) > new Date()).map(reminder => {
+                    let dateFormatted = reminder
+                    dateFormatted.formattedDate = moment(new Date(reminder.date)).format('MMMM Do YYYY, h:mm a')
+                    return dateFormatted
+                }))
+            }
+        }
+
+    }, [isViewRemindersResponseReceived]);
+
+
+    useEffect(() => {
+        console.log("user",supabase.auth.user().email)
+        dispatch(viewReminders({user_id: user().user.identities[0].user_id}));
+    }, []);
+
+
+
+    const deleteReminderResponseData = useSelector(
+        (state) => {
+            return state.reminder.deleteReminderResponseData
+        }
+    );
+
+    const isDeleteReminderResponseReceived = useSelector(
+        (state) => {
+            return state.reminder.isDeleteReminderResponseReceived
+        }
+    );
+
+    const prevIsDeleteReminderResponseReceived = usePrevious(isDeleteReminderResponseReceived);
+
+    useEffect(() => {
+        if (prevIsDeleteReminderResponseReceived !== undefined && prevIsDeleteReminderResponseReceived !== isDeleteReminderResponseReceived) {
+            if (isSuccessfulResponse(deleteReminderResponseData)) {
+                showPopup("success", "Success", "Payment Reminder Successfully Deleted!");
+                // history.replace(routes.reminders.path);
+                window.location.reload();
+            }
+        }
+    }, [isDeleteReminderResponseReceived]);
+
+    const editReminderResponseData = useSelector(
+        (state) => {
+            return state.reminder.editReminderResponseData
+        }
+    );
+
+    const isEditReminderResponseReceived = useSelector(
+        (state) => {
+            return state.reminder.isEditReminderResponseReceived
+        }
+    );
+
+    const prevIsEditReminderResponseReceived = usePrevious(isEditReminderResponseReceived);
+
+    useEffect(() => {
+        if (prevIsEditReminderResponseReceived !== undefined && prevIsEditReminderResponseReceived !== isEditReminderResponseReceived) {
+            if (isSuccessfulResponse(editReminderResponseData)) {
+                showPopup("success", "Success", "Payment Reminder Successfully Modified!");
+                window.location.reload();
+            }
+        }
+    }, [isEditReminderResponseReceived]);
+
 
     const history = useHistory();
 
-    const [editReminder, setEditReminder] = useState({reminder: "", show: false});
+    const [updateReminder, setUpdateReminder] = useState({reminder: "", show: false});
 
-    const handleClose = () => setEditReminder(prevState => {
+    const handleClose = () => setUpdateReminder(prevState => {
         return {reminder: prevState.reminder, show: false}
     });
-    const handleShow = () => setEditReminder(prevState => {
-        return {reminder: prevState.reminder, show: true}
+    const handleShow = (reminder) => setUpdateReminder(prevState => {
+        return {reminder: reminder, show: true}
     });
 
     const [currentReminder, setCurrentReminder] = useState(null)
@@ -60,11 +130,11 @@ export default function RemindersGrid() {
     const handleCreateReminder = () => this.props.history.push('/create-reminder')
 
     function handleEditSuccess() {
-        setEditReminder({reminder: "", show: false});
+        setUpdateReminder({reminder: "", show: false});
         setSnackbar({message: "Payment Reminder Successfully Modified!", severity: "success", visibility: true});
     }
 
-    function showDeleteAlert() {
+    function showDeleteAlert(id) {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -75,7 +145,7 @@ export default function RemindersGrid() {
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire("Deleted!", "Payment Reminder has been deleted.", "success");
+                dispatch(deleteReminder(id));
             }
         });
     }
@@ -103,18 +173,26 @@ export default function RemindersGrid() {
     const handleSubmit = (event) => {
         const form = event.currentTarget;
         event.preventDefault();
-        if (form.checkValidity() === false) {
-
+        if(date <= new Date()){
+            alert("Reminder cannot be set in past.")
+        }
+        else if (form.checkValidity() === false) {
             event.stopPropagation();
         } else {
-            // set validations and navigate to reminders list
+            dispatch(editReminder({id:updateReminder.reminder.id, name: reminderName, amount: reminderAmount, user_id: user().user.identities[0].user_id, desc: reminderDesc, date: date, email: supabase.auth.user().email}));
             handleClose();
-            Swal.fire("Payment Reminder Changed!", "Payment Reminder has been successfully updated.", "success");
+            // Swal.fire("Payment Reminder Changed!", "Payment Reminder has been successfully updated.", "success");
 
         }
 
         setValidated(true);
 
+    };
+    const filterPassedTime = (time) => {
+        const currentDate = new Date();
+        const selectedDate = new Date(time);
+
+        return currentDate.getTime() < selectedDate.getTime();
     };
 
     return (
@@ -125,8 +203,11 @@ export default function RemindersGrid() {
                     onClick={() => history.push(routes.createReminder.path)}>Create Reminder
                 </Button>
             </Row>
+            <Row className="text-center" hidden={remindersList.length!==0}>
+                <label> No reminders found, please create a new Payment Reminder! </label>
+            </Row>
             <Row className=" m-0 ps-0 pe-0 pe-sm-5 ps-sm-5 pt-2 text-black justify-content-center container-fluid">
-                {Object.values(json).map(reminder =>
+                {remindersList.map(reminder =>
                     <div className="col-sm-10 col-12 col-md-10 col-lg-8 m-2">
 
                         <div className="p-2 rounded-3  border" style={{backgroundColor: "#ffffff"}}>
@@ -138,7 +219,7 @@ export default function RemindersGrid() {
                                 <Col className="p-3">
                                     <Stack gap={1}>
                                         <Row style={{fontSize: 20, fontWeight: "bold"}}>
-                                            <Col>{reminder.date}</Col>
+                                            <Col>{reminder.formattedDate}</Col>
                                             <Col className="text-end"> ${reminder.amount}</Col>
 
                                         </Row>
@@ -146,15 +227,17 @@ export default function RemindersGrid() {
                                         <div>{reminder.desc}</div>
                                         <Stack direction="horizontal" className="justify-content-end" gap={2}>
                                             <Button variant="danger"
-                                                    onClick={showDeleteAlert}>Remove
+                                                    onClick={() => {
+                                                        setCurrentReminder(reminder);
+                                                        showDeleteAlert(reminder.id)}}>Remove
                                             </Button>
                                             <Button
                                                 onClick={() => {
-                                                    handleShow();
+                                                    handleShow(reminder);
                                                     setReminderAmount(reminder.amount);
                                                     setReminderDesc(reminder.desc);
                                                     setReminderName(reminder.name);
-                                                    setDate(new Date("Thu Jun 16 2022 19:37:39 GMT-0300 (Atlantic Daylight Time)"))
+                                                    setDate(new Date(reminder.date))
                                                 }}>Edit
                                             </Button>
                                         </Stack>
@@ -189,7 +272,7 @@ export default function RemindersGrid() {
 
             {/* Modify reminder modal*/}
 
-            <Modal size="lg" show={editReminder.show} onHide={handleClose}>
+            <Modal size="lg" show={updateReminder.show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Update Payment Reminder</Modal.Title>
                 </Modal.Header>
@@ -246,6 +329,8 @@ export default function RemindersGrid() {
                                 onChange={setDate}
                                 dateFormat="Pp"
                                 value={new Date(date)}
+                                minDate={new Date()}
+                                filterTime={filterPassedTime}
                             />
                         </Form.Group>
                         <Button className="m-3" variant="secondary" onClick={handleClose}>

@@ -1,8 +1,19 @@
+/**
+ * @author ${abhishekuppe}
+ */
+
+// All the CRUD operations related to the group sagas such as create, edit, view and delete group are added here
+
 import axios from "axios";
 import {put, takeLatest} from "redux-saga/effects";
 import {
     CREATE_GROUP,
-    createGroupResponse, DELETE_GROUP, EDIT_GROUP, editGroupResponse,
+    createGroupResponse,
+    DELETE_GROUP,
+    EDIT_GROUP,
+    editGroupResponse,
+    GET_USERS,
+    getUsersResponse,
     VIEW_GROUP,
     VIEW_GROUPS,
     viewGroupResponse,
@@ -26,10 +37,10 @@ export function* createGroupSaga() {
     yield takeLatest(CREATE_GROUP, createGroup);
 }
 
-function* viewGroups() {
+function* viewGroups(action) {
     try {
         const json = yield axios
-            .get("/api/view-groups/")
+            .get(`/api/view-groups/?user=${action.id}`)
             .then((res) => res.data);
         yield put(viewGroupsResponse(json));
     } catch (err) {
@@ -45,7 +56,7 @@ export function* viewGroupsSaga() {
 function* viewGroup(action) {
     try {
         const json = yield axios
-            .get(`/api/view-group/${action.id}`)
+            .get(`/api/view-group/${action.id}?user=${action.user}`)
             .then((res) => res.data);
         yield put(viewGroupResponse(json));
     } catch (err) {
@@ -61,7 +72,7 @@ export function* viewGroupSaga() {
 function* editGroup(action) {
     try {
         const json = yield axios
-            .put(`/api/edit-group/${action.id}`, action.groupData)
+            .put(`/api/update-group/${action.id}`, action.groupData)
             .then((res) => res.data);
         yield put(editGroupResponse(json));
     } catch (err) {
@@ -88,4 +99,20 @@ function* deleteGroup(action) {
 
 export function* deleteGroupSaga() {
     yield takeLatest(DELETE_GROUP, deleteGroup);
+}
+
+function* getUsers(action) {
+    try {
+        const json = yield axios
+            .get(`/api/view-users/`)
+            .then((res) => res.data);
+        yield put(getUsersResponse(json));
+    } catch (err) {
+        showError(err);
+        yield put(getUsersResponse(err));
+    }
+}
+
+export function* getUsersSaga() {
+    yield takeLatest(GET_USERS, getUsers);
 }
