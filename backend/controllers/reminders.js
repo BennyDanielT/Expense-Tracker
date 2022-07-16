@@ -57,6 +57,7 @@ export const createReminder = async (request, response) => {
             text: 'Payment Reminder \nAmount: '+amount+'$ \nDetails: '+name+' - '+desc
         };
 
+        // Code Reference [1]: https://stackoverflow.com/a/72279819/12146592
         // e-mail transport configuration
         let transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
@@ -67,6 +68,8 @@ export const createReminder = async (request, response) => {
                 pass: 'ythscondtmxkatkj'
             }
         });
+
+        // Code Reference [2]: https://blog.greenroots.info/send-and-schedule-e-mails-from-a-nodejs-app
 
         schedule.scheduleJob(data[0].id.toString(),new Date(date), function(){
             console.log('Sending mail');
@@ -136,6 +139,7 @@ export const updateReminder = async (request, response) => {
             return response.status(400).send(error);
         }
 
+        // Code Reference [4]: https://stackoverflow.com/a/53684854/12146592
         let current_job = schedule.scheduledJobs[id.toString()];
         current_job.cancel();
 

@@ -29,7 +29,6 @@ const reminder = (state = initialState, action) => {
             };
         }
         case CREATE_REMINDER_RESPONSE: {
-            console.log("reducer reminder", action.response)
             return {
                 ...state,
                 isCreateReminderResponseReceived: true,

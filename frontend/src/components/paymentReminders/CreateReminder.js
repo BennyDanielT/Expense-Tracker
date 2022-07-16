@@ -12,7 +12,6 @@ import {useAuth} from "../../contexts/Auth";
 import {supabase} from "../../supabase";
 
 
-// Reference : https://www.npmjs.com/package/react-datetime-picker
 export default function CreateReminder() {
 
     const [reminderName, setReminderName] = useState('');
@@ -86,11 +85,7 @@ export default function CreateReminder() {
 
     };
 
-    const handleChange = (newValue) => {
-        setDate(newValue);
-    };
-
-    // Code Reference: https://stackoverflow.com/questions/59826534/react-datepicker-mintime-and-maxtime-not-works
+    // Code Reference [5]: https://stackoverflow.com/questions/59826534/react-datepicker-mintime-and-maxtime-not-works
     const filterPassedTime = (time) => {
         const currentDate = new Date();
         const selectedDate = new Date(time);
@@ -146,6 +141,7 @@ export default function CreateReminder() {
 
                 <Form.Group controlId="date">
                     <Form.Label className="mt-1">Time</Form.Label>
+                    {/*Reference: https://www.npmjs.com/package/react-datetime-picker*/}
                     <DatePicker
                         showTimeSelect
                         selected={date}
