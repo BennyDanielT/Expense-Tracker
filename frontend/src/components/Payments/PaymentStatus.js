@@ -1,6 +1,12 @@
 import { Alert } from 'react-bootstrap';
-import { routes } from '../../constants';
 import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { isSuccessfulResponse, routes, showPopup } from '../../constants';
+import { recordTransaction } from '../../redux/actions';
+import {useEffect, useState} from "react";
+
+
+
 
 export default function PaymentStatus() {
   const history = useHistory();
@@ -47,6 +53,23 @@ export default function PaymentStatus() {
     );
   }
 
+  // const dispatch = useDispatch();
+
+  // const recordTransactionResponseData = useSelector(
+  //   (state) => state.transaction.recordTransactionResponseData,
+  // );
+
+  // const isRecordTransactionResponseReceived = useSelector(
+  //   (state) => state.transaction.isRecordTransactionResponseReceived,
+  // );
+
+  // useEffect(() => {
+  //   if (isSuccessfulResponse(recordTransactionResponseData)) {
+  //     showPopup('success', 'Success', 'Transaction recorded in database!');
+  //     // history.push(routes.viewGroup.path);
+  //   }
+  // }, [isRecordTransactionResponseReceived]);
+
   function Message() {
     if (status == 'success') {
       return (
@@ -60,11 +83,6 @@ export default function PaymentStatus() {
         <Failure />
       </div>
     );
-    // if (status == "success") {
-    //     return <Success/>;
-    // } else {
-    //     return <Failure/>;
-    // }
   }
 
   return <Message />;

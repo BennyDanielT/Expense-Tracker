@@ -6,10 +6,21 @@ import {
 } from '@stripe/react-stripe-js';
 import Swal from 'sweetalert2';
 import { Link, useHistory } from 'react-router-dom';
+import { createClient } from '@supabase/supabase-js';
 
-export default function CheckoutForm() {
+const SUPABASE_KEY =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtmeXhmd2NkZGlncXV6ZGNkdWl4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTc3MTc1NTAsImV4cCI6MTk3MzI5MzU1MH0.gQCSvtkF6PYgpDiepWPTqQkLjoAO-miKX4egXOkQiVU';
+
+const SUPABASE_URL = 'https://kfyxfwcddigquzdcduix.supabase.co';
+
+export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+export default function CheckoutForm(props) {
   const stripe = useStripe();
   const elements = useElements();
+
+  let val = props.data;
+  let transaction_status = '';
 
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,21 +42,23 @@ export default function CheckoutForm() {
     }
 
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+      transaction_status = paymentIntent.status;
       switch (paymentIntent.status) {
         case 'succeeded':
           setMessage('Payment succeeded!');
-          redirectURL = 'http://localhost:3000/payment-status/success';
+          // redirectURL = 'http://localhost:3000/payment-status/success';
+
           break;
         case 'processing':
           setMessage('Your payment is processing.');
           break;
         case 'requires_payment_method':
           setMessage('Your payment was not successful, please try again.');
-          redirectURL = 'http://localhost:3000/payment-status/failure';
+          // redirectURL = 'http://localhost:3000/payment-status/failure';
           break;
         default:
           setMessage('Something went wrong.');
-          redirectURL = 'http://localhost:3000/payment-status/failure';
+          // redirectURL = 'http://localhost:3000/payment-status/failure';
           break;
       }
     });
@@ -79,6 +92,15 @@ export default function CheckoutForm() {
 
     setIsLoading(true);
 
+    const { data, err } = await supabase.from('transaction').insert([
+      {
+        payee: val.firstName + ',' + val.lastName,
+        amount: val.amount,
+        timestamp: new Date().toUTCString(),
+        user_id: '4e8eea9b-2526-41e6-ad70-469e14b6d9a7',
+      },
+    ]);
+
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
@@ -105,7 +127,11 @@ export default function CheckoutForm() {
   return (
     <form id='payment-form' onSubmit={handleSubmit}>
       <PaymentElement id='payment-element' />
-      <button disabled={isLoading || !stripe || !elements} id='submit'>
+      <button
+        disabled={isLoading || !stripe || !elements}
+        id='submit'
+        className='stripe-button'
+      >
         <span id='button-text'>
           {isLoading ? <div className='spinner' id='spinner'></div> : 'Pay now'}
         </span>

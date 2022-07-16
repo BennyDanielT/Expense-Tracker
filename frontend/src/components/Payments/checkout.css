@@ -1,7 +1,7 @@
-#root {
+/* #root {
   display: flex;
   align-items: center;
-}
+} */
 .accordion-button:not(.collapsed) {
   color: #ffffff;
   background-color: #5469d4;
@@ -16,11 +16,11 @@
   box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
 }
 
-body {
+/* body {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
-}
+} */
 
 #payment-message {
   color: rgb(105, 115, 134);
@@ -35,7 +35,7 @@ body {
 }
 
 /* Buttons and links */
-button {
+.stripe-button {
   background: #5469d4;
   font-family: Arial, sans-serif;
   color: #ffffff;
@@ -51,11 +51,11 @@ button {
   width: 100%;
 }
 
-button:hover {
+.stripe-button:hover {
   filter: contrast(115%);
 }
 
-button:disabled {
+.stripe-button:disabled {
   opacity: 0.5;
   cursor: default;
 }

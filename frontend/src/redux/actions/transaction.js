@@ -8,7 +8,7 @@ export const recordTransaction = (transactionData) => ({
   transactionData,
 });
 
-export const createGroupResponse = (response) => ({
+export const recordTransactionResponse = (response) => ({
   type: RECORD_TRANSACTION_RESPONSE,
   response,
 });

@@ -1,8 +1,11 @@
 import { Heading } from '../Heading/Heading';
 import { Button, Form } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { isSuccessfulResponse, routes, showPopup } from '../../constants';
+import { recordTransaction } from '../../redux/actions';
 
 export default function InitiatePayment() {
   const [values, setValues] = useState({});
@@ -141,6 +144,23 @@ export default function InitiatePayment() {
     },
   };
 
+  const dispatch = useDispatch();
+
+  const recordTransactionResponseData = useSelector(
+    (state) => state.transaction.recordTransactionResponseData,
+  );
+
+  const isRecordTransactionResponseReceived = useSelector(
+        (state) => state.transaction.isRecordTransactionResponseReceived
+    );
+
+    useEffect(() => {
+      if (isSuccessfulResponse(recordTransactionResponseData)) {
+        showPopup('success', 'Success', 'Transaction recorded in database!');
+        // history.push(routes.viewGroup.path);
+      }
+    }, [isRecordTransactionResponseReceived]);
+
   const [mainErrors, setMainErrors] = useState('');
 
   const fields = [
@@ -181,6 +201,8 @@ export default function InitiatePayment() {
       onChange: onChangeFunctions.lastName,
     },
   ];
+
+
 
   const submitForm = (e) => {
     e.preventDefault();

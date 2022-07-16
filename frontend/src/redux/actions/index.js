@@ -1,2 +1,2 @@
 export * from './group.js';
-export * from './payment.js';
+export * from './transaction.js';

@@ -31,7 +31,7 @@ export default function PaymentMethod() {
     let testv = JSON.stringify({ amount: values.amount });
     console.log(testv);
 
-    fetch('http://localhost:8080/create-payment-intent', {
+    fetch('http://localhost:3001/create-payment-intent', {
       method: 'POST',
       headers: headers,
       // body: { amount: values.amount },
@@ -113,7 +113,7 @@ export default function PaymentMethod() {
         >
           {clientSecret && (
             <Elements options={options} stripe={stripePromise}>
-              <CheckoutForm />
+              <CheckoutForm data={values} />
             </Elements>
           )}
         </Card>
