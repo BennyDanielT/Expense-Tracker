@@ -190,22 +190,14 @@ function Routing() {
           </PrivateRoute>
 
           <Route exact path={routes.login.path}>
-            <Layout>
-              <Login />
-            </Layout>
+            {/* <Layout> */}
+            <Login />
+            {/* </Layout> */}
           </Route>
 
           <Route exact path={routes.register.path}>
-            <Layout>
-              <Signup />
-            </Layout>
+            <Signup />
           </Route>
-
-          <PrivateRoute exact path={routes.dashboard.path}>
-            <Layout>
-              <Dashboard />
-            </Layout>
-          </PrivateRoute>
 
           <PrivateRoute exact path={routes.forgotPassword.path}>
             <Layout>

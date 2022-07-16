@@ -60,37 +60,42 @@ export function Login() {
         <button type="submit">Login</button>
       </form> */}
       <Container>
+        <br></br>
         {/* Initiate the user signin using the API controller */}
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              id="input-email"
-              type="email"
-              placeholder="Enter email"
-              ref={emailRef}
-            />
-          </Form.Group>
+        <div class="row">
+          <div class="col-md-8 offset-md-2">
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control
+                  id="input-email"
+                  type="email"
+                  placeholder="Enter email"
+                  ref={emailRef}
+                />
+              </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              id="input-password"
-              type="password"
-              placeholder="Password"
-              ref={passwordRef}
-            />
-          </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  id="input-password"
+                  type="password"
+                  placeholder="Password"
+                  ref={passwordRef}
+                />
+              </Form.Group>
 
-          <div style={{ textAlign: "center" }}>
-            {" "}
-            <Button variant="primary" type="submit">
-              Login
-            </Button>{" "}
-            <br></br> <br></br>
-            Don't have an account? <Link to="/register">Sign Up</Link>
+              <div style={{ textAlign: "center" }}>
+                {" "}
+                <Button variant="primary" type="submit">
+                  Login
+                </Button>{" "}
+                <br></br> <br></br>
+                Don't have an account? <Link to="/register">Sign Up</Link>
+              </div>
+            </Form>
           </div>
-        </Form>
+        </div>
       </Container>
       <p></p>
     </>

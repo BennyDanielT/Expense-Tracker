@@ -35,9 +35,6 @@ function SideBar() {
             <MenuItem>
               <Link to={routes.passwordChanged.path}>Change Password</Link>
             </MenuItem>
-            <MenuItem>
-              <Link to={routes.dashboard.path}>Dashboard</Link>
-            </MenuItem>
           </SubMenu>
 
           <SubMenu title={"Expenses"}>
