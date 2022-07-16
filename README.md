@@ -17,6 +17,9 @@
 1. Abhishek Uppe
    1. Group Expense Tracking
 
+2. Vatsal Yadav
+   1. Payment Reminder
+
 ## Tasks developed
 
 1. Abhishek Uppe
@@ -25,6 +28,11 @@
    3. View Group
    4. Delete Group
 
+2. Vatsal Yadav
+   1. Create Payment Reminder
+   2. Modify Payment Reminder
+   3. Delete Payment Reminder
+   4. View Payment Reminder
 
 ## Files worked on
 
@@ -59,6 +67,25 @@
 2. backend/routes/index.js (Partial)
 3. backend/index.js
 4. backend/utils.js
+
+### 2. Vatsal Yadav
+
+**Feature: Payment Reminder**
+
+**Frontend**
+1. frontend\src\components\paymentReminders\RemindersGrid.js
+2. frontend\src\components\paymentReminders\CreateReminder.js
+3. frontend\src\redux\actions\reminder.js
+4. frontend\src\redux\reducers\reminder.js
+5. frontend\src\redux\sagas\reminder.js
+6. frontend\src\redux\actions\index.js (partial)
+7. frontend\src\redux\reducers\index.js (partial)
+8. frontend\src\redux\sagas\index.js (partial)
+9. frontend\src\components\routing\index.js (partial)
+
+**Backend**
+1. backend/controllers/reminders.js
+2. backend/routes/index.js (Partial)
 
 ## Getting Started
 
@@ -105,6 +132,8 @@ Frontend
 - [SweetAlert2](https://sweetalert2.github.io/) - Beautiful Alerts for React.
 - [React Redux](https://react-redux.js.org/) - Used for state management.
 - [Redux Saga](https://redux-saga.js.org/) - Middleware for redux.
+- [React Datepicker](https://www.npmjs.com/package/react-datepicker) - Reusable datepicker component for React.
+- [Moment](https://www.npmjs.com/package/moment) - A JavaScript date library for parsing, validating, manipulating, and formatting dates.
 
 Backend
 
@@ -114,6 +143,8 @@ Backend
 * [Supabase](https://supabase.com/) - API Client for PostgreSQL.
 * [Docker](https://www.docker.com/) - Creating single container for frontend and backend folder.
 * [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/) - Used for deploying both frontend and backend applications using Docker.
+* [Nodemailer](https://nodemailer.com/about/) - Node.js module to send emails.
+* [Node Schedule](https://github.com/node-schedule/node-schedule#readme) - A flexible job scheduler for Node.js for scheduling emails.
 
 ## Folder Structure
 
