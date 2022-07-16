@@ -9,7 +9,12 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import { useAuth } from "../../contexts/Auth.js";
-
+/**
+ * Author:    Ayush Verma
+ * Created:   15.07.2022
+ *
+ * (c) Copyright by Group 24.
+ **/
 export function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();

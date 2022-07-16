@@ -2,7 +2,12 @@ import { Container, Card, Table, Button } from "react-bootstrap";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { useAuth } from "../../contexts/Auth.js";
-
+/**
+ * Author:    Ayush Verma
+ * Created:   15.07.2022
+ *
+ * (c) Copyright by Group 24.
+ **/
 import { Link } from "react-router-dom";
 import Form from "./Utilities/FormHelper";
 import "../../css/user_management.css";
