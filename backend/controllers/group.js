@@ -160,7 +160,7 @@ export const viewGroup = async (request, response) => {
         const expenses = {lent: [], owed: []};
 
         expenseResponse.data.forEach((exp) => {
-           if (exp.id === user) {
+           if (exp.user_id === user) {
                expenses['lent'].push(exp);
            } else {
                if (exp.user_ids.includes(user)) {
@@ -178,13 +178,21 @@ export const viewGroup = async (request, response) => {
 
 // The controller view all the groups in database
 export const viewGroups = async (request, response) => {
+
+    const user = request.query.user;
+
     try {
-        const {data, error} = await supabase
+        let {data, error} = await supabase
             .from('group')
             .select('*')
+
+        data = data.filter((ele) => ele.user_ids.includes(user))
+
         if (error) {
             return response.status(400).send(error);
         }
+
+        console.log(data);
         return response.send({success: data});
     } catch (e) {
         return response.status(500).send(errorCodeResponses["500"]);
@@ -195,8 +203,10 @@ export const viewGroups = async (request, response) => {
 export const viewUsers = async (request, response) => {
     try {
         const {data, error} = await supabase
-            .from('profiles')
-            .select('*')
+            .from('users')
+            .select('*');
+
+
         if (error) {
             return response.status(400).send(error);
         }

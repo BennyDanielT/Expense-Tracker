@@ -33,7 +33,7 @@ function GroupHomePage() {
     const { user } = useAuth();
 
     useEffect(() => {
-        dispatch(viewGroups());
+        dispatch(viewGroups(user().user.identities[0].id));
     }, []);
 
     // show the success message only if view groups response is received successfully

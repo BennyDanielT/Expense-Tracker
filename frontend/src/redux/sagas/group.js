@@ -37,10 +37,10 @@ export function* createGroupSaga() {
     yield takeLatest(CREATE_GROUP, createGroup);
 }
 
-function* viewGroups() {
+function* viewGroups(action) {
     try {
         const json = yield axios
-            .get("/api/view-groups/")
+            .get(`/api/view-groups/?user=${action.id}`)
             .then((res) => res.data);
         yield put(viewGroupsResponse(json));
     } catch (err) {

@@ -167,11 +167,7 @@ function DeleteGroup() {
 
                     <Card className="p-2 mb-4">
                         <div>
-                            <div className="mb-2">The group expenses are as following. If you delete the group all the
-                                expenses
-                                will
-                                be
-                                deleted.
+                            <div className="mb-2">The group expenses are as following.
                             </div>
                             <div>{expenses}</div>
                         </div>
