@@ -1,4 +1,5 @@
 import {useId, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {Button, ButtonGroup, Form} from "react-bootstrap";
 import Select from "react-select";
 import {getLocalStorage, routes, setLocalStorage} from "../../constants";
@@ -6,8 +7,13 @@ import Swal from "sweetalert2";
 import {useHistory} from "react-router-dom";
 import "../../css/expense.css";
 import {Heading} from "../Heading/Heading";
+import {getUserFullName, imgToBase64,   showPopup} from "../../constants";
+import {usePrevious} from "react-use";
+import {useEffect} from "react";
 import {dummyGroupData, dummyMembersData} from "./helpers";
+import {addExpense, getUsers} from "../../redux/actions";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {isSuccessfulResponse} from "../../constants";
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 
@@ -15,8 +21,7 @@ function AddExepnse() {
     const [values, setValues] = useState({name: "", icon: "",amount:"", type: "home", members: null, groups: null,});
     const [errors, setErrors] = useState({});
     const [mainError, setMainError] = useState("");
-    const history = useHistory();
-    const uniqueId = useId();
+    
 
     const onChangeFunctions = {
         'name': (e) => {
@@ -28,12 +33,12 @@ function AddExepnse() {
             if (!value.length) {
                 setErrors({
                     ...errors,
-                    name: "Group name is a required field"
+                    name: "Expense name is a required field"
                 });
             } else if (value.length > 50) {
                 setErrors({
                     ...errors,
-                    name: "Group name shouldn't be more than 50 characters"
+                    name: "Expense name shouldn't be more than 50 characters"
                 });
             } else {
                 setErrors({
@@ -107,6 +112,50 @@ function AddExepnse() {
         }
     }
 
+    const dispatch = useDispatch();
+
+    const addExpenseResponseData = useSelector(
+        (state) => state.expense.addExpenseResponseData
+    );
+
+    const isAddExpenseResponseReceived = useSelector(
+        (state) => state.expense.isAddExpenseResponseReceived
+    );
+
+    const history = useHistory();
+
+    const prevIsAddExpenseResponseReceived = usePrevious(isAddExpenseResponseReceived);
+
+    useEffect(() => {
+        if (prevIsAddExpenseResponseReceived !== undefined && prevIsAddExpenseResponseReceived !== isAddExpenseResponseReceived) {
+            if (isSuccessfulResponse(addExpenseResponseData)) {
+                showPopup("success", "Success", "Expense Successfully Created");
+                history.push(routes.expense.path);
+            }
+        }
+    }, [isAddExpenseResponseReceived]);
+
+    const isUsersResponseReceived = useSelector((state) => state.expense.isUsersResponseReceived);
+    const usersResponseData = useSelector((state) => state.expense.usersResponseData);
+
+
+    useEffect(() => {
+        dispatch(getUsers());
+    }, []);
+
+    const [users, setUsers] = useState([]);
+    const [groups, setGroups] = useState([]);
+
+    useEffect(() => {
+        if (isSuccessfulResponse(usersResponseData)) {
+            const array = [];
+            usersResponseData['success'].forEach((ele) => {
+                array.push({label: getUserFullName(ele), value: ele.user_id});
+            });
+            setUsers(array);
+        }
+    }, [isUsersResponseReceived]);
+
     const submitForm = (e) => {
 
         const callErrorFunctions = () => {
@@ -124,21 +173,9 @@ function AddExepnse() {
             });
             if (!error) {
                 setMainError("");
-                const expenses = getLocalStorage("expenses")
-                let newExpenses = [];
-                if (expenses) {
-                    newExpenses = JSON.parse(expenses);
-                }
-                newExpenses.push({[uniqueId]: values});
-                setLocalStorage("expenses", JSON.stringify(newExpenses));
-                Swal.fire(
-                    'Expense Created',
-                    'New Expense is created',
-                    'success'
-                ).then((ele) => {
-                    setTimeout(() => {
-                        history.push(routes.expense.path);
-                    }, 100);
+                imgToBase64(values['image'], (res) => {
+                    values['image'] = res;
+                    dispatch(addExpense(values));
                 });
             } else {
                 callErrorFunctions();
@@ -162,8 +199,8 @@ function AddExepnse() {
                 <Form.Group className="mb-3" controlId="expenseIcon">
                     <Form.Label>Expense photo</Form.Label>
                     <Form.Control type="file" accept="image/*" placeholder="Add expense icon"
-                                  onChange={onChangeFunctions['icon']}/>
-                    <div className="errors">{errors['icon']}</div>
+                                  onChange={onChangeFunctions['image']}/>
+                    <div className="errors">{errors['image']}</div>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="expenseAmount">
@@ -183,12 +220,23 @@ function AddExepnse() {
                     </div>
                     <div className="errors">{errors['type']}</div>
                 </Form.Group>
+                <Form.Group className="mb-3 expense-tag" controlId="expenseType">
+                    <Form.Label>Tag</Form.Label>
+                    <div>
+                        <ButtonGroup aria-label="Group Types" onClick={onChangeFunctions['type']}>
+                            <Button variant="secondary selected" value={values["type"]}>Food</Button>
+                            <Button variant="secondary" value="trip">Trip</Button>
+                            <Button variant="secondary" value="others">Others</Button>
+                        </ButtonGroup>
+                    </div>
+                    <div className="errors">{errors['type']}</div>
+                </Form.Group>
                 <Form.Group className="mb-3" controlId="react-select-3-input">
                     <Form.Label>Available Groups</Form.Label>
                     <Select
                         isMulti
                         name="colors"
-                        options={dummyGroupData}
+                        options={groups}
                         className="basic-multi-select"
                         classNamePrefix="select"
                         onChange={onChangeFunctions['groups']}
@@ -200,12 +248,12 @@ function AddExepnse() {
                     <Select
                         isMulti
                         name="colors"
-                        options={dummyMembersData}
+                        options={users}
                         className="basic-multi-select"
                         classNamePrefix="select"
-                        onChange={onChangeFunctions['members']}
+                        onChange={onChangeFunctions['user_ids']}
                     />
-                    <div className="errors">{errors['members']}</div>
+                    <div className="errors">{errors['user_ids']}</div>
                 </Form.Group>
 
                 <div className="errors mb-3">{mainError}</div>
