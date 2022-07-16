@@ -15,6 +15,7 @@
 * Devarshi Vyas (dv459527@dal.ca)
 * Ayush Verma (ayush.verma@dal.ca)
 * Smit Thakkar (sm928548@dal.ca)
+* Benny Tharigopala (bn489600@dal.ca)
 
 ## Features developed
 
@@ -32,6 +33,10 @@
 
 5. Smit Thakkar
    1. Expense Tracker
+
+6. Benny Tharigopala
+   1. In-App Payment Integration
+
 
 ## Tasks developed
 
@@ -65,6 +70,13 @@
    3. Settle Uppe
    4. Delete Expense
 
+6. Benny Tharigopala
+   1. Initiate Payment
+   2. Input Payment Method Details
+   3. View Payment Status
+   4. View Payment History
+
+
 ## Individual Branches
 
 ### 1. Abhishek Uppe
@@ -78,10 +90,14 @@ https://git.cs.dal.ca/ayushv/group24_expensetracker/-/tree/vatsal-yadav-b0089303
 https://git.cs.dal.ca/ayushv/group24_expensetracker/-/tree/devarshi-vyas-b00878443
 
 ### 4. Ayush Verma
-https://git.cs.dal.ca/ayushv/group24_expensetracker/-/tree/vatsal-yadav-b00893024
+https://git.cs.dal.ca/ayushv/group24_expensetracker/-/tree/ayush-verma-b00893024
 
 ### 5. Smit Thakkar
 https://git.cs.dal.ca/ayushv/group24_expensetracker/-/tree/smit-thakkar-b00896215
+
+### 6. Benny Tharigopala
+https://git.cs.dal.ca/ayushv/group24_expensetracker/-/tree/benny-tharigopala-b00899629
+
 
 ## Files worked on
 
@@ -197,6 +213,30 @@ https://git.cs.dal.ca/ayushv/group24_expensetracker/-/tree/smit-thakkar-b0089621
 
 1. backend/controllers/expense.js
 2. backend/routes/index.js (Partial)
+
+## 6. Benny Tharigopala
+
+**Feature: In-App Payment Integration**
+**Frontend**
+
+1. frontend/src/components/Payments/InitiatePayment.jsx
+2. frontend/src/components/Payments/PaymentMethod.jsx
+3. frontend/src/components/Payments/PaymentStatus.jsx
+4. frontend/src/components/Payments/PaymentHistory.jsx
+5. frontend/src/components/Payments/checkout.jsx
+6. frontend/src/redux/actions/transaction.jsx
+7. frontend/src/redux/reducers/transaction.jsx
+8. frontend/src/redux/sagas/transaction.jsx
+9. frontend/src/routing/index.js (Team-Effort)
+10. frontend/src/App.js (Partial)
+11. frontend/src/constants.js (Partial)
+12. frontend/src/App.css (Partial)
+
+**Backend**
+
+1. backend/controllers/transaction.js
+2. backend/routes/index.js (Team-Effort)
+
 
 
 ## Getting Started
