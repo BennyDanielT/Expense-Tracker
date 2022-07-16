@@ -13,6 +13,7 @@
 * Abhishek Uppe (ab577089@dal.ca)
 * Vatsal Yadav
 * Devarshi Vyas (dv459527@dal.ca)
+* Ayush Verma (ayush.verma@dal.ca)
 
 ## Features developed
 
@@ -24,6 +25,9 @@
 
 3. Devarshi Vyas
    1. Categorial Expense (Tags)
+
+4. Ayush Verma
+   1. User management and Partial coupon management
 
 ## Tasks developed
 
@@ -45,6 +49,11 @@
    3. View Tag Details (an individual tag)
    4. View Tags (per user)
    5. Delete Tag
+4. Ayush Verma
+   1. SignIn
+   2. SignUp
+   3. Change Password
+   4. Logout
 
 ## Individual Branches
 
@@ -57,6 +66,9 @@ https://git.cs.dal.ca/ayushv/group24_expensetracker/-/tree/vatsal-yadav-b0089303
 
 ### 3. Devarshi Vyas
 https://git.cs.dal.ca/ayushv/group24_expensetracker/-/tree/devarshi-vyas-b00878443
+
+### 4. Ayush Verma
+https://git.cs.dal.ca/ayushv/group24_expensetracker/-/tree/vatsal-yadav-b00893024
 
 ## Files worked on
 
@@ -119,6 +131,23 @@ https://git.cs.dal.ca/ayushv/group24_expensetracker/-/tree/devarshi-vyas-b008784
 **Feature: Categorial Expense (Tags)**
 
 **Frontend**
+1. frontend/src/components/UserManagement/ChangePassword.jsx
+2. frontend/src/components/UserManagement/ForgetPassword.jsx
+3. frontend/src/components/UserManagement/Signup.jsx
+4. frontend/src/components/UserManagement/Login.jsx
+5. frontend/src/redux/reducers/config.js
+6. frontend/src/components/HomePage.jsx
+7. frontend/src/routing/index.js (partial)
+
+**Backend**
+1. backend/controllers/tags.js
+2. backend/routes/index.js (partial)
+
+## 4. Ayush Verma
+
+**Feature: Categorial Expense (Tags)**
+
+**Frontend**
 1. frontend/src/components/tags/CreateEditTag.jsx
 2. frontend/src/components/tags/ViewTags.jsx
 3. frontend/src/components/tags/ViewTagDetails.jsx
@@ -131,8 +160,8 @@ https://git.cs.dal.ca/ayushv/group24_expensetracker/-/tree/devarshi-vyas-b008784
 10. frontend/src/App.css (Partial)
 
 **Backend**
-1. backend/controllers/tags.js
-2. backend/routes/index.js (partial)
+1. backend/controllers/coupons.js
+2. backend/controllers/userManagement.js
 
 ## Getting Started
 
