@@ -14,6 +14,8 @@ export const VIEW_TAG = "VIEW_TAG";
 export const VIEW_TAG_RESPONSE = "VIEW_TAG_RESPONSE";
 export const VIEW_TAGS = "VIEW_TAGS";
 export const VIEW_TAGS_RESPONSE = "VIEW_TAGS_RESPONSE";
+export const FETCH_EXPENSE = "FETCH_EXPENSE";
+export const FETCH_EXPENSE_RESPONSE = "FETCH_EXPENSE_RESPONSE";
 
 export const createTag = (tagData) => ({
   type: CREATE_TAG,
@@ -62,5 +64,15 @@ export const viewTag = (id) => ({
 
 export const viewTagResponse = (response) => ({
   type: VIEW_TAG_RESPONSE,
+  response,
+});
+
+export const fetchExpenses = (response) => ({
+  type: FETCH_EXPENSE,
+  response,
+});
+
+export const fetchExpensesResponse = (response) => ({
+  type: FETCH_EXPENSE_RESPONSE,
   response,
 });

@@ -2,75 +2,64 @@
  * @author ${devarshivyas}
  */
 
-import { useState } from "react";
-import { Card, Table, Button } from "react-bootstrap";
-import { useHistory, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Card, Table } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 import "../../css/tags.css";
+import { usePrevious } from "react-use";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchExpenses } from "../../redux/actions";
+import { Loading } from "../Loading";
 
 // function responsible to create the component to view a specific tag's details
 // list of the expenses which are associated with this tag are displayed by this component
 function ViewTagDetails() {
-  const [errors, setErrors] = useState({});
-  const [mainError, setMainError] = useState("");
-  const history = useHistory();
   const location = useLocation();
 
+  let dispatch = useDispatch();
+
   const [tagDetails, setTagDetails] = useState({
-    tagId: location.state?.tag?.tagId || "",
+    tagId: location.state?.tag?.id || "",
     name: location.state?.tag?.name || "",
     description: location.state?.tag?.description || "",
     icon: location.state?.tag?.icon || null,
-    usage: location.state?.tag?.usage || 0,
+    usage: location.state?.tag?.usage_count || 0,
+    user_id: location.state?.tag?.user_id || "",
   });
 
-  const [expenses, setExpense] = useState([
-    {
-      id: "1234",
-      name: "expense_1",
-      amount: 1102,
-      tag: {
-        tagId: "1234",
-        name: "some tag",
-      },
-      type: "equally",
-      group_ids: [],
-      user_ids: [111],
-    },
-  ]);
+  const [expenses, setExpenses] = useState([]);
+
+  // hook to request the data
+  useEffect(() => {
+    dispatch(fetchExpenses(tagDetails.user_id));
+  }, [dispatch]);
 
   // Fetch all related expenses request and processing
   // hook to check if the data is received from the backend
   // UI is updated accordingly
 
-  // const deleteTagResponseData = useSelector(
-  //   (state) => state.tag.deleteTagResponseData
-  // );
+  const fetchExpensesResponseData = useSelector(
+    (state) => state.tag.fetchExpensesResponseData
+  );
 
-  // const isDeleteTagResponseReceived = useSelector(
-  //   (state) => state.tag.isDeleteTagResponseReceived
-  // );
+  const isFetchExpensesResponseReceived = useSelector(
+    (state) => state.tag.isFetchExpensesResponseReceived
+  );
 
-  // const prevIsDeleteTagResponseReceived = usePrevious(
-  //   isDeleteTagResponseReceived
-  // );
+  const prevIsFetchExpensesResponseReceived = usePrevious(
+    isFetchExpensesResponseReceived
+  );
 
-  // useEffect(() => {
-  //   if (
-  //     prevIsDeleteTagResponseReceived !== undefined &&
-  //     isDeleteTagResponseReceived
-  //   ) {
-  //     if (deleteTagResponseData.error) {
-  //       Swal.fire("Failure", deleteTagResponseData.message, "failure");
-  //     } else {
-  //       Swal.fire("Deleted!", "Tag has been deleted.", "success");
-  //       setTags(
-  //         tags.filter((tag) => {
-  //           return tag.id != deleteTagResponseData.data.id;
-  //         })
-  //       );
-  //     }
-  //   }
-  // }, [isDeleteTagResponseReceived]);
+  useEffect(() => {
+    if (fetchExpensesResponseData) {
+      if (fetchExpensesResponseData.error) {
+        // TODO: handle error
+        setExpenses([]);
+      } else {
+        setExpenses(fetchExpensesResponseData.data);
+      }
+    }
+  }, [isFetchExpensesResponseReceived]);
 
   return (
     <div
@@ -94,32 +83,34 @@ function ViewTagDetails() {
       </Card>
       <hr />
       <h3>Related Expenses</h3>
-      {/* {!isViewTagsResponseReceived ? (
+      {!isFetchExpensesResponseReceived ? (
         <Loading />
-      ) : ( */}
-      <Table striped bordered hover responsive>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Expense Id</th>
-            <th>Amount</th>
-            <th>Type</th>
-            <th>U/G</th>
-          </tr>
-        </thead>
-        <tbody>
-          {expenses.map((expense, index) => (
-            <tr key={index}>
-              <td>{expense.id}</td>
-              <td>{expense.name}</td>
-              <td>{expense.amount}</td>
-              <td>{expense.type}</td>
-              <td>{expense.group_ids.length > 0 ? "G" : "U"}</td>
+      ) : (
+        <Table striped bordered hover responsive>
+          <thead>
+            <tr>
+              <th>Expense Id</th>
+              <th>Name</th>
+              <th>Amount</th>
+              <th>Type</th>
+              <th>U/G</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
-      {/* )} */}
+          </thead>
+          <tbody>
+            {expenses &&
+              expenses.length &&
+              expenses.map((expense, index) => (
+                <tr key={index}>
+                  <td>{expense.id}</td>
+                  <td>{expense.name}</td>
+                  <td>{expense.amount}</td>
+                  <td>{expense.type}</td>
+                  <td>{expense.group_ids.length > 0 ? "G" : "U"}</td>
+                </tr>
+              ))}
+          </tbody>
+        </Table>
+      )}
     </div>
   );
 }

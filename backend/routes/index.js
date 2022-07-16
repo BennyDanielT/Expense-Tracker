@@ -17,6 +17,7 @@ import {
   updateTag,
   viewTag,
   viewTags,
+  viewTagExpenses,
 } from "../controllers/tags.js";
 
 import {
@@ -44,6 +45,7 @@ router.put("/update-tag/:id", updateTag);
 router.delete("/delete-tag/:id", deleteTag);
 router.get("/view-tags", viewTags);
 router.get("/view-tag/:id", viewTag);
+router.get("/fetch-expenses/:id", viewTagExpenses);
 
 router.post("/user-signup", userSignup);
 // routing for the coupon management
