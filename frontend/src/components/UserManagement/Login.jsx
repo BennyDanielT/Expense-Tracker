@@ -1,14 +1,20 @@
 // src/components/Login.js
 
 // src/components/Login.js
-
+import Swal from "sweetalert2";
+// Used sweet alerts for alerts
 import { useRef, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import { useAuth } from "../../contexts/Auth.js";
-
+/**
+ * Author:    Ayush Verma
+ * Created:   15.07.2022
+ *
+ * (c) Copyright by Group 24.
+ **/
 export function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -29,9 +35,14 @@ export function Login() {
     const { error } = await signIn({ email, password });
 
     if (error) {
-      alert("error signing in");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Wrong password",
+      });
     } else {
       // Redirect user to Dashboard
+
       history.push("/");
     }
   }
@@ -49,6 +60,7 @@ export function Login() {
         <button type="submit">Login</button>
       </form> */}
       <Container>
+        {/* Initiate the user signin using the API controller */}
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>

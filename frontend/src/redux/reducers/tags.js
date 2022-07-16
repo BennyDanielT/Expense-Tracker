@@ -1,3 +1,7 @@
+/**
+ * @author ${devarshivyas}
+ */
+
 import {
   CREATE_TAG,
   CREATE_TAG_RESPONSE,
@@ -11,6 +15,7 @@ import {
   VIEW_TAGS_RESPONSE,
 } from "../actions";
 
+// Setting initial state of the reducer
 const initialState = {
   viewTagResponseData: {},
   isViewTagResponseReceived: false,
@@ -24,6 +29,7 @@ const initialState = {
   isCreateTagResponseReceived: false,
 };
 
+// All the CRUD operations related to the tag reducers such as create, edit, view and delete tag are added here
 const tag = (state = initialState, action) => {
   switch (action.type) {
     case CREATE_TAG: {

@@ -5,9 +5,14 @@ import { useHistory, Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
-
+import Swal from "sweetalert2";
 import { useAuth } from "../../contexts/Auth.js";
-
+/**
+ * Author:    Ayush Verma
+ * Created:   15.07.2022
+ *
+ * (c) Copyright by Group 24.
+ **/
 export function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -28,7 +33,11 @@ export function Signup() {
     const { error } = await signUp({ email, password });
 
     if (error) {
-      alert("error signing in");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Oops! Atleast 8 characters please",
+      });
     } else {
       // Redirect user to Dashboard
       history.push("/");
@@ -48,6 +57,7 @@ export function Signup() {
         <button type="submit">Sign up</button>
       </form> */}
       <Container>
+        {/* Handles the user signuop for the user */}
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
@@ -72,10 +82,11 @@ export function Signup() {
           <div style={{ textAlign: "center" }}>
             {" "}
             <Button variant="primary" type="submit">
-              Login
+              {/* Login function for the sign */}
+              Register
             </Button>{" "}
             <br></br> <br></br>
-            Don't have an account? <Link to="/register">Sign Up</Link>
+            Don't have an account? <Link to="/login">Login</Link>
           </div>
         </Form>
       </Container>

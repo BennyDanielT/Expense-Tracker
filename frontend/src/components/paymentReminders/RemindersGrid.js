@@ -13,6 +13,7 @@ import {deleteReminder, editReminder, viewReminders} from "../../redux/actions";
 import {usePrevious} from "react-use";
 import moment from "moment";
 import {useAuth} from "../../contexts/Auth";
+import {supabase} from "../../supabase";
 
 
 export default function RemindersGrid() {
@@ -51,6 +52,7 @@ export default function RemindersGrid() {
 
 
     useEffect(() => {
+        console.log("user",supabase.auth.user().email)
         dispatch(viewReminders({user_id: user().user.identities[0].user_id}));
     }, []);
 
@@ -171,10 +173,13 @@ export default function RemindersGrid() {
     const handleSubmit = (event) => {
         const form = event.currentTarget;
         event.preventDefault();
-        if (form.checkValidity() === false) {
+        if(date <= new Date()){
+            alert("Reminder cannot be set in past.")
+        }
+        else if (form.checkValidity() === false) {
             event.stopPropagation();
         } else {
-            dispatch(editReminder({id:updateReminder.reminder.id, name: reminderName, amount: reminderAmount, user_id: user().user.identities[0].user_id, desc: reminderDesc, date: date}));
+            dispatch(editReminder({id:updateReminder.reminder.id, name: reminderName, amount: reminderAmount, user_id: user().user.identities[0].user_id, desc: reminderDesc, date: date, email: supabase.auth.user().email}));
             handleClose();
             // Swal.fire("Payment Reminder Changed!", "Payment Reminder has been successfully updated.", "success");
 
@@ -182,6 +187,12 @@ export default function RemindersGrid() {
 
         setValidated(true);
 
+    };
+    const filterPassedTime = (time) => {
+        const currentDate = new Date();
+        const selectedDate = new Date(time);
+
+        return currentDate.getTime() < selectedDate.getTime();
     };
 
     return (
@@ -318,6 +329,8 @@ export default function RemindersGrid() {
                                 onChange={setDate}
                                 dateFormat="Pp"
                                 value={new Date(date)}
+                                minDate={new Date()}
+                                filterTime={filterPassedTime}
                             />
                         </Form.Group>
                         <Button className="m-3" variant="secondary" onClick={handleClose}>

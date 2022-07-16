@@ -2,6 +2,14 @@ import { supabase } from "../models/index.js";
 import { errorCodeResponses, isFieldAbsent } from "../utils.js";
 import * as _ from "lodash";
 
+/**
+ * Author:    Ayush Verma
+ * Created:   15.07.2022
+ *
+ * (c) Copyright by Group 24.
+ **/
+
+// Signup module for the NodeJS
 export const userSignup = async (request, response) => {
   try {
     const { first_name, last_name, password, email } = request.body;
@@ -31,6 +39,7 @@ export const userSignup = async (request, response) => {
   }
 };
 
+// Module for the signin for the user
 export const userSignin = async (request, response) => {
   try {
     const { password, email } = request.body;
