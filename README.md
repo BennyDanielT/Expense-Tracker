@@ -1,4 +1,4 @@
-# Assignment 3 - Individual Submission
+# Assignment 3
 
 ## Group Information
 
