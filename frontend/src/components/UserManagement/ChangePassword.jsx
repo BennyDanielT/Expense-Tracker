@@ -12,7 +12,12 @@ function PasswordChanged() {
 
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
+  /**
+   * Author:    Ayush Verma
+   * Created:   15.07.2022
+   *
+   * (c) Copyright by Group 24.
+   **/
   function generateString(length) {
     let result = " ";
     const charactersLength = characters.length;

@@ -1,11 +1,16 @@
 import {useHistory, useLocation} from "react-router-dom";
 import {Heading} from "../Heading/Heading";
 import {Button, Form} from "react-bootstrap";
-import {useState} from "react";
 import Select from "react-select";
 import {dummyMembersData, dummyGroupData} from "./helpers";
 import Swal from "sweetalert2";
 import {routes} from "../../constants";
+import {useEffect, useState} from "react";
+import {  useParams} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {getUserFullName, imgToBase64, isSuccessfulResponse,  showPopup} from "../../constants";
+import {usePrevious} from "react-use";
+import {editExpense, getUsers, viewExpense} from "../../redux/actions";
 
 function EditExpense() {
     const location = useLocation();
@@ -98,36 +103,72 @@ function EditExpense() {
 
     const history = useHistory();
 
-    const editExpense = (e) => {
+    const dispatch = useDispatch();
 
-        const callErrorFunctions = () => {
-            setMainError("Enter all the form fields to continue!!");
-        }
+    const {id} = useParams();
 
-        e.preventDefault();
-        if (Object.keys(values).length) {
-            let error = false;
-            Object.values(values).forEach((value) => {
-                if (!value || (Array.isArray(value) && !value.length)) {
-                    error = true
-                }
+    useEffect(() => {
+        dispatch(getUsers());
+        dispatch(viewExpense(id));
+    }, []);
+
+    const viewExpenseResponseData = useSelector(
+        (state) => state.expense.viewExpenseResponseData
+    );
+
+    const isViewExpenseResponseReceived = useSelector(
+        (state) => state.expense.isViewExpenseResponseReceived
+    );
+
+    const prevIsViewExpenseResponseReceived = usePrevious(isViewExpenseResponseReceived);
+
+    useEffect(() => {
+        if (prevIsViewExpenseResponseReceived !== isViewExpenseResponseReceived && isSuccessfulResponse(viewExpenseResponseData)) {
+            const data = viewExpenseResponseData['success'][0];
+            const users = [];
+            data.users.forEach((ele) => {
+                users.push({label: getUserFullName(ele), value: ele.user_id});
             });
-            if (!error) {
-                setMainError("");
-                Swal.fire(
-                    'Edit',
-                    'Your expense has been been updated',
-                    'success'
-                ).then(() => {
-                    history.push(routes.expense.path);
-                })
-            } else {
-                callErrorFunctions();
-            }
-        } else {
-            callErrorFunctions();
+            setValues({...values, name: data.name, users});
         }
-    };
+    }, [isViewExpenseResponseReceived]);
+
+    const isUsersResponseReceived = useSelector((state) => state.expense.isUsersResponseReceived);
+    const usersResponseData = useSelector((state) => state.expense.usersResponseData);
+    const prevIsUsersResponseReceived = usePrevious(isUsersResponseReceived);
+
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        if (prevIsUsersResponseReceived !== undefined && isUsersResponseReceived !== prevIsUsersResponseReceived) {
+            if (isSuccessfulResponse(usersResponseData)) {
+                const array = [];
+                usersResponseData['success'].forEach((ele) => {
+                    array.push({label: getUserFullName(ele), value: ele.user_id});
+                });
+                setUsers(array);
+            }
+        }
+    }, [isUsersResponseReceived]);
+
+    const editExpenseResponseData = useSelector(
+        (state) => state.expense.editExpenseResponseData
+    );
+
+    const isEditExpenseResponseReceived = useSelector(
+        (state) => state.expense.isEditExpenseResponseReceived
+    );
+
+    const prevIsEditExpenseResponseReceived = usePrevious(isEditExpenseResponseReceived);
+
+    useEffect(() => {
+        if (prevIsEditExpenseResponseReceived !== isEditExpenseResponseReceived && prevIsEditExpenseResponseReceived !== undefined) {
+            if (isSuccessfulResponse(editExpenseResponseData)) {
+                showPopup("success", "Success", "Expense Edited Successfully");
+                history.push(routes.expense.path);
+            }
+        }
+    }, [isEditExpenseResponseReceived]);
 
     return (
         <div className="edit-expense p-4">
@@ -146,25 +187,14 @@ function EditExpense() {
                     <div className="errors">{errors['amount']}</div>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="groupIcon">
-                    <Form.Label>Expense Icon</Form.Label>
-                    <Form.Control type="file" accept="image/*" placeholder="Add group icon"
+                <Form.Group className="mb-3" controlId="expenseIcon">
+                    <Form.Label>Expense Image</Form.Label>
+                    <Form.Control type="file" accept="image/*" placeholder="Add expense image"
                                   onChange={onChangeFunctions['icon']}/>
                     <div className="errors">{errors['icon']}</div>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="react-select-3-input">
-                    <Form.Label>Available Groups</Form.Label>
-                    <Select
-                        isMulti
-                        name="colors"
-                        options={dummyGroupData}
-                        className="basic-multi-select"
-                        classNamePrefix="select"
-                        onChange={onChangeFunctions['groups']}
-                    />
-                    <div className="errors">{errors['groups']}</div>
-                </Form.Group>
+                
 
                 <Form.Group className="mb-3" controlId="react-select-3-input">
                     <Form.Label>Group Members</Form.Label>
@@ -172,7 +202,7 @@ function EditExpense() {
                         isMulti
                         name="colors"
                         defaultValue={values.members}
-                        options={dummyMembersData}
+                        options={users}
                         className="basic-multi-select"
                         classNamePrefix="select"
                         onChange={onChangeFunctions['members']}

@@ -29,6 +29,14 @@ import {
   viewUsers,
 } from "../controllers/group.js";
 
+import {
+  addExpense,
+  deleteExpense,
+  editExpense,
+  viewExpense,
+  viewExpenses,
+} from "../controllers/expense.js";
+
 const router = express.Router();
 
 // group routes
@@ -38,6 +46,13 @@ router.delete("/delete-group/:id", deleteGroup);
 router.get("/view-groups", viewGroups);
 router.get("/view-group/:id", viewGroup);
 router.get("/view-users", viewUsers);
+
+//expense routes
+router.post("/add-expense", addExpense);
+router.put("/edit-expense/:id", editExpense);
+router.delete("/delete-expense/:id", deleteExpense);
+router.get("/view-expenses", viewExpenses);
+router.get("/view-expense/:id", viewExpense);
 
 // tags routes
 router.post("/create-tag", createTag);
