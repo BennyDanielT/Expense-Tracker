@@ -11,6 +11,7 @@
 ## Authors
 
 * Abhishek Uppe (ab577089@dal.ca)
+* Vatsal Yadav
 
 ## Features developed
 
@@ -33,6 +34,12 @@
    2. Modify Payment Reminder
    3. Delete Payment Reminder
    4. View Payment Reminder
+
+## Individual Branches
+
+### 1. Abhishek Uppe
+
+https://git.cs.dal.ca/ayushv/group24_expensetracker/-/tree/abhishek-uppe-b00885768
 
 ## Files worked on
 
