@@ -1,188 +1,188 @@
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
 
 export const routes = {
   home: {
-    path: "/",
+    path: '/',
     isAuthenticated: true,
   },
   viewCoupons: {
-    path: "/view-coupons",
+    path: '/view-coupons',
     isAuthenticated: true,
   },
   redeemCoupon: {
-    path: "/redeem-coupon/:id",
+    path: '/redeem-coupon/:id',
     isAuthenticated: true,
   },
   couponRedeemed: {
-    path: "/coupon-redeemed",
+    path: '/coupon-redeemed',
     isAuthenticated: true,
   },
   group: {
-    path: "/group",
+    path: '/group',
     isAuthenticated: true,
   },
   createGroup: {
-    path: "/create-group",
+    path: '/create-group',
     isAuthenticated: true,
   },
   viewGroup: {
-    path: "/view-group/:id",
+    path: '/view-group/:id',
     isAuthenticated: true,
   },
   editGroup: {
-    path: "/edit-group/:id",
+    path: '/edit-group/:id',
     isAuthenticated: true,
   },
   deleteGroup: {
-    path: "/delete-group/:id",
+    path: '/delete-group/:id',
     isAuthenticated: true,
   },
   viewNotification: {
-    path: "/view-notification",
+    path: '/view-notification',
     isAuthenticated: true,
   },
   emailNotification: {
-    path: "/email-notification",
+    path: '/email-notification',
     isAuthenticated: true,
   },
   notificationSettings: {
-    path: "/notification-settings",
+    path: '/notification-settings',
     isAuthenticated: true,
   },
   reminders: {
-    path: "/reminders",
+    path: '/reminders',
     isAuthenticated: true,
   },
   createReminder: {
-    path: "/create-reminder",
+    path: '/create-reminder',
     isAuthenticated: true,
   },
   exportGrid: {
-    path: "/export-grid",
+    path: '/export-grid',
     isAuthenticated: true,
   },
   createSnapshot: {
-    path: "/create-snapshot",
+    path: '/create-snapshot',
     isAuthenticated: true,
   },
   viewSnapshot: {
-    path: "/view-snapshot",
+    path: '/view-snapshot',
     isAuthenticated: true,
   },
   addPaymentMethod: {
-    path: "/add-method",
+    path: '/add-method',
     isAuthenticated: true,
   },
   initiatePayment: {
-    path: "/initiate-payment",
+    path: '/initiate-payment',
     isAuthenticated: true,
   },
   paymentStatus: {
-    path: "/payment-status",
+    path: '/payment-status/:status',
     isAuthenticated: true,
   },
   paymentHistory: {
-    path: "/payment-history",
+    path: '/payment-history',
     isAuthenticated: true,
   },
   notFound: {
-    path: "/error",
+    path: '/error',
     isAuthenticated: true,
   },
   createTag: {
-    path: "/create-tag",
+    path: '/create-tag',
     isAuthenticated: true,
   },
   editTag: {
-    path: "/edit-tag",
+    path: '/edit-tag',
     isAuthenticated: true,
   },
   viewTagDetails: {
-    path: "/view-tag-details",
+    path: '/view-tag-details',
     isAuthenticated: true,
   },
   viewTags: {
-    path: "/view-tags",
+    path: '/view-tags',
     isAuthenticated: true,
   },
   addReceipt: {
-    path: "/add-new-receipt",
+    path: '/add-new-receipt',
     isAuthenticated: true,
   },
   viewReceiptDetails: {
-    path: "/view-receipt-details",
+    path: '/view-receipt-details',
     isAuthenticated: true,
   },
   viewReceipts: {
-    path: "/view-receipts",
+    path: '/view-receipts',
     isAuthenticated: true,
   },
   login: {
-    path: "/login",
+    path: '/login',
     isAuthenticated: true,
   },
   register: {
-    path: "/register",
+    path: '/register',
     isAuthenticated: true,
   },
   forgotPassword: {
-    path: "/forgot-password",
+    path: '/forgot-password',
     isAuthenticated: true,
   },
   passwordChanged: {
-    path: "/password-changed",
+    path: '/password-changed',
     isAuthenticated: true,
   },
   analytics: {
-    path: "/analytics",
+    path: '/analytics',
     isAuthenticated: true,
   },
   expenseTracking: {
-    path: "/expense-tracking",
+    path: '/expense-tracking',
     isAuthenticated: true,
   },
   spendingTrends: {
-    path: "/spending-trends",
+    path: '/spending-trends',
     isAuthenticated: true,
   },
   expenseAnalysis: {
-    path: "/expense-analysis",
+    path: '/expense-analysis',
     isAuthenticated: true,
   },
   expense: {
-    path: "/expense",
+    path: '/expense',
     isAuthenticated: true,
   },
   addExpense: {
-    path: "/add-expense",
+    path: '/add-expense',
     isAuthenticated: true,
   },
   viewExpense: {
-    path: "/view-expense/:id",
+    path: '/view-expense/:id',
     isAuthenticated: true,
   },
   inviteFriends: {
-    path: "/invite-friends",
+    path: '/invite-friends',
     isAuthenticated: true,
   },
   friendsInvited: {
-    path: "/friends-invited",
+    path: '/friends-invited',
     isAuthenticated: true,
   },
   successfullInvites: {
-    path: "/succInvite",
+    path: '/succInvite',
     isAuthenticated: true,
   },
   editExpense: {
-    path: "/edit-expense/:id",
+    path: '/edit-expense/:id',
     isAuthenticated: true,
   },
   settleExpense: {
-    path: "/settle-expense",
+    path: '/settle-expense',
     isAuthenticated: true,
   },
   dashboard: {
-    path: "/dashboard",
+    path: '/dashboard',
     isAuthenticated: true,
   },
 };
@@ -207,20 +207,20 @@ export const showPopup = (type, title, msg, callback = () => {}) => {
 
 export const showError = (error) => {
   const status = error.response.status.toString();
-  if (status.match("4[0-9][0-9]")) {
-    showPopup("error", "Error", error.response.data.error);
-  } else if (status.match("5[0-9][0-9]")) {
-    showPopup("error", "Error", "Internal Server Error");
+  if (status.match('4[0-9][0-9]')) {
+    showPopup('error', 'Error', error.response.data.error);
+  } else if (status.match('5[0-9][0-9]')) {
+    showPopup('error', 'Error', 'Internal Server Error');
   } else {
-    showPopup("error", "Error", "An error occurred. Please try again");
+    showPopup('error', 'Error', 'An error occurred. Please try again');
   }
 };
 
 export const imgToBase64 = (file, callback) => {
-  let base64String = "";
+  let base64String = '';
   const reader = new FileReader();
   reader.onload = function () {
-    base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
+    base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
     callback(base64String);
   };
   reader.readAsDataURL(file);

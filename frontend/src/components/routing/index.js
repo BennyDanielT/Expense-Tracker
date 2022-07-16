@@ -1,60 +1,60 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { routes } from "../../constants";
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { routes } from '../../constants';
 
-import { GroupHomePage } from "../group/GroupHomePage";
-import { CreateGroup } from "../group/CreateGroup";
-import { ViewGroup } from "../group/ViewGroup";
-import { EditGroup } from "../group/EditGroup";
-import { DeleteGroup } from "../group/DeleteGroup";
-import { ViewNotification } from "../notifications/ViewNotification";
-import { EmailNotification } from "../notifications/EmailNotification";
-import { NotificationSettings } from "../notifications/NotificationSettings";
-import Grid from "../ExportData/Grid";
-import CreateSnap from "../ExportData/CreateSnap";
-import ViewSnaps from "../ExportData/ViewSnaps.js";
-import PaymentMethod from "../Payments/PaymentMethod.js";
-import InitiatePayment from "../Payments/InitiatePayment.js";
-import PaymentHistory from "../Payments/PaymentHistory.js";
-import PaymentStatus from "../Payments/PaymentStatus.js";
-import { ViewCoupons } from "../CouponManagement/viewCoupons";
-import { ReedemCoupon } from "../CouponManagement/redeemCoupon";
-import Layout from "../CouponManagement/Layout/Layout";
-import NotFound from "../CouponManagement/notFound";
-import { CouponRedeemed } from "../CouponManagement/couponRedeemed";
-import { AddExepnse } from "../expense/AddExpense";
-import { EditExpense } from "../expense/EditExpense";
-import { ExpenseHomePage } from "../expense/ExpenseHomePage";
-import { ViewExpense } from "../expense/ViewExpense";
-import InviteFriends from "../invite/InviteFriends";
-import SettleExpense from "../expense/SettleExpense";
-import SuccInvites from "../invite/SuccessfulInvites";
-import FriendsInvited from "../invite/FriendsInvited";
-import { SideBar } from "../SideBar";
-import { Login } from "../UserManagement/Login";
-import { Signup } from "../UserManagement/Signup";
-import { Dashboard } from "../UserManagement/Dashboard";
-import { ForgotPassword } from "../UserManagement/ForgetPassword";
-import { PasswordChanged } from "../UserManagement/ChangePassword";
-import { CreateEditTag } from "../tags/CreateEditTag";
-import { ViewTagDetails } from "../tags/ViewTagDetails";
-import { ViewTags } from "../tags/ViewTags";
-import { AddNewReceipt } from "../receipts/AddNewReceipt";
-import { ViewReceiptDetails } from "../receipts/ViewReceiptDetails";
-import { ViewReceipts } from "../receipts/ViewReceipts";
-import { AnalyticsHome } from "../analytics/AnalyticsHome";
-import ExpenseTracking from "../analytics/ExpenseTracking";
-import SpendingTrends from "../analytics/SpendingAnalysis";
-import ExpenseAnalysis from "../analytics/ExpenseAnalysis";
-import RemindersGrid from "../paymentReminders/RemindersGrid";
-import CreateReminder from "../paymentReminders/CreateReminder";
-import HomePage from "../HomePage";
-import { PrivateRoute } from "../../components/PrivateRoute.js";
+import { GroupHomePage } from '../group/GroupHomePage';
+import { CreateGroup } from '../group/CreateGroup';
+import { ViewGroup } from '../group/ViewGroup';
+import { EditGroup } from '../group/EditGroup';
+import { DeleteGroup } from '../group/DeleteGroup';
+import { ViewNotification } from '../notifications/ViewNotification';
+import { EmailNotification } from '../notifications/EmailNotification';
+import { NotificationSettings } from '../notifications/NotificationSettings';
+import Grid from '../ExportData/Grid';
+import CreateSnap from '../ExportData/CreateSnap';
+import ViewSnaps from '../ExportData/ViewSnaps';
+import PaymentMethod from '../Payments/PaymentMethod';
+import InitiatePayment from '../Payments/InitiatePayment';
+import PaymentHistory from '../Payments/PaymentHistory';
+import PaymentStatus from '../Payments/PaymentStatus';
+import { ViewCoupons } from '../CouponManagement/viewCoupons';
+import { ReedemCoupon } from '../CouponManagement/redeemCoupon';
+import Layout from '../CouponManagement/Layout/Layout';
+import NotFound from '../CouponManagement/notFound';
+import { CouponRedeemed } from '../CouponManagement/couponRedeemed';
+import { AddExepnse } from '../expense/AddExpense';
+import { EditExpense } from '../expense/EditExpense';
+import { ExpenseHomePage } from '../expense/ExpenseHomePage';
+import { ViewExpense } from '../expense/ViewExpense';
+import InviteFriends from '../invite/InviteFriends';
+import SettleExpense from '../expense/SettleExpense';
+import SuccInvites from '../invite/SuccessfulInvites';
+import FriendsInvited from '../invite/FriendsInvited';
+import { SideBar } from '../SideBar';
+import { Login } from '../UserManagement/Login';
+import { Signup } from '../UserManagement/Signup';
+import { Dashboard } from '../UserManagement/Dashboard';
+import { ForgotPassword } from '../UserManagement/ForgetPassword';
+import { PasswordChanged } from '../UserManagement/ChangePassword';
+import { CreateEditTag } from '../tags/CreateEditTag';
+import { ViewTagDetails } from '../tags/ViewTagDetails';
+import { ViewTags } from '../tags/ViewTags';
+import { AddNewReceipt } from '../receipts/AddNewReceipt';
+import { ViewReceiptDetails } from '../receipts/ViewReceiptDetails';
+import { ViewReceipts } from '../receipts/ViewReceipts';
+import { AnalyticsHome } from '../analytics/AnalyticsHome';
+import ExpenseTracking from '../analytics/ExpenseTracking';
+import SpendingTrends from '../analytics/SpendingAnalysis';
+import ExpenseAnalysis from '../analytics/ExpenseAnalysis';
+import RemindersGrid from '../paymentReminders/RemindersGrid';
+import CreateReminder from '../paymentReminders/CreateReminder';
+import HomePage from '../HomePage';
+import { PrivateRoute } from '../../components/PrivateRoute.js';
 
 function Routing() {
   return (
     <BrowserRouter>
       <SideBar />
-      <div className="main">
+      <div className='main'>
         <Switch>
           <Route exact path={routes.home.path}>
             <Layout>
@@ -264,12 +264,12 @@ function Routing() {
 
           <PrivateRoute exact path={routes.createTag.path}>
             <Layout>
-              <CreateEditTag setting="create" />
+              <CreateEditTag setting='create' />
             </Layout>
           </PrivateRoute>
           <PrivateRoute exact path={routes.editTag.path}>
             <Layout>
-              <CreateEditTag setting="edit" />
+              <CreateEditTag setting='edit' />
             </Layout>
           </PrivateRoute>
           <PrivateRoute exact path={routes.viewTagDetails.path}>
