@@ -1,3 +1,7 @@
+/**
+ * @author ${devarshivyas}
+ */
+
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Table, Button } from "react-bootstrap";
@@ -8,6 +12,9 @@ import { deleteTag, viewTags } from "../../redux/actions";
 import { usePrevious } from "react-use";
 import { Loading } from "../Loading";
 
+// function responsible to create the component to view a specific tag's details
+// list of all the tags created by a user are fetched and displayed
+// each expense can be viewed in detail, edited or deleted
 function ViewTags() {
   const [tags, setTags] = useState([]);
 
@@ -25,10 +32,13 @@ function ViewTags() {
     (state) => state.tag.isViewTagsResponseReceived
   );
 
+  // hook to request the data
   useEffect(() => {
     dispatch(viewTags());
   }, [dispatch]);
 
+  // hook to check if the data is received from the backend
+  // UI is updated accordingly
   useEffect(() => {
     if (
       viewTagsResponseData &&
@@ -40,8 +50,6 @@ function ViewTags() {
       setTags([]);
     }
   }, [viewTagsResponseData]);
-
-  // Delete tag request and processing
 
   const deleteTagResponseData = useSelector(
     (state) => state.tag.deleteTagResponseData
@@ -55,6 +63,9 @@ function ViewTags() {
     isDeleteTagResponseReceived
   );
 
+  // Delete tag request and processing
+  // hook to check if the tag has been deleted
+  // UI is updated accordingly
   useEffect(() => {
     if (
       prevIsDeleteTagResponseReceived !== undefined &&
@@ -73,6 +84,7 @@ function ViewTags() {
     }
   }, [isDeleteTagResponseReceived]);
 
+  // on-click functions to view, edit or delete a tag
   const onClickFunctions = {
     viewTag: (tag) => {
       history.push(routes.viewTagDetails.path, { tag });
