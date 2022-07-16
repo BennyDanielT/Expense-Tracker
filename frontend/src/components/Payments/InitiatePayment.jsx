@@ -1,3 +1,7 @@
+/**
+ * @author ${Benny Tharigopala}
+ */
+
 import { Heading } from '../Heading/Heading';
 import { Button, Form } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
@@ -144,22 +148,22 @@ export default function InitiatePayment() {
     },
   };
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const recordTransactionResponseData = useSelector(
-    (state) => state.transaction.recordTransactionResponseData,
-  );
+  // const recordTransactionResponseData = useSelector(
+  //   (state) => state.transaction.recordTransactionResponseData,
+  // );
 
-  const isRecordTransactionResponseReceived = useSelector(
-        (state) => state.transaction.isRecordTransactionResponseReceived
-    );
+  // const isRecordTransactionResponseReceived = useSelector(
+  //   (state) => state.transaction.isRecordTransactionResponseReceived,
+  // );
 
-    useEffect(() => {
-      if (isSuccessfulResponse(recordTransactionResponseData)) {
-        showPopup('success', 'Success', 'Transaction recorded in database!');
-        // history.push(routes.viewGroup.path);
-      }
-    }, [isRecordTransactionResponseReceived]);
+  // useEffect(() => {
+  //   if (isSuccessfulResponse(recordTransactionResponseData)) {
+  //     showPopup('success', 'Success', 'Transaction recorded in database!');
+  //     // history.push(routes.viewGroup.path);
+  //   }
+  // }, [isRecordTransactionResponseReceived]);
 
   const [mainErrors, setMainErrors] = useState('');
 
@@ -201,8 +205,6 @@ export default function InitiatePayment() {
       onChange: onChangeFunctions.lastName,
     },
   ];
-
-
 
   const submitForm = (e) => {
     e.preventDefault();

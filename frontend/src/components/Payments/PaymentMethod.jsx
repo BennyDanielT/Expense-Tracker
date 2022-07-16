@@ -1,3 +1,7 @@
+/**
+ * @author ${Benny Tharigopala}
+ */
+
 import React, { useState, useEffect } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
@@ -5,7 +9,7 @@ import Swal from 'sweetalert2';
 import { useLocation } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import CheckoutForm from './checkout';
-import '../Payments/checkout.css';
+import '../../css/checkout.css';
 import Accordion from 'react-bootstrap/Accordion';
 import Table from 'react-bootstrap/Table';
 
@@ -31,7 +35,7 @@ export default function PaymentMethod() {
     let testv = JSON.stringify({ amount: values.amount });
     console.log(testv);
 
-    fetch('http://localhost:3001/create-payment-intent', {
+    fetch('http://localhost:3001/api/create-payment-intent', {
       method: 'POST',
       headers: headers,
       // body: { amount: values.amount },

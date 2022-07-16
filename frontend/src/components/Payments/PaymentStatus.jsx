@@ -1,12 +1,13 @@
+/**
+ * @author ${Benny Tharigopala}
+ */
+
 import { Alert } from 'react-bootstrap';
 import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { isSuccessfulResponse, routes, showPopup } from '../../constants';
 import { recordTransaction } from '../../redux/actions';
-import {useEffect, useState} from "react";
-
-
-
+import { useEffect, useState } from 'react';
 
 export default function PaymentStatus() {
   const history = useHistory();

@@ -1,3 +1,6 @@
+/**
+ * @author ${Benny Tharigopala}
+ */
 import { Heading } from '../Heading/Heading';
 import DatePicker from 'react-datepicker';
 import { Button, Table } from 'react-bootstrap';

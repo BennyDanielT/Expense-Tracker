@@ -1,5 +1,11 @@
-app.use(express.json());
-
+// app.use(express.json());
+import Stripe from 'stripe';
+const stripe = new Stripe(
+  'sk_test_51L5xY5GQAnXJ0JEKipyVcR2IyoP5ECqTXhyRcSgxkGSiCunc3UFK2mtehvGpYtpCYnI57zf9S6ki82t36hyadpaT00q04YVOCW',
+);
+// const stripe = require('stripe')(
+//     'sk_test_51L5xY5GQAnXJ0JEKipyVcR2IyoP5ECqTXhyRcSgxkGSiCunc3UFK2mtehvGpYtpCYnI57zf9S6ki82t36hyadpaT00q04YVOCW',
+//   );
 export const createPaymentIntent = async (req, res) => {
   const items = req.body;
   console.log(items);
