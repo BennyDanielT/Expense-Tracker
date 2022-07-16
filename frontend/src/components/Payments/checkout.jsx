@@ -71,23 +71,7 @@ export default function CheckoutForm(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Swal.fire('Initiated!', 'Your payment has been initiated', 'success');
-    // Swal.fire({
-    //         title: `Instance: ${snap.date}`,
-    //         icon: 'question',
-    //         html: `<div class="mb-3">${account}</div> ${amount}<div class="mt-3 mb-3">${title}</div>`,
-    //         denyButtonText: "Delete Snapshot",
-    //         showCloseButton: true,
-    //         showDenyButton: true,
-    //         showConfirmButton: false,
-    //         showCancelButton:true,
-    //         preDeny() {
-    //             Swal.fire(
-    //                 'Deleted!',
-    //                 'Snapshot has been deleted.',
-    //                 'success'
-    //             );
-    //         }
-    //     })
+
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
@@ -98,10 +82,12 @@ export default function CheckoutForm(props) {
 
     const { data, err } = await supabase.from('transaction').insert([
       {
-        payee: val.firstName + ',' + val.lastName,
+        payee: val.firstName + ', ' + val.lastName,
         amount: val.amount,
         timestamp: new Date().toUTCString(),
         user_id: '4e8eea9b-2526-41e6-ad70-469e14b6d9a7',
+        payment_for: val.payFor,
+        // status: transaction_status,
       },
     ]);
 
