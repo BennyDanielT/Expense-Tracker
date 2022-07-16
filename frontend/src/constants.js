@@ -227,7 +227,7 @@ export const imgToBase64 = (file, callback) => {
 };
 
 export const getUserFullName = (user) => {
-  return user.first_name + " " + user.last_name;
+  return user.email_id;
 };
 
 const base64ToImg = async (url, filename, mimeType) => {

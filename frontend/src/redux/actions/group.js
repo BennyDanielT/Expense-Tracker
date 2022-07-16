@@ -48,8 +48,9 @@ export const deleteGroupResponse = (response) => ({
     response
 });
 
-export const viewGroups = () => ({
-    type: VIEW_GROUPS
+export const viewGroups = (id) => ({
+    type: VIEW_GROUPS,
+    id
 });
 
 export const viewGroupsResponse = (response) => ({
