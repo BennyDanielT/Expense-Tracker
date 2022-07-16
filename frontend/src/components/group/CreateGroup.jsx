@@ -93,6 +93,7 @@ function CreateGroup() {
 
     const prevIsCreateGroupResponseReceived = usePrevious(isCreateGroupResponseReceived);
 
+    // show the success message only if create group response is received successfully
     useEffect(() => {
         if (prevIsCreateGroupResponseReceived !== undefined && prevIsCreateGroupResponseReceived !== isCreateGroupResponseReceived) {
             if (isSuccessfulResponse(createGroupResponseData)) {
@@ -111,11 +112,12 @@ function CreateGroup() {
 
     const [users, setUsers] = useState([]);
 
+    // useEffect after the users api is successful
     useEffect(() => {
         if (isSuccessfulResponse(usersResponseData)) {
             const array = [];
             usersResponseData['success'].forEach((ele) => {
-                array.push({label: getUserFullName(ele), value: ele.user_id});
+                array.push({label: getUserFullName(ele), value: ele.id});
             });
             setUsers(array);
         }

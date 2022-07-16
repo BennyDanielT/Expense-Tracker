@@ -136,10 +136,11 @@ export const viewGroup = async (request, response) => {
         if (error) {
             return response.status(400).send(error);
         }
+
         const userResponse = await supabase
-            .from('profiles')
+            .from('users')
             .select('*')
-            .eq('user_id', data[0].user_ids[0]);
+            .in('id', data[0].user_ids);
 
         if (userResponse.error) {
             return response.status(400).send(error);
@@ -159,7 +160,7 @@ export const viewGroup = async (request, response) => {
         const expenses = {lent: [], owed: []};
 
         expenseResponse.data.forEach((exp) => {
-           if (exp.user_id === user) {
+           if (exp.id === user) {
                expenses['lent'].push(exp);
            } else {
                if (exp.user_ids.includes(user)) {

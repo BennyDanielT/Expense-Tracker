@@ -12,6 +12,7 @@ import {viewGroups} from "../../redux/actions";
 import {useDispatch, useSelector} from "react-redux";
 import {usePrevious} from "react-use";
 import {Loading} from "../Loading";
+import {useAuth} from "../../contexts/Auth";
 
 // The component lists all the groups created by the user.
 function GroupHomePage() {
@@ -29,10 +30,13 @@ function GroupHomePage() {
 
     const prevIsViewGroupsResponseReceived = usePrevious(isViewGroupsResponseReceived);
 
+    const { user } = useAuth();
+
     useEffect(() => {
         dispatch(viewGroups());
     }, []);
 
+    // show the success message only if view groups response is received successfully
     useEffect(() => {
         if (prevIsViewGroupsResponseReceived !== isViewGroupsResponseReceived && isSuccessfulResponse(viewGroupsResponseData)) {
             const res = [];
