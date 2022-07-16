@@ -248,11 +248,11 @@ export const viewTag = async (request, response) => {
 // error handling is also managed
 export const viewTags = async (request, response) => {
   try {
-    const user = supabase.auth.user(); // TODO: get logged in user id
+    const user_id = request.params.id;
     const { data, error } = await supabase
       .from("tags")
-      .select("*", { count: "exact" });
-    //   .eq("id", id); // use user id here
+      .select("*", { count: "exact" })
+      .eq("user_id", user_id);
     if (error) {
       return response.status(400).send({
         error: error,

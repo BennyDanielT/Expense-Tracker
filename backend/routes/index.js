@@ -58,7 +58,7 @@ router.get("/view-expense/:id", viewExpense);
 router.post("/create-tag", createTag);
 router.put("/update-tag/:id", updateTag);
 router.delete("/delete-tag/:id", deleteTag);
-router.get("/view-tags", viewTags);
+router.get("/view-tags/:id", viewTags);
 router.get("/view-tag/:id", viewTag);
 router.get("/fetch-expenses/:id", viewTagExpenses);
 

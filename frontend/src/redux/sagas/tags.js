@@ -37,9 +37,11 @@ export function* createTagSaga() {
   yield takeLatest(CREATE_TAG, createTag);
 }
 
-function* viewTags() {
+function* viewTags(action) {
   try {
-    const json = yield axios.get("/api/view-tags/").then((res) => res.data);
+    const json = yield axios
+      .get(`http://localhost:3001/api/view-tags/${action.id}`)
+      .then((res) => res.data);
     yield put(viewTagsResponse(json));
   } catch (err) {
     showError(err);

@@ -1,4 +1,4 @@
-# Assignment 3
+# Assignment 3 - Individual Submission
 
 ## Group Information
 
@@ -7,85 +7,47 @@
 3. *Last Modification Date*: 15 JUL 2022
 4. *Website URL*: http://group24-expensetracker-dev.us-east-1.elasticbeanstalk.com/
 5. *Git URL*: https://git.cs.dal.ca/ayushv/group24_expensetracker
+6. *Branch URL*: https://git.cs.dal.ca/ayushv/group24_expensetracker/-/tree/devarshi-vyas-b00878443
 
 ## Authors
 
-* Abhishek Uppe (ab577089@dal.ca)
+* Devarshi Vyas (dv459527@dal.ca)
 
 ## Features developed
 
-1. Abhishek Uppe
-   1. Group Expense Tracking
-
-2. Vatsal Yadav
-   1. Payment Reminder
+1. Devarshi Vyas
+   1. Categorial Expense (Tags)
 
 ## Tasks developed
 
-1. Abhishek Uppe
-   1. Create Group
-   2. Edit Group
-   3. View Group
-   4. Delete Group
-
-2. Vatsal Yadav
-   1. Create Payment Reminder
-   2. Modify Payment Reminder
-   3. Delete Payment Reminder
-   4. View Payment Reminder
+1. Devarshi Vyas
+   1. Create Tag
+   2. Edit Tag
+   3. View Tag Details (an individual tag)
+   4. View Tags (per user)
+   5. Delete Tag
 
 ## Files worked on
 
-### 1. Abhishek Uppe
+### 1. Devarshi Vyas
 
-**Feature: Group Expense Tracking**
-
-**Frontend**
-1. frontend/src/components/group/CreateGroup.jsx
-2. frontend/src/components/group/DeleteGroup.jsx
-3. frontend/src/components/group/EditGroup.jsx
-4. frontend/src/components/group/GroupHomePage.jsx
-5. frontend/src/components/group/helpers.js
-6. frontend/src/components/group/ViewGroup.jsx
-7. frontend/src/components/Heading/Heading.jsx
-8. frontend/src/components/SideBar/index.js
-9. frontend/src/redux/actions/group.js
-10. frontend/src/redux/actions/index.js
-11. frontend/src/redux/reducers/group.js
-12. frontend/src/redux/reducers/index.js
-13. frontend/src/redux/sagas/group.js
-14. frontend/src/redux/sagas/index.js
-15. frontend/src/redux/store.js
-16. frontend/src/App.js (Partial)
-17. frontend/src/constants.js (Partial)
-18. frontend/src/App.css (Partial)
-19. frontend/src/css/group.css
-20. frontend/src/css/heading.css
-
-**Backend**
-1. backend/controllers/group.js
-2. backend/routes/index.js (Partial)
-3. backend/index.js
-4. backend/utils.js
-
-### 2. Vatsal Yadav
-
-**Feature: Payment Reminder**
+**Feature: Categorial Expense (Tags)**
 
 **Frontend**
-1. frontend\src\components\paymentReminders\RemindersGrid.js
-2. frontend\src\components\paymentReminders\CreateReminder.js
-3. frontend\src\redux\actions\reminder.js
-4. frontend\src\redux\reducers\reminder.js
-5. frontend\src\redux\sagas\reminder.js
-6. frontend\src\redux\actions\index.js (partial)
-7. frontend\src\redux\reducers\index.js (partial)
-8. frontend\src\redux\sagas\index.js (partial)
-9. frontend\src\components\routing\index.js (partial)
+1. frontend/src/components/tags/CreateEditTag.jsx
+2. frontend/src/components/tags/ViewTags.jsx
+3. frontend/src/components/tags/ViewTagDetails.jsx
+4. frontend/src/redux/actions/tags.jsx
+5. frontend/src/redux/reducers/tags.jsx
+6. frontend/src/redux/sagas/tags.jsx
+7. frontend/src/routing/index.js (partial)
+8. frontend/src/App.js (Partial)
+9. frontend/src/constants.js (Partial)
+10. frontend/src/App.css (Partial)
 
 **Backend**
-1. backend/controllers/reminders.js
-2. backend/routes/index.js (Partial)
+1. backend/controllers/tags.js
+2. backend/routes/index.js (partial)
 
 ## Getting Started
 
@@ -124,7 +86,7 @@ eb deploy
 
 ## Built With
 
-Frontend
+**Frontend**
 
 - [ReactJS](https://reactjs.org/) - The core web library (framework) used.
 - [React Router DOM](https://v5.reactrouter.com/) - Routing library for single page application.
@@ -135,7 +97,7 @@ Frontend
 - [React Datepicker](https://www.npmjs.com/package/react-datepicker) - Reusable datepicker component for React.
 - [Moment](https://www.npmjs.com/package/moment) - A JavaScript date library for parsing, validating, manipulating, and formatting dates.
 
-Backend
+**Backend**
 
 * [Node](https://nodejs.org/en/) - The core backend library (framework) used.
 * [Express](https://expressjs.com/) - Framework for creating single page routes.
@@ -148,7 +110,7 @@ Backend
 
 ## Folder Structure
 
-Frontend
+**Frontend**
 
 * For frontend the folder structure used is the default react folder structure.
 * All the assets are stored in frontend/src/assets.
@@ -156,7 +118,7 @@ Frontend
 * All the css files other then App.css and index.css are stored in frontend/src/css.
 * The redux structure containing actions, reducers and sagas in frontend/src/redux.
 
-Backend
+**Backend**
 
 * For backend the folder structure used is the default nodejs and expressjs folder structure.
 * All the API logic and end points are stored in backend/controllers.

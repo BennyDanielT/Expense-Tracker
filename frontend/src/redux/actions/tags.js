@@ -48,8 +48,9 @@ export const deleteTagResponse = (response) => ({
   response,
 });
 
-export const viewTags = () => ({
+export const viewTags = (id) => ({
   type: VIEW_TAGS,
+  id,
 });
 
 export const viewTagsResponse = (response) => ({
