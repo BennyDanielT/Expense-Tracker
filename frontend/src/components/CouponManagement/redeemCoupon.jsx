@@ -36,7 +36,7 @@ const ReedemCoupon = () => {
       .then((data) => {
         setReview(data);
       });
-  }, []);
+  }, []); // <-- Have to pass in [] here!
 
   // page content
   const pageTitle = "Awesome! Redeem the coupon below.";
@@ -120,7 +120,7 @@ const ReedemCoupon = () => {
         <br></br>
         <div className="d-grid gap-2">
           <Button variant="primary" size="lg" className="white-anchor-tag">
-            <Link to={`/coupon-redeemed/2`}>Redeem</Link>
+            <Link to={`/coupon-redeemed/${id}`}>Redeem</Link>
           </Button>
         </div>
       </div>
