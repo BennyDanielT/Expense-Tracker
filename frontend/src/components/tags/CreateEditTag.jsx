@@ -139,13 +139,14 @@ function CreateEditTag({ setting }) {
     if (isError) {
       return;
     }
-
-    if (mode === "create") {
-      dispatch(createTag(tagDetails));
-    } else {
-      dispatch(editTag(tagDetails.id, tagDetails));
-    }
-    console.log(tagDetails);
+    toast(
+      mode === "create"
+        ? "Tag created successfully"
+        : "Tag updated successfully"
+    );
+    setTimeout(() => {
+      history.goBack();
+    }, 2000);
   };
 
   return (
