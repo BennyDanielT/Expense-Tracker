@@ -16,6 +16,8 @@ import {
   VIEW_TAGS,
   viewTagResponse,
   viewTagsResponse,
+  fetchExpensesResponse,
+  FETCH_EXPENSE,
 } from "../actions";
 import { showError } from "../../constants";
 
@@ -35,9 +37,11 @@ export function* createTagSaga() {
   yield takeLatest(CREATE_TAG, createTag);
 }
 
-function* viewTags() {
+function* viewTags(action) {
   try {
-    const json = yield axios.get("/api/view-tags/").then((res) => res.data);
+    const json = yield axios
+      .get(`http://localhost:3001/api/view-tags/${action.id}`)
+      .then((res) => res.data);
     yield put(viewTagsResponse(json));
   } catch (err) {
     showError(err);
@@ -95,4 +99,20 @@ function* deleteTag(action) {
 
 export function* deleteTagSaga() {
   yield takeLatest(DELETE_TAG, deleteTag);
+}
+
+function* fetchExpenses(action) {
+  try {
+    const json = yield axios
+      .get(`/api/fetch-expenses/${action.response}`)
+      .then((res) => res.data);
+    yield put(fetchExpensesResponse(json));
+  } catch (err) {
+    showError(err);
+    yield put(fetchExpensesResponse(err));
+  }
+}
+
+export function* fetchExpensesSaga() {
+  yield takeLatest(FETCH_EXPENSE, fetchExpenses);
 }

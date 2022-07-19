@@ -92,12 +92,13 @@ function EditGroup() {
 
     const prevIsViewGroupResponseReceived = usePrevious(isViewGroupResponseReceived);
 
+    // show the success message only if view group response is received successfully
     useEffect(() => {
         if (prevIsViewGroupResponseReceived !== isViewGroupResponseReceived && isSuccessfulResponse(viewGroupResponseData)) {
             const data = viewGroupResponseData['success'][0];
             const users = [];
             data.users.forEach((ele) => {
-                users.push({label: getUserFullName(ele), value: ele.user_id});
+                users.push({label: getUserFullName(ele), value: ele.id});
             });
             setValues({...values, name: data.name, users});
         }
@@ -114,7 +115,7 @@ function EditGroup() {
             if (isSuccessfulResponse(usersResponseData)) {
                 const array = [];
                 usersResponseData['success'].forEach((ele) => {
-                    array.push({label: getUserFullName(ele), value: ele.user_id});
+                    array.push({label: getUserFullName(ele), value: ele.id});
                 });
                 setUsers(array);
             }
@@ -131,6 +132,7 @@ function EditGroup() {
 
     const prevIsEditGroupResponseReceived = usePrevious(isEditGroupResponseReceived);
 
+    // show the success message only if edit group response is received successfully
     useEffect(() => {
         if (prevIsEditGroupResponseReceived !== isEditGroupResponseReceived && prevIsEditGroupResponseReceived !== undefined) {
             if (isSuccessfulResponse(editGroupResponseData)) {

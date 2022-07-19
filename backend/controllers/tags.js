@@ -248,11 +248,50 @@ export const viewTag = async (request, response) => {
 // error handling is also managed
 export const viewTags = async (request, response) => {
   try {
-    const user = supabase.auth.user(); // TODO: get logged in user id
+    const user_id = request.params.id;
     const { data, error } = await supabase
       .from("tags")
-      .select("*", { count: "exact" });
-    //   .eq("id", id); // use user id here
+      .select("*", { count: "exact" })
+      .eq("user_id", user_id);
+    if (error) {
+      return response.status(400).send({
+        error: error,
+        status: 400,
+      });
+    }
+    console.log("returned");
+    return response.status(200).send({ data: data, status: 200, error: null });
+  } catch (e) {
+    console.log(e);
+    return response
+      .status(500)
+      .send({ status: 500, error: errorCodeResponses["500"] });
+  }
+};
+
+export const viewTagExpenses = async (request, response) => {
+  try {
+    let user_id = request.params.id;
+    const fields = [
+      {
+        label: "User ID",
+        value: user_id,
+      },
+    ];
+
+    const field = isFieldAbsent(fields);
+
+    if (field) {
+      return response.status(400).send({
+        message: "Updation Failed",
+        error: `${field.label} is a required field`,
+      });
+    }
+
+    const { data, error } = await supabase
+      .from("expense")
+      .select("*", { count: "exact" })
+      .eq("user_id", user_id); // use user id here
     if (error) {
       return response.status(400).send({
         error: error,

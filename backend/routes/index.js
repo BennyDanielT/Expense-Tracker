@@ -1,19 +1,15 @@
-/**
- * @author ${Vatsal Yadav, Abhishek Uppe}
- */
+import express from 'express';
 
-import express from "express";
+import { getCoupons } from '../controllers/coupons.js';
+import { getCoupon } from '../controllers/coupons.js';
 
-import { getCoupons } from "../controllers/coupons.js";
-import { getCoupon } from "../controllers/coupons.js";
-
-import { userSignin, userSignup } from "../controllers/userManagement.js";
+import { userSignin, userSignup } from '../controllers/userManagement.js';
 import {
   createReminder,
   deleteReminder,
   updateReminder,
   viewReminders,
-} from "../controllers/reminders.js";
+} from '../controllers/reminders.js';
 
 import {
   createTag,
@@ -21,7 +17,8 @@ import {
   updateTag,
   viewTag,
   viewTags,
-} from "../controllers/tags.js";
+  viewTagExpenses,
+} from '../controllers/tags.js';
 
 import {
   createGroup,
@@ -30,7 +27,7 @@ import {
   viewGroup,
   viewGroups,
   viewUsers,
-} from "../controllers/group.js";
+} from '../controllers/group.js';
 
 import {
   addExpense,
@@ -38,42 +35,44 @@ import {
   editExpense,
   viewExpense,
   viewExpenses,
-} from "../controllers/expense.js";
+} from '../controllers/expense.js';
+import { createPaymentIntent } from '../controllers/payment-server.js';
 
 const router = express.Router();
 
 // group routes
-router.post("/create-group", createGroup);
-router.put("/update-group/:id", updateGroup);
-router.delete("/delete-group/:id", deleteGroup);
-router.get("/view-groups", viewGroups);
-router.get("/view-group/:id", viewGroup);
-router.get("/view-users", viewUsers);
+router.post('/create-group', createGroup);
+router.put('/update-group/:id', updateGroup);
+router.delete('/delete-group/:id', deleteGroup);
+router.get('/view-groups', viewGroups);
+router.get('/view-group/:id', viewGroup);
+router.get('/view-users', viewUsers);
 
 //expense routes
-router.post("/add-expense", addExpense);
-router.put("/edit-expense/:id", editExpense);
-router.delete("/delete-expense/:id", deleteExpense);
-router.get("/view-expenses", viewExpenses);
-router.get("/view-expense/:id", viewExpense);
+router.post('/add-expense', addExpense);
+router.put('/edit-expense/:id', editExpense);
+router.delete('/delete-expense/:id', deleteExpense);
+router.get('/view-expenses', viewExpenses);
+router.get('/view-expense/:id', viewExpense);
 
 // tags routes
-router.post("/create-tag", createTag);
-router.put("/update-tag/:id", updateTag);
-router.delete("/delete-tag/:id", deleteTag);
-router.get("/view-tags", viewTags);
-router.get("/view-tag/:id", viewTag);
+router.post('/create-tag', createTag);
+router.put('/update-tag/:id', updateTag);
+router.delete('/delete-tag/:id', deleteTag);
+router.get('/view-tags/:id', viewTags);
+router.get('/view-tag/:id', viewTag);
+router.get('/fetch-expenses/:id', viewTagExpenses);
 
-router.post("/user-signup", userSignup);
+router.post('/user-signup', userSignup);
 // routing for the coupon management
-router.get("/get-coupons", getCoupons);
-router.get("/get-coupon/:id", getCoupon);
-router.post("/sign-in", userSignin);
+router.get('/get-coupons', getCoupons);
+router.get('/get-coupon/:id', getCoupon);
+router.post('/sign-in', userSignin);
 
-// payment reminder routes
-router.post("/create-reminder", createReminder);
-router.put("/edit-reminder", updateReminder);
-router.delete("/delete-reminder/:id", deleteReminder);
-router.post("/view-reminders", viewReminders);
+router.post('/create-reminder', createReminder);
+router.put('/edit-reminder', updateReminder);
+router.delete('/delete-reminder/:id', deleteReminder);
+router.post('/view-reminders', viewReminders);
+router.post('/create-payment-intent', createPaymentIntent);
 
 export { router };

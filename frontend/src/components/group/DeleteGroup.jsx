@@ -34,6 +34,7 @@ function DeleteGroup() {
 
     const prevIsDeleteGroupResponseReceived = usePrevious(isDeleteGroupResponseReceived);
 
+    // show the success message only if delete group response is received successfully
     useEffect(() => {
         if (prevIsDeleteGroupResponseReceived !== undefined && prevIsDeleteGroupResponseReceived !== isDeleteGroupResponseReceived && isSuccessfulResponse(deleteGroupResponseData)) {
             showPopup("success", "Success", "Group Successfully Deleted");
@@ -83,7 +84,7 @@ function DeleteGroup() {
     const {user} = useAuth();
 
     useEffect(() => {
-        dispatch(viewGroup(id, user().user.identities[0].user_id));
+        dispatch(viewGroup(id, user().user.identities[0].id));
     }, []);
 
     useEffect(() => {
@@ -166,11 +167,7 @@ function DeleteGroup() {
 
                     <Card className="p-2 mb-4">
                         <div>
-                            <div className="mb-2">The group expenses are as following. If you delete the group all the
-                                expenses
-                                will
-                                be
-                                deleted.
+                            <div className="mb-2">The group expenses are as following.
                             </div>
                             <div>{expenses}</div>
                         </div>

@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteTag, viewTags } from "../../redux/actions";
 import { usePrevious } from "react-use";
 import { Loading } from "../Loading";
+import { Empty } from "../Empty";
+import { useAuth } from "../../contexts/Auth";
 
 // function responsible to create the component to view a specific tag's details
 // list of all the tags created by a user are fetched and displayed
@@ -21,6 +23,8 @@ function ViewTags() {
   const history = useHistory();
 
   let dispatch = useDispatch();
+
+  const { user } = useAuth();
 
   // View Tags request and processing
 
@@ -34,7 +38,7 @@ function ViewTags() {
 
   // hook to request the data
   useEffect(() => {
-    dispatch(viewTags());
+    dispatch(viewTags(user().user.identities[0].user_id));
   }, [dispatch]);
 
   // hook to check if the data is received from the backend
@@ -123,6 +127,8 @@ function ViewTags() {
       </div>
       {!isViewTagsResponseReceived ? (
         <Loading />
+      ) : !viewTagsResponseData.data.length ? (
+        <Empty />
       ) : (
         <Table striped bordered hover responsive>
           <thead>
@@ -134,6 +140,7 @@ function ViewTags() {
               <th>Actions</th>
             </tr>
           </thead>
+
           <tbody>
             {tags.map((tag, index) => (
               <tr key={index}>

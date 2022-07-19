@@ -57,6 +57,7 @@ export function Signup() {
         <button type="submit">Sign up</button>
       </form> */}
       <Container>
+        <br></br>
         {/* Handles the user signuop for the user */}
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">

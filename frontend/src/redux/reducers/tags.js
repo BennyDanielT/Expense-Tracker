@@ -13,6 +13,8 @@ import {
   VIEW_TAG_RESPONSE,
   VIEW_TAGS,
   VIEW_TAGS_RESPONSE,
+  FETCH_EXPENSE,
+  FETCH_EXPENSE_RESPONSE,
 } from "../actions";
 
 // Setting initial state of the reducer
@@ -27,6 +29,8 @@ const initialState = {
   isDeleteTagResponseReceived: false,
   createTagResponseData: {},
   isCreateTagResponseReceived: false,
+  fetchExpensesResponseData: {},
+  isFetchExpensesResponseReceived: false,
 };
 
 // All the CRUD operations related to the tag reducers such as create, edit, view and delete tag are added here
@@ -95,6 +99,19 @@ const tag = (state = initialState, action) => {
         ...state,
         isDeleteTagResponseReceived: true,
         deleteTagResponseData: action.response,
+      };
+    }
+    case FETCH_EXPENSE: {
+      return {
+        ...state,
+        isFetchExpensesResponseReceived: false,
+      };
+    }
+    case FETCH_EXPENSE_RESPONSE: {
+      return {
+        ...state,
+        isFetchExpensesResponseReceived: true,
+        fetchExpensesResponseData: action.response,
       };
     }
     default: {

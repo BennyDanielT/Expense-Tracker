@@ -11,6 +11,7 @@ import "../../css/tags.css";
 import { createTag, editTag } from "../../redux/actions";
 import { routes } from "../../constants";
 import { usePrevious } from "react-use";
+import { useAuth } from "../../contexts/Auth";
 
 // function responsible to create the component to create and update the tags
 // same component is used for both; a flag called "mode" will be passed which calling this component
@@ -21,6 +22,8 @@ function CreateEditTag({ setting }) {
   const history = useHistory();
   const location = useLocation();
   let dispatch = useDispatch();
+
+  const { user } = useAuth();
 
   const createTagResponseData = useSelector(
     (state) => state.tag.createTagResponseData
@@ -80,23 +83,6 @@ function CreateEditTag({ setting }) {
     }
   }, [isEditTagResponseReceived]);
 
-  const isUsersResponseReceived = useSelector(
-    (state) => state.tag.isUsersResponseReceived
-  );
-  const usersResponseData = useSelector((state) => state.tag.usersResponseData);
-
-  useEffect(() => {
-    console.log("--------------");
-    if (usersResponseData) {
-      console.log(usersResponseData);
-      // const array = [];
-      // usersResponseData['success'].forEach((ele) => {
-      //     array.push({label: getUserFullName(ele), value: ele.user_id});
-      // });
-      // setUsers(array);
-    }
-  }, [isUsersResponseReceived]);
-
   const [showPicker, setShowPicker] = useState(false);
   const [mode] = useState(setting);
   const [tagDetails, setTagDetails] = useState({
@@ -111,7 +97,7 @@ function CreateEditTag({ setting }) {
       unified: "1f3f7-fe0f",
     },
     usage: location.state?.tag?.usage_count || 0,
-    user_id: location.state?.tag?.user_id || 13,
+    user_id: user().user.identities[0].user_id,
   });
 
   const [tagError, setTagError] = useState(null);
