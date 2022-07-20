@@ -37,7 +37,7 @@ const ReedemCoupon = () => {
   const [review, setReview] = React.useState(null);
 
   React.useEffect(() => {
-    fetch(`http://localhost:3001/api/get-reviews/${id}`)
+    fetch(`/api/get-reviews/${id}`)
       .then((results) => results.json())
       .then((data) => {
         setReview(data);

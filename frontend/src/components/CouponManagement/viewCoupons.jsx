@@ -13,7 +13,7 @@ const ViewCoupons = () => {
   const fetchData = async () => {
     var config = {
       method: "get",
-      url: "http://localhost:3001/api/get-coupons",
+      url: "/api/get-coupons",
       headers: {},
     };
 
