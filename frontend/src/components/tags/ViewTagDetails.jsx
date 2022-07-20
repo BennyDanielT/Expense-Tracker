@@ -31,7 +31,7 @@ function ViewTagDetails() {
 
   // hook to request the data
   useEffect(() => {
-    dispatch(fetchExpenses(tagDetails.user_id));
+    dispatch(fetchExpenses(tagDetails.tagId));
   }, [dispatch]);
 
   // Fetch all related expenses request and processing

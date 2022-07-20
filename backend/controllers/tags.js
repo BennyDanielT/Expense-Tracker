@@ -271,11 +271,11 @@ export const viewTags = async (request, response) => {
 
 export const viewTagExpenses = async (request, response) => {
   try {
-    let user_id = request.params.id;
+    let tag_id = request.params.id;
     const fields = [
       {
         label: "User ID",
-        value: user_id,
+        value: tag_id,
       },
     ];
 
@@ -291,7 +291,7 @@ export const viewTagExpenses = async (request, response) => {
     const { data, error } = await supabase
       .from("expense")
       .select("*", { count: "exact" })
-      .eq("user_id", user_id); // use user id here
+      .eq("tag_id", tag_id); // use user id here
     if (error) {
       return response.status(400).send({
         error: error,

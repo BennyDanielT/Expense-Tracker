@@ -4,7 +4,7 @@
 // All the CRUD operations related to the tags sagas such as create, edit, view and delete tag are added here
 
 import axios from "axios";
-import { put, takeLatest } from "redux-saga/effects";
+import { put, takeLatest, takeEvery } from "redux-saga/effects";
 import {
   CREATE_TAG,
   createTagResponse,
@@ -24,7 +24,7 @@ import { showError } from "../../constants";
 function* createTag(action) {
   try {
     const json = yield axios
-      .post("http://localhost:3001/api/create-tag/", action.tagData)
+      .post("/api/create-tag/", action.tagData)
       .then((res) => res.data);
     yield put(createTagResponse(json));
   } catch (err) {
@@ -40,7 +40,7 @@ export function* createTagSaga() {
 function* viewTags(action) {
   try {
     const json = yield axios
-      .get(`http://localhost:3001/api/view-tags/${action.id}`)
+      .get(`/api/view-tags/${action.id}`)
       .then((res) => res.data);
     yield put(viewTagsResponse(json));
   } catch (err) {
@@ -56,7 +56,7 @@ export function* viewTagsSaga() {
 function* viewTag(action) {
   try {
     const json = yield axios
-      .get(`http://localhost:3001/api/view-tag/${action.id}`)
+      .get(`/api/view-tag/${action.id}`)
       .then((res) => res.data);
     yield put(viewTagResponse(json));
   } catch (err) {
@@ -114,5 +114,5 @@ function* fetchExpenses(action) {
 }
 
 export function* fetchExpensesSaga() {
-  yield takeLatest(FETCH_EXPENSE, fetchExpenses);
+  yield takeEvery(FETCH_EXPENSE, fetchExpenses);
 }
