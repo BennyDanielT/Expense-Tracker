@@ -92,11 +92,9 @@ const ReedemCoupon = () => {
   const [reviews, setReviews] = useState([]);
   let pageDescription = "";
   const fetchData = async () => {
-    const response = await fetch("http://localhost:3001/api/get-coupon/" + id);
+    const response = await fetch("/api/get-coupon/" + id);
     const data = await response.json();
-    const response_ = await fetch(
-      "http://localhost:3001/api/get-reviews/" + id
-    );
+    const response_ = await fetch("/api/get-reviews/" + id);
     const data_ = await response_.json();
     console.log(data);
     console.log(data_);
