@@ -44,7 +44,6 @@ const ReedemCoupon = () => {
   );
   const [coupons, setCoupons] = useState([]);
   const [reviews, setReviews] = useState([]);
-
   let pageDescription = "";
   const fetchData = async () => {
     const response = await fetch("http://localhost:3001/api/get-coupon/" + id);
@@ -122,7 +121,7 @@ const ReedemCoupon = () => {
             href="coupon-redeemed"
             className="white-anchor-tag"
           >
-            <Link to="/coupon-redeemed">Redeem</Link>
+            <Link to={`/coupon-redeemed/${id}`}>Redeem</Link>
           </Button>
         </div>
       </div>
