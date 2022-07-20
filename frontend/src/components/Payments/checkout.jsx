@@ -28,6 +28,7 @@ export default function CheckoutForm(props) {
 
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [succ, setSuccess] = useState('failure');
 
   let redirectURL = 'http://localhost:3000/payment-status/success';
   let history = useHistory();
@@ -50,6 +51,7 @@ export default function CheckoutForm(props) {
       switch (paymentIntent.status) {
         case 'succeeded':
           setMessage('Payment succeeded!');
+          setSuccess('success');
           // redirectURL = 'http://localhost:3000/payment-status/success';
 
           break;
@@ -73,23 +75,10 @@ export default function CheckoutForm(props) {
     // Swal.fire('Initiated!', 'Your payment has been initiated', 'success');
 
     if (!stripe || !elements) {
-      // Stripe.js has not yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
 
     setIsLoading(true);
-
-    const { data, err } = await supabase.from('transaction').insert([
-      {
-        payee: val.firstName + ', ' + val.lastName,
-        amount: val.amount,
-        timestamp: new Date().toUTCString(),
-        user_id: '4e8eea9b-2526-41e6-ad70-469e14b6d9a7',
-        payment_for: val.payFor,
-        // status: transaction_status,
-      },
-    ]);
 
     const { error } = await stripe.confirmPayment({
       elements,
@@ -97,14 +86,58 @@ export default function CheckoutForm(props) {
         return_url: redirectURL,
       },
     });
+    console.log(succ);
+    if (succ === 'success') {
+      const { data, err } = await supabase.from('transaction').insert([
+        {
+          payee: val.firstName + ', ' + val.lastName,
+          amount: val.amount,
+          timestamp: new Date().toUTCString(),
+          user_id: '4e8eea9b-2526-41e6-ad70-469e14b6d9a7',
+          payment_for: val.payFor,
+          // status: transaction_status,
+        },
+      ]);
+    }
+    // .then(function (result) {
+    //   if (result.error) {
+    //     console.log(result.error);
+    //   } else {
+    //     successTransaction();
+    //   }
+    // });
+
+    // const successTransaction = async () => {
+
+    // };
 
     if (error.type === 'card_error' || error.type === 'validation_error') {
       setMessage(error.message);
+      const { data, err } = await supabase.from('transaction').insert([
+        {
+          payee: val.firstName + ', ' + val.lastName,
+          amount: val.amount,
+          timestamp: new Date().toUTCString(),
+          user_id: '4e8eea9b-2526-41e6-ad70-469e14b6d9a7',
+          payment_for: val.payFor,
+          status: error.type,
+        },
+      ]);
       history.push({
         pathname: '/payment-status/failure',
       });
     } else {
       setMessage('An unexpected error occurred.');
+      const { data, err } = await supabase.from('transaction').insert([
+        {
+          payee: val.firstName + ', ' + val.lastName,
+          amount: val.amount,
+          timestamp: new Date().toUTCString(),
+          user_id: '4e8eea9b-2526-41e6-ad70-469e14b6d9a7',
+          payment_for: val.payFor,
+          status: 'failure',
+        },
+      ]);
       history.push({
         pathname: '/payment-status/failure',
       });
