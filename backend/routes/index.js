@@ -1,3 +1,7 @@
+/**
+ * @author ${Vatsal Yadav, Abhishek Uppe}
+ */
+
 import express from "express";
 
 import { getCoupons } from "../controllers/coupons.js";
@@ -73,6 +77,7 @@ router.get("/get-coupons", getCoupons);
 router.get("/get-coupon/:id", getCoupon);
 router.post("/sign-in", userSignin);
 
+// payment reminder routes
 router.post("/create-reminder", createReminder);
 router.put("/edit-reminder", updateReminder);
 router.delete("/delete-reminder/:id", deleteReminder);

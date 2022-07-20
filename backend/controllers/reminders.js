@@ -1,8 +1,13 @@
+/**
+ * @author ${Vatsal Yadav}
+ */
+
 import {supabase} from "../models/index.js";
 import {errorCodeResponses, isFieldAbsent} from "../utils.js";
 import nodemailer from "nodemailer";
 import schedule from "node-schedule";
 
+// The controller creates a reminder in database with details provided by the user and schedule an email
 export const createReminder = async (request, response) => {
 
     const {name, amount, user_id, desc, date, email} = request.body;
@@ -57,6 +62,7 @@ export const createReminder = async (request, response) => {
             text: 'Payment Reminder \nAmount: '+amount+'$ \nDetails: '+name+' - '+desc
         };
 
+        // Code Reference [1]: https://stackoverflow.com/a/72279819/12146592
         // e-mail transport configuration
         let transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
@@ -68,6 +74,8 @@ export const createReminder = async (request, response) => {
             }
         });
 
+        // Code Reference [2]: https://blog.greenroots.info/send-and-schedule-e-mails-from-a-nodejs-app
+        // Schedule email for the payment reminder date and time
         schedule.scheduleJob(data[0].id.toString(),new Date(date), function(){
             console.log('Sending mail');
             transporter.sendMail(mailOptions, function(error, info){
@@ -85,7 +93,7 @@ export const createReminder = async (request, response) => {
     }
 }
 
-
+// The controller updated a reminder in database with details provided by the user and reschedules the previous email
 export const updateReminder = async (request, response) => {
 
     const {id, name, amount, user_id, desc, date, email} = request.body;
@@ -136,6 +144,7 @@ export const updateReminder = async (request, response) => {
             return response.status(400).send(error);
         }
 
+        // Code Reference [4]: https://stackoverflow.com/a/53684854/12146592
         let current_job = schedule.scheduledJobs[id.toString()];
         current_job.cancel();
 
@@ -171,14 +180,13 @@ export const updateReminder = async (request, response) => {
             });
         });
 
-
-
         return response.send({success: data});
     } catch (e) {
         return response.status(500).send(errorCodeResponses["500"]);
     }
 }
 
+// The controller deletes the selected payment reminder in the database and deletes the scheduled email
 export const deleteReminder = async (request, response) => {
     const id = request.params.id;
     try {
@@ -200,6 +208,7 @@ export const deleteReminder = async (request, response) => {
     }
 }
 
+// The controller gets the list of payment reminders added by a user
 export const viewReminders = async (request, response) => {
     const {user_id} = request.body;
     try {
