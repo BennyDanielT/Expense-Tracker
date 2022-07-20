@@ -2,7 +2,7 @@
  * @author ${Vatsal Yadav}
  */
 
-import "bootstrap/dist/css/bootstrap.css";
+import 'bootstrap/dist/css/bootstrap.css';
 import {Col, Container, Form, Modal, Row, Stack} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import {useEffect, useState} from "react";
@@ -245,8 +245,7 @@ export default function RemindersGrid() {
                                             <Button variant="danger"
                                                     onClick={() => {
                                                         setCurrentReminder(reminder);
-                                                        showDeleteAlert(reminder.id)
-                                                    }}>Remove
+                                                        showDeleteAlert(reminder.id)}}>Remove
                                             </Button>
                                             <Button
                                                 onClick={() => {
