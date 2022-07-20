@@ -43,7 +43,6 @@ export default function RemindersGrid() {
     useEffect(() => {
         if (prevIsViewRemindersResponseReceived !== undefined && prevIsViewRemindersResponseReceived !== isViewRemindersResponseReceived) {
             if (isSuccessfulResponse(viewRemindersResponseData)) {
-                // showPopup("success", "Success", "Payment Reminder Successfully fetched");
                 setRemindersList(viewRemindersResponseData.success.filter(reminder => new Date(reminder.date) > new Date()).map(reminder => {
                     let dateFormatted = reminder
                     dateFormatted.formattedDate = moment(new Date(reminder.date)).format('MMMM Do YYYY, h:mm a')
@@ -81,8 +80,6 @@ export default function RemindersGrid() {
         if (prevIsDeleteReminderResponseReceived !== undefined && prevIsDeleteReminderResponseReceived !== isDeleteReminderResponseReceived) {
             if (isSuccessfulResponse(deleteReminderResponseData)) {
                 showPopup("success", "Success", "Payment Reminder Successfully Deleted!");
-                // history.replace(routes.reminders.path);
-                window.location.reload();
             }
         }
     }, [isDeleteReminderResponseReceived]);
@@ -106,7 +103,6 @@ export default function RemindersGrid() {
         if (prevIsEditReminderResponseReceived !== undefined && prevIsEditReminderResponseReceived !== isEditReminderResponseReceived) {
             if (isSuccessfulResponse(editReminderResponseData)) {
                 showPopup("success", "Success", "Payment Reminder Successfully Modified!");
-                window.location.reload();
             }
         }
     }, [isEditReminderResponseReceived]);
@@ -144,6 +140,9 @@ export default function RemindersGrid() {
         }).then((result) => {
             if (result.isConfirmed) {
                 dispatch(deleteReminder(id));
+                remindersList.splice(remindersList.findIndex(function(i){
+                    return i.id === id;
+                }), 1);
             }
         });
     }
@@ -177,6 +176,17 @@ export default function RemindersGrid() {
         else if (form.checkValidity() === false) {
             event.stopPropagation();
         } else {
+            // TODO:
+            remindersList.map(reminder => {
+                let updateReminderList = reminder
+                if (reminder.id === updateReminder.reminder.id){
+                    updateReminderList.formattedDate = moment(new Date(date)).format('MMMM Do YYYY, h:mm a')
+                    updateReminderList.amount = reminderAmount
+                    updateReminderList.desc = reminderDesc
+                    updateReminderList.date = date
+                }
+                return updateReminderList
+            })
             dispatch(editReminder({id:updateReminder.reminder.id, name: reminderName, amount: reminderAmount, user_id: user().user.identities[0].user_id, desc: reminderDesc, date: date, email: supabase.auth.user().email}));
             handleClose();
         }
