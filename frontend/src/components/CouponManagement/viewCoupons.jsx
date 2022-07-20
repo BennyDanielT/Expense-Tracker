@@ -11,9 +11,20 @@ const ViewCoupons = () => {
   const [coupons, setCoupons] = useState([]);
   let pageDescription = "";
   const fetchData = async () => {
-    const response = await fetch("http://localhost:3001/api/get-coupons");
-    const data = await response.json();
-    setCoupons(data);
+    var config = {
+      method: "get",
+      url: "http://localhost:3001/api/get-coupons",
+      headers: {},
+    };
+
+    axios(config)
+      .then(function (response) {
+        setCoupons(response.data);
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -41,7 +52,7 @@ const ViewCoupons = () => {
                     className="white-anchor-tag"
                   >
                     <Button variant="success">
-                      <Link to={routes.redeemCoupon.path}>Show Details</Link>
+                      <Link to={`/redeem-coupon/${data.id}`}>Show Details</Link>
                     </Button>
                     <Button variant="primary">
                       <a href={data.coupon_website} target="_blank">
