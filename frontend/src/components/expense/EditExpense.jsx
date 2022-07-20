@@ -6,7 +6,7 @@ import {dummyMembersData, dummyGroupData} from "./helpers";
 import Swal from "sweetalert2";
 import {routes} from "../../constants";
 import {useEffect, useState} from "react";
-import {  useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getUserFullName, imgToBase64, isSuccessfulResponse,  showPopup} from "../../constants";
 import {usePrevious} from "react-use";

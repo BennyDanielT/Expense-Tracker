@@ -176,9 +176,9 @@ function AddExepnse() {
         tempArray.push({
           label: ele.email_id,
           value: ele.email_id,
-          email_id: ele.email_id,
-          id: ele.id,
-          user_id: ele.user_id,
+          //email_id: ele.email_id,
+          //id: ele.id,
+          //user_id: ele.user_id,
         });
       });
       //   setUsers(array);
