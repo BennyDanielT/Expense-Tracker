@@ -2,7 +2,7 @@
  * @author ${Vatsal Yadav}
  */
 
-import 'bootstrap/dist/css/bootstrap.css';
+import "bootstrap/dist/css/bootstrap.css";
 import {Col, Container, Form, Modal, Row, Stack} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import {useEffect, useState} from "react";
@@ -55,10 +55,9 @@ export default function RemindersGrid() {
 
 
     useEffect(() => {
-        console.log("user",supabase.auth.user().email)
+        console.log("user", supabase.auth.user().email)
         dispatch(viewReminders({user_id: user().user.identities[0].user_id}));
     }, []);
-
 
 
     const deleteReminderResponseData = useSelector(
@@ -140,7 +139,7 @@ export default function RemindersGrid() {
         }).then((result) => {
             if (result.isConfirmed) {
                 dispatch(deleteReminder(id));
-                remindersList.splice(remindersList.findIndex(function(i){
+                remindersList.splice(remindersList.findIndex(function (i) {
                     return i.id === id;
                 }), 1);
             }
@@ -170,16 +169,15 @@ export default function RemindersGrid() {
     const handleSubmit = (event) => {
         const form = event.currentTarget;
         event.preventDefault();
-        if(date <= new Date()){
+        if (date <= new Date()) {
             alert("Reminder cannot be set in past.")
-        }
-        else if (form.checkValidity() === false) {
+        } else if (form.checkValidity() === false) {
             event.stopPropagation();
         } else {
             // TODO:
             remindersList.map(reminder => {
                 let updateReminderList = reminder
-                if (reminder.id === updateReminder.reminder.id){
+                if (reminder.id === updateReminder.reminder.id) {
                     updateReminderList.formattedDate = moment(new Date(date)).format('MMMM Do YYYY, h:mm a')
                     updateReminderList.amount = reminderAmount
                     updateReminderList.desc = reminderDesc
@@ -187,7 +185,15 @@ export default function RemindersGrid() {
                 }
                 return updateReminderList
             })
-            dispatch(editReminder({id:updateReminder.reminder.id, name: reminderName, amount: reminderAmount, user_id: user().user.identities[0].user_id, desc: reminderDesc, date: date, email: supabase.auth.user().email}));
+            dispatch(editReminder({
+                id: updateReminder.reminder.id,
+                name: reminderName,
+                amount: reminderAmount,
+                user_id: user().user.identities[0].user_id,
+                desc: reminderDesc,
+                date: date,
+                email: supabase.auth.user().email
+            }));
             handleClose();
         }
         setValidated(true);
@@ -210,7 +216,7 @@ export default function RemindersGrid() {
                     onClick={() => history.push(routes.createReminder.path)}>Create Reminder
                 </Button>
             </Row>
-            <Row className="text-center" hidden={remindersList.length!==0}>
+            <Row className="text-center" hidden={remindersList.length !== 0}>
                 <label> No reminders found, please create a new Payment Reminder! </label>
             </Row>
 
@@ -239,7 +245,8 @@ export default function RemindersGrid() {
                                             <Button variant="danger"
                                                     onClick={() => {
                                                         setCurrentReminder(reminder);
-                                                        showDeleteAlert(reminder.id)}}>Remove
+                                                        showDeleteAlert(reminder.id)
+                                                    }}>Remove
                                             </Button>
                                             <Button
                                                 onClick={() => {
