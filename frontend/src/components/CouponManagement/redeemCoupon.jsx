@@ -1,6 +1,8 @@
 import Header from "./Helpers/header";
 import React, { useEffect, useState } from "react";
 import Footer from "./Helpers/footer";
+import { useHistory } from "react-router-dom";
+
 import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
 import Menu from "./Helpers/menu";
@@ -23,9 +25,11 @@ import { Link } from "react-router-dom";
 import { routes } from "../../constants";
 
 const ReedemCoupon = () => {
+  const history = useHistory();
+
   let { id } = useParams();
-  console.log(id);
   const [review, setReview] = React.useState(null);
+
   React.useEffect(() => {
     fetch("http://localhost:3001/api/get-reviews")
       .then((results) => results.json())
@@ -115,13 +119,8 @@ const ReedemCoupon = () => {
         </Accordion>
         <br></br>
         <div className="d-grid gap-2">
-          <Button
-            variant="primary"
-            size="lg"
-            href="coupon-redeemed"
-            className="white-anchor-tag"
-          >
-            <Link to="/coupon-redeemed">Redeem</Link>
+          <Button variant="primary" size="lg" className="white-anchor-tag">
+            <Link to={`/coupon-redeemed/${id}`}>Redeem</Link>
           </Button>
         </div>
       </div>

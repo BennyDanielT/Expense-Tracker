@@ -1,3 +1,7 @@
+/**
+ * @author ${Vatsal Yadav}
+ */
+
 import {
     CREATE_REMINDER,
     CREATE_REMINDER_RESPONSE,
@@ -9,6 +13,7 @@ import {
     VIEW_REMINDERS_RESPONSE
 } from "../actions";
 
+// Setting initial state of the reducer
 const initialState = {
     viewRemindersResponseData: {},
     isViewRemindersResponseReceived: false,
@@ -20,6 +25,7 @@ const initialState = {
     isCreateReminderResponseReceived: false
 };
 
+// All the CRUD operations related to the reminder reducers such as create, edit, view and delete payment reminder
 const reminder = (state = initialState, action) => {
     switch (action.type) {
         case CREATE_REMINDER: {
@@ -29,7 +35,6 @@ const reminder = (state = initialState, action) => {
             };
         }
         case CREATE_REMINDER_RESPONSE: {
-            console.log("reducer reminder", action.response)
             return {
                 ...state,
                 isCreateReminderResponseReceived: true,

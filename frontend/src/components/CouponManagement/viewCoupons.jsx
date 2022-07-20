@@ -41,7 +41,7 @@ const ViewCoupons = () => {
                     className="white-anchor-tag"
                   >
                     <Button variant="success">
-                      <Link to={routes.redeemCoupon.path}>Show Details</Link>
+                      <Link to={`/redeem-coupon/${data.id}`}>Show Details</Link>
                     </Button>
                     <Button variant="primary">
                       <a href={data.coupon_website} target="_blank">

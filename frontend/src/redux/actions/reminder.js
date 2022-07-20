@@ -1,3 +1,7 @@
+/**
+ * @author ${Vatsal Yadav}
+ */
+
 export const CREATE_REMINDER = "CREATE_REMINDER";
 export const CREATE_REMINDER_RESPONSE = "CREATE_REMINDER_RESPONSE";
 export const EDIT_REMINDER = "EDIT_REMINDER";
