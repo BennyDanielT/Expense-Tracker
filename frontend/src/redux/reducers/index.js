@@ -1,5 +1,5 @@
 /**
- * @author ${abhishekuppe}
+ * @author ${abhishekuppe, Vatsal Yadav}
  */
 
 import { combineReducers } from "redux";

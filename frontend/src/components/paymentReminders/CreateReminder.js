@@ -1,3 +1,7 @@
+/**
+ * @author ${Vatsal Yadav}
+ */
+
 import {useState, useEffect} from 'react';
 import {Button, Form} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.css';
@@ -11,8 +15,7 @@ import {usePrevious} from "react-use";
 import {useAuth} from "../../contexts/Auth";
 import {supabase} from "../../supabase";
 
-
-// Reference : https://www.npmjs.com/package/react-datetime-picker
+// The component purpose is to create a new payment reminder with reminder details added by the user
 export default function CreateReminder() {
 
     const [reminderName, setReminderName] = useState('');
@@ -20,10 +23,11 @@ export default function CreateReminder() {
     const [reminderDesc, setReminderDesc] = useState('');
     const [date, setDate] = useState(new Date());
     const [validated, setValidated] = useState(false);
-    const [snackbar, setSnackbar] = useState({message:"", severity:"success", visibility:false});
     const {user} = useAuth();
     const history = useHistory();
 
+
+    // Validate payment reminder details
     const handleReminderName = (e) => {
         if (e.target.value.match(/^[a-zA-Z0-9 ]*$/)) {
             setReminderName(e.target.value);
@@ -59,6 +63,7 @@ export default function CreateReminder() {
 
     const prevIsCreateReminderResponseReceived = usePrevious(isCreateReminderResponseReceived);
 
+    // show the success message only if create reminder response is received successfully
     useEffect(() => {
         if (prevIsCreateReminderResponseReceived !== undefined && prevIsCreateReminderResponseReceived !== isCreateReminderResponseReceived) {
             if (isSuccessfulResponse(createReminderResponseData)) {
@@ -68,6 +73,7 @@ export default function CreateReminder() {
         }
     }, [isCreateReminderResponseReceived]);
 
+    // Submit validated details to create a new payment reminder
     const handleSubmit = (event) => {
         const form = event.currentTarget;
         event.preventDefault();
@@ -86,20 +92,19 @@ export default function CreateReminder() {
 
     };
 
-    const handleChange = (newValue) => {
-        setDate(newValue);
-    };
-
-    // Code Reference: https://stackoverflow.com/questions/59826534/react-datepicker-mintime-and-maxtime-not-works
+    // Code Reference [5]: https://stackoverflow.com/questions/59826534/react-datepicker-mintime-and-maxtime-not-works
+    // filter the selected time that is passed
     const filterPassedTime = (time) => {
         const currentDate = new Date();
         const selectedDate = new Date(time);
 
         return currentDate.getTime() < selectedDate.getTime();
     };
+
     return (
         <div className="container-fluid col-md-6 col-12 col-sm-10 mt-4 p-4" style={{backgroundColor: 'white'}}>
             <h1 align="center"> Create Payment Reminder </h1>
+            {/* Form for creating a new payment reminder */}
 
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
 
@@ -146,6 +151,7 @@ export default function CreateReminder() {
 
                 <Form.Group controlId="date">
                     <Form.Label className="mt-1">Time</Form.Label>
+                    {/*Reference: https://www.npmjs.com/package/react-datetime-picker*/}
                     <DatePicker
                         showTimeSelect
                         selected={date}
@@ -159,13 +165,6 @@ export default function CreateReminder() {
                 <Button className="mt-3" type="submit">Submit</Button>
 
             </Form>
-
-            <Snackbar anchorOrigin={{ vertical:"top", horizontal:"right" }}
-                      open={snackbar.visibility} autoHideDuration={3000} onClose={()=> setSnackbar({message:"", severity:"success", visibility: false})}>
-                <Alert onClose={()=> setSnackbar({message:"", severity:"success", visibility: false})} severity={snackbar.severity} sx={{ width: '100%' }}>
-                    {snackbar.message}
-                </Alert>
-            </Snackbar>
 
         </div>
     );
