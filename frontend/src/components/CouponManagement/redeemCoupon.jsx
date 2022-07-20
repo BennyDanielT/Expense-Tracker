@@ -1,11 +1,12 @@
 import Header from "./Helpers/header";
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
 import Footer from "./Helpers/footer";
 import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
 import Menu from "./Helpers/menu";
 import Meta from "./Helpers/meta";
-import { useParams } from "react-router-dom";
 import "../../css/coupon.css";
 import {
   Container,
