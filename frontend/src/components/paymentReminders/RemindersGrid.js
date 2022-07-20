@@ -174,7 +174,6 @@ export default function RemindersGrid() {
         } else if (form.checkValidity() === false) {
             event.stopPropagation();
         } else {
-            // TODO:
             remindersList.map(reminder => {
                 let updateReminderList = reminder
                 if (reminder.id === updateReminder.reminder.id) {
