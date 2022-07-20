@@ -1,6 +1,7 @@
 import Header from "./Helpers/header";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 import Footer from "./Helpers/footer";
 import Card from "react-bootstrap/Card";
@@ -8,6 +9,8 @@ import CardGroup from "react-bootstrap/CardGroup";
 import Menu from "./Helpers/menu";
 import Meta from "./Helpers/meta";
 import "../../css/coupon.css";
+import { supabase } from "../../supabase";
+
 import {
   Container,
   Row,
@@ -25,8 +28,13 @@ import { routes } from "../../constants";
 
 const ReedemCoupon = () => {
   let { id } = useParams();
+  if (id == "") {
+    id = 3;
+  }
+
   console.log(id);
   const [review, setReview] = React.useState(null);
+
   React.useEffect(() => {
     fetch(`http://localhost:3001/api/get-reviews/${id}`)
       .then((results) => results.json())
@@ -34,6 +42,29 @@ const ReedemCoupon = () => {
         setReview(data);
       });
   }, []); // <-- Have to pass in [] here!
+  function sayHello() {
+    var data = JSON.stringify({
+      merchant: id,
+      user: supabase.auth.user().email,
+    });
+
+    var config = {
+      method: "post",
+      url: "/api/add-coupon-redeemption",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
   // page content
   const pageTitle = "Awesome! Redeem the coupon below.";
@@ -120,6 +151,7 @@ const ReedemCoupon = () => {
             size="lg"
             href="coupon-redeemed"
             className="white-anchor-tag"
+            onClick={sayHello}
           >
             <Link to={`/coupon-redeemed/${id}`}>Redeem</Link>
           </Button>

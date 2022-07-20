@@ -66,3 +66,10 @@ export const getMerchantLocations = async (request, response) => {
   console.log(location_of_merchants);
   response.json(location_of_merchants);
 };
+export const addMerchantToDB = async (request, response) => {
+  const { data, error } = await supabase
+    .from("coupon_transactions")
+    .insert([{ merchant: request.body.merchant, user: request.body.user }]);
+  response.send(data);
+  console.log(data);
+};

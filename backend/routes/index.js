@@ -9,6 +9,7 @@ import {
   getCoupon,
   getMerchantReviews,
   getMerchantLocations,
+  addMerchantToDB,
 } from "../controllers/coupons.js";
 
 import { userSignin, userSignup } from "../controllers/userManagement.js";
@@ -85,5 +86,5 @@ router.post("/view-reminders", viewReminders);
 router.post("/create-payment-intent", createPaymentIntent);
 router.get("/get-reviews/:id", getMerchantReviews);
 router.get("/get-location/:id", getMerchantLocations);
-
+router.post("/add-coupon-redeemption", addMerchantToDB);
 export { router };
