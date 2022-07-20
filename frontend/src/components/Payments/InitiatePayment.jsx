@@ -92,7 +92,7 @@ export default function InitiatePayment() {
       if (!value) {
         setErrors({
           ...errors,
-          email: 'Amount is a required field',
+          email: 'Email is a required field',
         });
       } else if (!value.match(emailRegex)) {
         setErrors({
@@ -217,11 +217,17 @@ export default function InitiatePayment() {
           isError = true;
         }
       });
+      if (Object.keys(values).length != 6) {
+        isError = true;
+      }
       if (isError) {
         setMainErrors('Please enter all the fields without errors!');
+        
       } else {
         setMainErrors('');
-        console.log(values);
+        // console.log(values);
+        // console.log(Object.keys(values).length);
+        // console.log(errors);
         // Swal.fire('Initiated!', 'Your payment has been initiated', 'success');
         // history.push('/add-method');
         history.push({
