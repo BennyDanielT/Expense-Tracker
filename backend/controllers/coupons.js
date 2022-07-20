@@ -40,3 +40,29 @@ export const getCoupon = async (request, response) => {
     return response.status(500).send(errorCodeResponses["500"]);
   }
 };
+
+export const getMerchantReviews = async (request, response) => {
+  try {
+    let t = request.params.id;
+    const { data, error } = await supabase
+      .from("coupon_merchant_reviews")
+      .select("*")
+      .eq("coupon_merchant", request.params.id);
+    if (error) {
+      return response.status(400).send(error);
+    }
+    return response.json(data);
+  } catch (err) {
+    console.log(err);
+    return response.status(500).send(errorCodeResponses["500"]);
+  }
+};
+
+export const getMerchantLocations = async (request, response) => {
+  let { data: location_of_merchants, error } = await supabase
+    .from("location_of_merchants")
+    .select("*")
+    .eq("merchant_id", request.params.id);
+  console.log(location_of_merchants);
+  response.json(location_of_merchants);
+};
