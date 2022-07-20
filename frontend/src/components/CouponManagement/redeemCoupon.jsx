@@ -2,6 +2,7 @@ import Header from "./Helpers/header";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 import Footer from "./Helpers/footer";
 import Card from "react-bootstrap/Card";
@@ -43,6 +44,20 @@ const ReedemCoupon = () => {
       });
   }, []); // <-- Have to pass in [] here!
   function sayHello() {
+    Swal.fire({
+      title: "Do you want to redeem the coupon?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Redeem",
+      denyButtonText: `Don't Redeem`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire("Yay!Redeemed", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Go for it! Click redeem", "", "info");
+      }
+    });
     var data = JSON.stringify({
       merchant: id,
       user: supabase.auth.user().email,

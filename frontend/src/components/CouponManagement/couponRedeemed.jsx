@@ -79,7 +79,7 @@ function CouponRedeemed() {
           <br></br>
 
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.521260322283!2d106.8195613507864!3d-6.194741395493371!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f5390917b759%3A0x6b45e67356080477!2sPT%20Kulkul%20Teknologi%20Internasional!5e0!3m2!1sen!2sid!4v1601138221085!5m2!1sen!2sid"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2838.4603762944744!2d-63.57985176911238!3d44.64894492864998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4b5a23cd9d9e7bef%3A0xff7b9976ecbe8bbd!2s1841%20Argyle%20St%2C%20Halifax%2C%20NS%20B3J%203S1!5e0!3m2!1sen!2sca!4v1658355376172!5m2!1sen!2sca"
             width="600"
             height="450"
             frameBorder="0"
@@ -94,5 +94,7 @@ function CouponRedeemed() {
     </div>
   );
 }
-
+{
+  /* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d90834.88987145112!2d-63.70293725776176!3d44.64628978041485!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4b5a211407dbfac1%3A0x666be3a6438b2ddc!2sHalifax%2C%20NS!5e0!3m2!1sen!2sca!4v1658355145884!5m2!1sen!2sca" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> */
+}
 export { CouponRedeemed };
