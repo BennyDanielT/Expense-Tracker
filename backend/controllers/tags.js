@@ -285,14 +285,14 @@ export const viewTags = async (request, response) => {
 };
 
 export const viewTagExpenses = async (request, response) => {
-    try {
-        let user_id = request.params.id;
-        const fields = [
-            {
-                label: "User ID",
-                value: user_id,
-            },
-        ];
+  try {
+    let tag_id = request.params.id;
+    const fields = [
+      {
+        label: "User ID",
+        value: tag_id,
+      },
+    ];
 
         const field = isFieldAbsent(fields);
 
@@ -303,24 +303,24 @@ export const viewTagExpenses = async (request, response) => {
             });
         }
 
-        const {data, error} = await supabase
-            .from("expense")
-            .select("*", {count: "exact"})
-            .eq("user_id", user_id); // use user id here
-        if (error) {
-            return response.status(400).send({
-                error: error,
-                status: 400,
-            });
-        }
-        console.log("returned");
-        return response.status(200).send({data: data, status: 200, error: null});
-    } catch (e) {
-        console.log(e);
-        return response
-            .status(500)
-            .send({status: 500, error: errorCodeResponses["500"]});
+    const { data, error } = await supabase
+      .from("expense")
+      .select("*", { count: "exact" })
+      .eq("tag_id", tag_id); // use user id here
+    if (error) {
+      return response.status(400).send({
+        error: error,
+        status: 400,
+      });
     }
+    console.log("returned");
+    return response.status(200).send({ data: data, status: 200, error: null });
+  } catch (e) {
+    console.log(e);
+    return response
+      .status(500)
+      .send({ status: 500, error: errorCodeResponses["500"] });
+  }
 };
 
 function checkExistance(id) {
