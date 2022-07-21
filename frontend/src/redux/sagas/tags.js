@@ -4,7 +4,7 @@
 // All the CRUD operations related to the tags sagas such as create, edit, view and delete tag are added here
 
 import axios from "axios";
-import {put, takeLatest} from "redux-saga/effects";
+import { put, takeLatest, takeEvery } from "redux-saga/effects";
 import {
     CREATE_TAG,
     createTagResponse,
@@ -114,5 +114,5 @@ function* fetchExpenses(action) {
 }
 
 export function* fetchExpensesSaga() {
-    yield takeLatest(FETCH_EXPENSE, fetchExpenses);
+  yield takeEvery(FETCH_EXPENSE, fetchExpenses);
 }
