@@ -18,6 +18,7 @@ function ExpenseTracking() {
     const dispatch = useDispatch();
     const {user} = useAuth();
 
+    // Prepare month list for months until current date and fetch expenses
     useEffect(() => {
         let yearStartDate = new Date(new Date().getFullYear(), 0, 1);
         let currentDate = new Date();
@@ -54,7 +55,7 @@ function ExpenseTracking() {
         ],
     })
 
-// Prepare chart data as per groups and total amount logged for each group
+// Prepare chart data as per groups and total amount logged for each month
     useEffect(() => {
         if (prevIsViewExpensesResponseReceived !== undefined && prevIsViewExpensesResponseReceived !== isViewExpensesResponseReceived && monthsList[0] !== undefined) {
             viewExpensesResponseData.success.map(expense => {
