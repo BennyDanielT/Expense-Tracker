@@ -1,14 +1,10 @@
-import {useHistory, useLocation} from "react-router-dom";
+import {useHistory, useLocation, useParams} from "react-router-dom";
 import {Heading} from "../Heading/Heading";
 import {Button, Form} from "react-bootstrap";
 import Select from "react-select";
-import {dummyMembersData, dummyGroupData} from "./helpers";
-import Swal from "sweetalert2";
-import {routes} from "../../constants";
+import {getUserFullName, isSuccessfulResponse, routes, showPopup} from "../../constants";
 import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {getUserFullName, imgToBase64, isSuccessfulResponse,  showPopup} from "../../constants";
 import {usePrevious} from "react-use";
 import {editExpense, getUsers, viewExpense} from "../../redux/actions";
 
@@ -25,7 +21,7 @@ function EditExpense() {
         actualMembers.push({label: ele.slice(0, 1).toUpperCase() + ele.slice(1), value: ele});
     });
 
-    const [values, setValues] = useState({name: apiData.name, members: actualMembers, icon: null, amount: null}, );
+    const [values, setValues] = useState({name: apiData.name, members: actualMembers, icon: null, amount: null},);
     const [errors, setErrors] = useState({});
 
     const onChangeFunctions = {
@@ -194,7 +190,6 @@ function EditExpense() {
                     <div className="errors">{errors['icon']}</div>
                 </Form.Group>
 
-                
 
                 <Form.Group className="mb-3" controlId="react-select-3-input">
                     <Form.Label>Group Members</Form.Label>

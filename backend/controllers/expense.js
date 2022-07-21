@@ -117,6 +117,7 @@ export const deleteExpense = async (request, response) => {
             .from('expense')
             .delete()
             .match({id});
+
         if (error) {
             return response.status(400).send(error);
         }
@@ -184,6 +185,36 @@ export const viewExpenses = async (request, response) => {
             return response.status(400).send(error);
         }
         return response.send({success: data});
+    } catch (e) {
+        return response.status(500).send(errorCodeResponses["500"]);
+    }
+}
+
+export const settleExpense = async (request, response) => {
+    try {
+        const {id, amount} = request.body;
+
+        const {data, error} = await supabase
+            .from('expense')
+            .select('amount')
+            .eq("id", id);
+
+        if (error) {
+            return response.status(400).send(error);
+        }
+
+        const newAmount = data[0].amount - parseInt(amount);
+
+        const expenseResponse = await supabase
+            .from('expense')
+            .update({amount: newAmount})
+            .eq("id", id);
+
+        if (error) {
+            return response.status(400).send(error);
+        }
+
+        return response.send({success: expenseResponse});
     } catch (e) {
         return response.status(500).send(errorCodeResponses["500"]);
     }

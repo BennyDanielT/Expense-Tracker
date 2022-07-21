@@ -4,6 +4,7 @@ import {
     ADD_EXPENSE,
     addExpenseResponse,
     DELETE_EXPENSE,
+    deleteExpenseResponse,
     EDIT_EXPENSE,
     editExpenseResponse,
     VIEW_EXPENSE,
@@ -82,10 +83,10 @@ function* deleteExpense(action) {
         const json = yield axios
             .delete(`/api/delete-expense/${action.id}`)
             .then((res) => res.data);
-        yield put(editExpenseResponse(json));
+        yield put(deleteExpenseResponse(json));
     } catch (err) {
         showError(err);
-        yield put(editExpenseResponse(err));
+        yield put(deleteExpenseResponse(err));
     }
 }
 

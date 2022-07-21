@@ -178,7 +178,7 @@ export const routes = {
         isAuthenticated: true,
     },
     settleExpense: {
-        path: "/settle-expense",
+        path: "/settle-expense/:id",
         isAuthenticated: true,
     },
     dashboard: {

@@ -5,7 +5,7 @@ import {useHistory, useParams} from "react-router-dom";
 import {isSuccessfulResponse, routes} from "../../constants";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {viewExpense} from "../../redux/actions";
+import {deleteExpense, viewExpense} from "../../redux/actions";
 import {usePrevious} from "react-use";
 import {Loading} from "../Loading";
 import Swal from "sweetalert2";
@@ -44,11 +44,19 @@ function ViewExpense() {
         history.push({pathname: routes.editExpense.path.split(":")[0] + currentExpense.id});
     };
 
-    const deleteExpense = (currentExpense) => {
+    const isDeleteExpenseResponseReceived = useSelector(
+        (state) => state.expense.isDeleteExpenseResponseReceived
+    );
 
-    };
+    const prevIsDeleteExpenseResponseReceived = usePrevious(isDeleteExpenseResponseReceived);
 
-    console.log(currentExpense);
+    useEffect(() => {
+        if (prevIsDeleteExpenseResponseReceived !== undefined && prevIsDeleteExpenseResponseReceived !== isDeleteExpenseResponseReceived) {
+            if (isDeleteExpenseResponseReceived) {
+                history.push(routes.expense.path);
+            }
+        }
+    }, [isDeleteExpenseResponseReceived]);
 
     return (
         <div className="view-expense">
@@ -82,7 +90,8 @@ function ViewExpense() {
                             </ul>
                         </div>
                         <div className="d-flex justify-content-evenly">
-                            <Button className="mt-2" onClick={() => history.push(routes.settleExpense.path)}>
+                            <Button className="mt-2"
+                                    onClick={() => history.push(routes.settleExpense.path.split(":")[0] + currentExpense.id)}>
                                 Settle Up
                             </Button>
                             <Button className="mt-2" onClick={() => editExpense(currentExpense)}>
@@ -96,6 +105,10 @@ function ViewExpense() {
                                 confirmButtonColor: '#3085d6',
                                 cancelButtonColor: '#d33',
                                 confirmButtonText: 'Yes, delete it!'
+                            }).then((ele) => {
+                                if (ele.isConfirmed) {
+                                    dispatch(deleteExpense(currentExpense.id));
+                                }
                             })}>
                                 Delete Expense
                             </Button>
