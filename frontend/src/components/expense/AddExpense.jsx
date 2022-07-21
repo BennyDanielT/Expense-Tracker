@@ -188,8 +188,8 @@ function AddExepnse() {
 
     useEffect(() => {
         dispatch(getUsers());
-        dispatch(viewGroups());
-        dispatch(viewTags());
+        dispatch(viewGroups(user().user.id));
+        dispatch(viewTags(user().user.id));
     }, [dispatch]);
 
     const [group_ids, setgroup_ids] = useState([]);
