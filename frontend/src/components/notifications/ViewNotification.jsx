@@ -67,7 +67,7 @@ function ViewNotification() {
             data.deleted_group.forEach((ele) => {
                 notifications.push({
                     id: ele.id,
-                    title: `The group ${ele.name} is deleted`
+                    title: `The expense ${ele.name} is deleted`
                 })
             });
 

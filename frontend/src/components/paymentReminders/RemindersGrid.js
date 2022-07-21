@@ -55,7 +55,6 @@ export default function RemindersGrid() {
 
 
     useEffect(() => {
-        console.log("user", supabase.auth.user().email)
         dispatch(viewReminders({user_id: user().user.identities[0].id}));
     }, []);
 

@@ -29,7 +29,7 @@ export default function PaymentMethod() {
 
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', 'application/json');
-        headers.append('Origin', 'http://localhost:3000');
+        headers.append('Origin', `${window.location.origin}`);
 
         let testv = JSON.stringify({amount: values.amount});
         console.log(testv);

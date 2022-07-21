@@ -1,147 +1,86 @@
+/**
+ * @author ${Vatsal Yadav}
+ */
+
 import {Bar} from 'react-chartjs-2'
 import 'chart.js/auto';
-import {Button, Grid, Typography} from "@mui/material";
-import {useState} from "react";
+import {Grid, Typography} from "@mui/material";
+import {useEffect, useState} from "react";
+import {viewExpenses} from "../../redux/actions";
+import {useDispatch, useSelector} from "react-redux";
+import {usePrevious} from "react-use";
+import {useAuth} from "../../contexts/Auth";
 
+// The component purpose is to view monthly expenses charts
 function ExpenseTracking() {
 
-    const monthlyExpenseData2022 =
-        [{
-            "name": "January",
-            "amount": "45",
-        },
-            {
-                "name": "February",
-                "amount": "85",
-            },
-            {
-                "name": "March",
-                "amount": "96",
-            },
-            {
-                "name": "April",
-                "amount": "47",
-            }, {
-            "name": "May",
-            "amount": "20",
-        }, {
-            "name": "June",
-            "amount": "67.85",
-        },
-        ];
+    const [monthsList, setMonthsList] = useState([])
+    const dispatch = useDispatch();
+    const {user} = useAuth();
 
-
-    const monthlyExpenseData2021 =
-        [{
-            "name": "January",
-            "amount": "167.85",
-        },
-            {
-                "name": "February",
-                "amount": "107",
-            },
-            {
-                "name": "March",
-                "amount": "108",
-            },
-            {
-                "name": "April",
-                "amount": "86",
-            }, {
-            "name": "May",
-            "amount": "45",
-        }, {
-            "name": "June",
-            "amount": "67",
-        },
-            {
-                "name": "July",
-                "amount": "75",
-            },
-            {
-                "name": "August",
-                "amount": "34",
-            }, {
-            "name": "September",
-            "amount": "90",
-        },
-            {
-                "name": "October",
-                "amount": "65",
-            },
-            {
-                "name": "November",
-                "amount": "87.85",
-            },
-            {
-                "name": "December",
-                "amount": "167.85",
-            },
-
-        ];
-
-    const weeklyExpense1 =
-        [{
-            "name": "Week 1",
-            "amount": "36",
-        },
-            {
-                "name": "Week 2",
-                "amount": "47.5",
-            },
-            {
-                "name": "Week 3",
-                "amount": "62",
-            },
-            {
-                "name": "Week 4",
-                "amount": "22",
+    // Prepare month list for months until current date and fetch expenses
+    useEffect(() => {
+        let yearStartDate = new Date(new Date().getFullYear(), 0, 1);
+        let currentDate = new Date();
+        let monthList = {0: {name: yearStartDate.toLocaleString('en', {month: 'long'}), amount: 0}}
+        while (yearStartDate.setMonth(yearStartDate.getMonth() + 1) < currentDate) {
+            monthList[yearStartDate.getMonth()] = {
+                name: yearStartDate.toLocaleString('en', {
+                    month: 'long'
+                }), amount: 0
             }
-        ];
+        }
+        setMonthsList(monthList)
+        dispatch(viewExpenses(user().user.id));
+    }, []);
 
-    const weeklyExpenseData2 =
-        [{
-            "name": "Week 1",
-            "amount": "25.85",
-        },
-            {
-                "name": "Week 2",
-                "amount": "30",
-            },
-            {
-                "name": "Week 3",
-                "amount": "27",
-            },
-            {
-                "name": "Week 4",
-                "amount": "40",
-            }
-        ];
+    const isViewExpensesResponseReceived = useSelector(
+        (state) => state.expense.isViewExpensesResponseReceived
+    );
 
+    const viewExpensesResponseData = useSelector(
+        (state) => state.expense.viewExpensesResponseData
+    );
 
-    const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-    const labels2022 = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
-    const dataWeekly = {
-        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-        datasets: [
-            {
-                label: '2021',
-                data: [36, 47.5, 62, 22],
-                backgroundColor: 'rgba(153,102,255,1)',
-            },
-        ],
-    };
+    const prevIsViewExpensesResponseReceived = usePrevious(isViewExpensesResponseReceived);
 
-    const data2022 = {
-        labels: labels2022,
+    const [montlyChartData, setMontlyChartData] = useState({
+        labels: [],
         datasets: [
             {
                 label: '2022',
-                data: [45, 85, 96, 47, 20, 67.85],
+                data: [],
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
             }
         ],
-    };
+    })
+
+// Prepare chart data as per groups and total amount logged for each month
+    useEffect(() => {
+        if (prevIsViewExpensesResponseReceived !== undefined && prevIsViewExpensesResponseReceived !== isViewExpensesResponseReceived && monthsList[0] !== undefined) {
+            viewExpensesResponseData.success.map(expense => {
+                let expenseDate = new Date(expense.current_time)
+                monthsList[expenseDate.getMonth()].amount = viewExpensesResponseData.success.filter(ex => (new Date(ex.current_time)).getMonth() === expenseDate.getMonth()).map(a => a.amount / a.user_ids.length).reduce((a, b) => a + b, 0)
+            })
+
+            setMontlyChartData({
+                labels: Object.keys(monthsList).map(key => {
+                    return monthsList[key]
+                }).map(a => a.name),
+                datasets: [
+                    {
+                        label: '2022',
+                        data: Object.keys(monthsList).map(key => {
+                            return monthsList[key]
+                        }).map(a => a.amount),
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    }
+                ],
+            })
+
+        }
+    }, [isViewExpensesResponseReceived]);
+
 
     const optionsMonthly = {
         responsive: true,
@@ -161,44 +100,6 @@ function ExpenseTracking() {
     };
 
 
-    const optionsWeekly = {
-        responsive: true,
-        plugins: {
-            legend: {
-                display: false,
-                position: 'right',
-            },
-            title: {
-                display: true,
-                text: 'Weekly Expense Tracking',
-                font: {
-                    size: 16
-                },
-            },
-        },
-    };
-
-
-    const [chartData, setChartData] = useState(data2022);
-    const [chartOptions, setChartOptions] = useState(optionsMonthly);
-    const [analysisData, setAnalysisData] = useState(monthlyExpenseData2022);
-    const [trackingMode, setTrackingMode] = useState("Monthly");
-
-
-    function handleTrackingMode() {
-        if (trackingMode === "Monthly") {
-            setTrackingMode("Weekly")
-            setAnalysisData(weeklyExpense1)
-            setChartOptions(optionsWeekly)
-            setChartData(dataWeekly)
-        } else {
-            setTrackingMode("Monthly")
-            setAnalysisData(monthlyExpenseData2022)
-            setChartOptions(optionsMonthly)
-            setChartData(data2022)
-        }
-    }
-
     return (
         <div>
             <h1 align="center"> Expense Tracking </h1>
@@ -212,9 +113,11 @@ function ExpenseTracking() {
                       style={{backgroundColor: "#ffffff", margin: "17px"}}>
 
                     <Typography gutterBottom variant="h5" component="div">
-                        Expense Tracking - {trackingMode}
+                        Monthly Expense Tracking
                     </Typography>
-                    {Object.values(analysisData).map(months =>
+                    {monthsList.length !== 0 && Object.keys(monthsList).map(key => {
+                        return monthsList[key];
+                    }).map(months =>
                         <Grid container
                               direction="row"
                               justifyContent="center"
@@ -231,17 +134,19 @@ function ExpenseTracking() {
                             </Grid>
 
                         </Grid>)}
-
-                    <div className="text-end me-4 m-2">
-                        <Button size="small" hidden={trackingMode === "Weekly"} onClick={handleTrackingMode}>Switch to
-                            Weekly Mode</Button>
-                        <Button size="small" hidden={trackingMode === "Monthly"} onClick={handleTrackingMode}>Switch to
-                            Monthly Mode</Button>
-                    </div>
+                    {monthsList.length === 0 &&
+                        <label> No Data Available, please add new expenses. </label>
+                    }
 
                 </Grid>
                 <Grid item xs={12} sm={8} md={5} style={{backgroundColor: "#ffffff", margin: "17px"}}>
-                    <Bar options={chartOptions} style={{backgroundColor: "#ffffff"}} height="200px" data={chartData}/>
+                    {/* Code Reference : https://www.chartjs.org/docs/latest/charts/bar.html*/}
+                    {monthsList.length !== 0 &&
+                        <Bar options={optionsMonthly} style={{backgroundColor: "#ffffff"}} height="200px"
+                             data={montlyChartData}/>}
+                    {monthsList.length === 0 &&
+                        <label> No Data Available, please add new expenses. </label>
+                    }
                 </Grid>
 
 
