@@ -6,6 +6,7 @@ import {getLocalStorage, routes, setLocalStorage} from "../../constants";
 import Swal from "sweetalert2";
 import {useHistory} from "react-router-dom";
 import "../../css/expense.css";
+<<<<<<< Updated upstream
 import {Heading} from "../Heading/Heading";
 import {getUserFullName, imgToBase64,   showPopup} from "../../constants";
 import {usePrevious} from "react-use";
@@ -16,6 +17,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {isSuccessfulResponse} from "../../constants";
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
+=======
+import { Heading } from "../Heading/Heading";
+import { getUserFullName, imgToBase64, showPopup } from "../../constants";
+import { usePrevious } from "react-use";
+import { useEffect } from "react";
+import { dummyGroupData, dummyMembersData } from "./helpers";
+import { addExpense, getUsers } from "../../redux/actions";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { isSuccessfulResponse } from "../../constants";
+import "bootstrap/dist/js/bootstrap.bundle.min";
+import { viewGroups } from "../../redux/actions";
+import { useAuth } from "../../contexts/Auth";
+>>>>>>> Stashed changes
 
 function AddExepnse() {
     const [values, setValues] = useState({name: "", icon: "",amount:"", type: "home", members: null, groups: null,});
@@ -23,6 +37,7 @@ function AddExepnse() {
     const [mainError, setMainError] = useState("");
     
 
+<<<<<<< Updated upstream
     const onChangeFunctions = {
         'name': (e) => {
             const {currentTarget: {value}} = e;
@@ -111,6 +126,104 @@ function AddExepnse() {
             });
         }
     }
+=======
+  const { user } = useAuth();
+
+  const onChangeFunctions = {
+    name: (e) => {
+      const {
+        currentTarget: { value },
+      } = e;
+      setValues({
+        ...values,
+        name: value,
+      });
+      if (!value.length) {
+        setErrors({
+          ...errors,
+          name: "Expense name is a required field",
+        });
+      } else if (value.length > 50) {
+        setErrors({
+          ...errors,
+          name: "Expense name shouldn't be more than 50 characters",
+        });
+      } else {
+        setErrors({
+          ...errors,
+          name: null,
+        });
+      }
+    },
+    amount: (e) => {
+      const {
+        currentTarget: { value },
+      } = e;
+      setValues({
+        ...values,
+        amount: value,
+      });
+      if (!value.length) {
+        setErrors({
+          ...errors,
+          amount: "Amount is a required field",
+        });
+      } else if (isNaN(value)) {
+        setErrors({
+          ...errors,
+          amount: "Amount Should be a numeric value",
+        });
+      } else {
+        setErrors({
+          ...errors,
+          amount: null,
+        });
+      }
+    },
+    icon: (e) => {
+      const {
+        currentTarget: { files },
+      } = e;
+      if (files.length) {
+        setValues({
+          ...values,
+          icon: files[0],
+        });
+        setErrors({
+          ...errors,
+          icon: null,
+        });
+      } else {
+        setErrors({
+          ...errors,
+          icon: "Expense image is required",
+        });
+      }
+    },
+    type: (e) => {
+      for (let i = 0; i < e.currentTarget.children.length; i++) {
+        e.currentTarget.children[i].classList.remove("selected");
+      }
+      e.target.classList.add("selected");
+      setValues({
+        ...values,
+        type: e.target.value,
+      });
+    },
+    members: (e) => {
+      setValues({
+        ...values,
+        members: e.map((ele) => ele.value),
+      });
+    },
+    groups: (e) => {
+      setValues({
+        ...values,
+        groups: e.map((ele) => ele.value),
+      });
+    },
+  };
+>>>>>>> Stashed changes
 
     const dispatch = useDispatch();
 
@@ -138,11 +251,19 @@ function AddExepnse() {
     const isUsersResponseReceived = useSelector((state) => state.expense.isUsersResponseReceived);
     const usersResponseData = useSelector((state) => state.expense.usersResponseData);
 
+<<<<<<< Updated upstream
+=======
+  useEffect(() => {
+    dispatch(getUsers());
+    dispatch(viewGroups(user().user.identities[0].id));
+  }, [dispatch]);
+>>>>>>> Stashed changes
 
     useEffect(() => {
         dispatch(getUsers());
     }, []);
 
+<<<<<<< Updated upstream
     const [users, setUsers] = useState([]);
     const [groups, setGroups] = useState([]);
 
@@ -161,6 +282,59 @@ function AddExepnse() {
         const callErrorFunctions = () => {
             setMainError("Please fill out all the fields");
         }
+=======
+  useEffect(() => {
+    if (usersResponseData.success && usersResponseData.success.length) {
+      let tempArray = [];
+      usersResponseData["success"].forEach((ele) => {
+        tempArray.push({
+          label: ele.email_id,
+          value: ele.email_id,
+          //email_id: ele.email_id,
+          //id: ele.id,
+          //user_id: ele.user_id,
+        });
+      });
+      setTransformedUsers(tempArray);
+    }
+  }, [usersResponseData]);
+
+  const viewGroupsResponseData = useSelector(
+    (state) => state.group.viewGroupsResponseData
+  );
+
+  const isViewGroupsResponseReceived = useSelector(
+    (state) => state.group.isViewGroupsResponseReceived
+  );
+
+  const prevIsViewGroupsResponseReceived = usePrevious(
+    isViewGroupsResponseReceived
+  );
+
+  // show the success message only if view groups response is received successfully
+  useEffect(() => {
+    if (
+      prevIsViewGroupsResponseReceived !== isViewGroupsResponseReceived &&
+      isSuccessfulResponse(viewGroupsResponseData)
+    ) {
+      const res = [];
+      viewGroupsResponseData["success"].forEach((ele) => {
+        res.push({
+          label: ele.name,
+          value: ele.name,
+          name: ele.name,
+          id: ele.id,
+        });
+      });
+      setGroups(res);
+    }
+  }, [isViewGroupsResponseReceived]);
+
+  const submitForm = (e) => {
+    const callErrorFunctions = () => {
+      setMainError("Please fill out all the fields");
+    };
+>>>>>>> Stashed changes
 
         e.preventDefault();
         if (Object.keys(values).length) {
