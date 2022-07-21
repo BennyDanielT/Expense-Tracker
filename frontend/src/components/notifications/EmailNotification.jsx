@@ -1,8 +1,13 @@
 import {Heading} from "../Heading/Heading";
 import {Button, Form} from "react-bootstrap";
 import Select from "react-select";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Swal from "sweetalert2";
+import {getUsers} from "../../redux/actions";
+import {useDispatch, useSelector} from "react-redux";
+import {usePrevious} from "react-use";
+import {getUserFullName, isSuccessfulResponse, showError} from "../../constants";
+import axios from "axios";
 
 function EmailNotification() {
 
@@ -32,7 +37,7 @@ function EmailNotification() {
         'emailMembers': (e) => {
             setValues({
                 ...values,
-                emailMembers: e.map((ele) => ele.value)
+                emailMembers: e.map((ele) => ele.label)
             });
             if (!e.length) {
                 setErrors({
@@ -99,21 +104,30 @@ function EmailNotification() {
         }
     ];
 
-    const emailMembers = [
-        {
-            label: "Abhishek",
-            value: 1
-        },
-        {
-            label: "Foo",
-            value: 2
-        },
-        {
-            label: "Bar",
-            value: 3
+
+    const dispatch = useDispatch();
+    const isUsersResponseReceived = useSelector((state) => state.group.isUsersResponseReceived);
+    const usersResponseData = useSelector((state) => state.group.usersResponseData);
+    const prevIsUsersResponseReceived = usePrevious(isUsersResponseReceived);
+
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        dispatch(getUsers());
+    }, []);
+
+    useEffect(() => {
+        if (prevIsUsersResponseReceived !== undefined && isUsersResponseReceived !== prevIsUsersResponseReceived) {
+            if (isSuccessfulResponse(usersResponseData)) {
+                const array = [];
+                usersResponseData['success'].forEach((ele) => {
+                    array.push({label: getUserFullName(ele), value: ele.id});
+                });
+                setUsers(array);
+            }
         }
-    ];
-    
+    }, [isUsersResponseReceived]);
+
     const submitEmailNotificationType = (e) => {
         const callErrorFunctions = () => {
             setMainNotificationTypeError("Enter all the form fields to continue!!");
@@ -128,7 +142,9 @@ function EmailNotification() {
                     'Sent',
                     'Notification Type preferences for email has been successfully updated',
                     'success'
-                );
+                ).then((ele) => {
+                    window.location.reload();
+                });
                 setValues({...values, emailMembers: [], emailSubject: null, emailBody: null});
             }
         } else {
@@ -136,7 +152,7 @@ function EmailNotification() {
         }
     };
 
-    const sendCustomEmailNotification = (e) => {
+    const sendCustomEmailNotification = async (e) => {
         const callErrorFunctions = () => {
             setMainCustomNotificationError("Enter all the form fields to continue!!");
         }
@@ -146,11 +162,15 @@ function EmailNotification() {
                 callErrorFunctions();
             } else {
                 setMainCustomNotificationError("");
-                Swal.fire(
-                    'Sent',
-                    'Email has been successfully sent',
-                    'success'
-                );
+                axios.post("/api/send-custom-mail", values).then((ele) => {
+                    Swal.fire(
+                        'Sent',
+                        'Email has been successfully sent',
+                        'success'
+                    );
+                }).catch((err) => {
+                    showError(err);
+                });
                 setValues({...values, notificationTypes: null});
             }
         } else {
@@ -162,30 +182,30 @@ function EmailNotification() {
         <div>
             <Heading>Send Email Notifications</Heading>
             <Form className="m-4">
-                <div>
-                    <h3>Email Notifications Types</h3>
-                    <Form.Group className="mb-3" controlId="emailNotifications">
-                        <Form.Label>Notifications Type</Form.Label>
-                        <Select
-                            name="notificationTypes"
-                            options={notificationTypes}
-                            className="basic-multi-select"
-                            classNamePrefix="select"
-                            onChange={onChangeFunctions['notificationTypes']}
-                        />
-                        <div className="errors">{errors['notificationTypes']}</div>
-                    </Form.Group>
+                {/*<div>*/}
+                {/*    <h3>Email Notifications Types</h3>*/}
+                {/*    <Form.Group className="mb-3" controlId="emailNotifications">*/}
+                {/*        <Form.Label>Notifications Type</Form.Label>*/}
+                {/*        <Select*/}
+                {/*            name="notificationTypes"*/}
+                {/*            options={notificationTypes}*/}
+                {/*            className="basic-multi-select"*/}
+                {/*            classNamePrefix="select"*/}
+                {/*            onChange={onChangeFunctions['notificationTypes']}*/}
+                {/*        />*/}
+                {/*        <div className="errors">{errors['notificationTypes']}</div>*/}
+                {/*    </Form.Group>*/}
 
-                    <div className="errors mb-3">{mainNotificationTypeError}</div>
+                {/*    <div className="errors mb-3">{mainNotificationTypeError}</div>*/}
 
-                    <div className="d-flex justify-content-center">
-                        <Button variant="primary" type="submit" onClick={submitEmailNotificationType}>
-                            Save
-                        </Button>
-                    </div>
+                {/*    <div className="d-flex justify-content-center">*/}
+                {/*        <Button variant="primary" type="submit" onClick={submitEmailNotificationType}>*/}
+                {/*            Save*/}
+                {/*        </Button>*/}
+                {/*    </div>*/}
 
 
-                </div>
+                {/*</div>*/}
 
                 <div>
                     <h3>Send Custom Email Notification</h3>
@@ -195,7 +215,7 @@ function EmailNotification() {
                         <Select
                             isMulti
                             name="emailMembers"
-                            options={emailMembers}
+                            options={users}
                             className="basic-multi-select"
                             classNamePrefix="select"
                             onChange={onChangeFunctions['emailMembers']}
