@@ -31,7 +31,7 @@ function ViewTagDetails() {
 
   // hook to request the data
   useEffect(() => {
-    dispatch(fetchExpenses(tagDetails.id));
+    dispatch(fetchExpenses(tagDetails.tagId));
   }, [dispatch]);
 
   // Fetch all related expenses request and processing
@@ -39,15 +39,15 @@ function ViewTagDetails() {
   // UI is updated accordingly
 
   const fetchExpensesResponseData = useSelector(
-    (state) => state.tag.fetchExpensesResponseData
+      (state) => state.tag.fetchExpensesResponseData
   );
 
   const isFetchExpensesResponseReceived = useSelector(
-    (state) => state.tag.isFetchExpensesResponseReceived
+      (state) => state.tag.isFetchExpensesResponseReceived
   );
 
   const prevIsFetchExpensesResponseReceived = usePrevious(
-    isFetchExpensesResponseReceived
+      isFetchExpensesResponseReceived
   );
 
   useEffect(() => {
@@ -62,56 +62,55 @@ function ViewTagDetails() {
   }, [isFetchExpensesResponseReceived]);
 
   return (
-    <div
-      style={{
-        width: "100vw",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        padding: "30px",
-        // margin: "30px",
-      }}
-    >
-      <h2>View Tag</h2>
-      <Card style={{ width: "50%" }}>
-        <Card.Body>
-          <Card.Text>Name: {tagDetails.name}</Card.Text>
-          <Card.Text>Description: {tagDetails.description}</Card.Text>
-          <Card.Text>Icon: {tagDetails.icon.emoji}</Card.Text>
-          <Card.Text>Usage: {tagDetails.usage}</Card.Text>
-        </Card.Body>
-      </Card>
-      <hr />
-      <h3>Related Expenses</h3>
-      {!isFetchExpensesResponseReceived ? (
-        <Loading />
-      ) : (
-        <Table striped bordered hover responsive>
-          <thead>
-            <tr>
-              <th>Expense Id</th>
-              <th>Name</th>
-              <th>Amount</th>
-              <th>Type</th>
-              <th>U/G</th>
-            </tr>
-          </thead>
-          <tbody>
-            {expenses &&
-              expenses.length &&
-              expenses.map((expense, index) => (
-                <tr key={index}>
-                  <td>{expense.id}</td>
-                  <td>{expense.name}</td>
-                  <td>{expense.amount}</td>
-                  <td>{expense.type}</td>
-                  <td>{expense.group_ids.length > 0 ? "G" : "U"}</td>
-                </tr>
+      <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            padding: "30px",
+            // margin: "30px",
+          }}
+      >
+        <h2>View Tag</h2>
+        <Card style={{ width: "50%" }}>
+          <Card.Body>
+            <Card.Text>Name: {tagDetails.name}</Card.Text>
+            <Card.Text>Description: {tagDetails.description}</Card.Text>
+            <Card.Text>Icon: {tagDetails.icon.emoji}</Card.Text>
+            <Card.Text>Usage: {tagDetails.usage}</Card.Text>
+          </Card.Body>
+        </Card>
+        <hr />
+        <h3>Related Expenses</h3>
+        {!isFetchExpensesResponseReceived ? (
+            <Loading />
+        ) : expenses && expenses.length ? (
+            <Table striped bordered hover responsive>
+              <thead>
+              <tr>
+                <th>Expense Id</th>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>U/G</th>
+              </tr>
+              </thead>
+              <tbody>
+              {expenses.map((expense, index) => (
+                  <tr key={index}>
+                    <td>{expense.id}</td>
+                    <td>{expense.name}</td>
+                    <td>{expense.amount}</td>
+                    <td>{expense.type}</td>
+                    <td>{expense.group_ids.length > 0 ? "G" : "U"}</td>
+                  </tr>
               ))}
-          </tbody>
-        </Table>
-      )}
-    </div>
+              </tbody>
+            </Table>
+        ) : (
+            <span>No expenses were found related to this tag</span>
+        )}
+      </div>
   );
 }
 

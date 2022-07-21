@@ -170,7 +170,7 @@ function SpendingTrends() {
                             </Grid>
                             <Grid item xs={4}>
                                 <Typography variant="body1" color="text.primary">
-                                    {months.amount}$
+                                    {months.amount} $
                                 </Typography>
                             </Grid>
 
