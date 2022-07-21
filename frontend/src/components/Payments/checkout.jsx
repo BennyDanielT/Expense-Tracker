@@ -29,7 +29,7 @@ export default function CheckoutForm(props) {
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  let redirectURL = 'http://localhost:3000/payment-status/success';
+  let redirectURL = `${window.location.origin}/payment-status/success`;
   let history = useHistory();
 
   useEffect(() => {
