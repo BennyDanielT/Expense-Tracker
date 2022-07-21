@@ -47,7 +47,7 @@ export const getMerchantReviews = async (request, response) => {
     const { data, error } = await supabase
       .from("coupon_merchant_reviews")
       .select("*")
-      .eq("coupon_merchant", request.params.id);
+      .eq("coupon_merchant", t);
     if (error) {
       return response.status(400).send(error);
     }
@@ -65,4 +65,11 @@ export const getMerchantLocations = async (request, response) => {
     .eq("merchant_id", request.params.id);
   console.log(location_of_merchants);
   response.json(location_of_merchants);
+};
+export const addMerchantToDB = async (request, response) => {
+  const { data, error } = await supabase
+    .from("coupon_transactions")
+    .insert([{ merchant: request.body.merchant, user: request.body.user }]);
+  response.send(data);
+  console.log(data);
 };

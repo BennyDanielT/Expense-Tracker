@@ -4,7 +4,13 @@
 
 import express from "express";
 
-import {getCoupon, getCoupons, getMerchantLocations, getMerchantReviews} from "../controllers/coupons.js";
+import {
+    addMerchantToDB,
+    getCoupon,
+    getCoupons,
+    getMerchantLocations,
+    getMerchantReviews,
+} from "../controllers/coupons.js";
 
 import {userSignin, userSignup} from "../controllers/userManagement.js";
 import {createReminder, deleteReminder, updateReminder, viewReminders,} from "../controllers/reminders.js";
@@ -18,7 +24,8 @@ import {addExpense, deleteExpense, editExpense, viewExpense, viewExpenses,} from
 import {createPaymentIntent} from "../controllers/payment-server.js";
 import {
     addNotification,
-    getNotificationTypes, sendCustomEmail,
+    getNotificationTypes,
+    sendCustomEmail,
     updateNotificationSettings,
     viewNotifications,
     viewNotificationSettings
@@ -64,13 +71,14 @@ router.post("/create-payment-intent", createPaymentIntent);
 router.get("/get-reviews/:id", getMerchantReviews);
 router.get("/get-location/:id", getMerchantLocations);
 
-// notification
 router.get("/notification-type", getNotificationTypes);
 router.put("/update-notification-settings", updateNotificationSettings);
 router.post("/notification-settings", viewNotificationSettings);
 router.get("/view-notification", viewNotifications);
 router.post("/add-notification", addNotification);
 router.post("/send-custom-mail", sendCustomEmail);
+router.post("/add-coupon-redeemption", addMerchantToDB);
 
 
 export {router};
+

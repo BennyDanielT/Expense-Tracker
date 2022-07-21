@@ -1,12 +1,17 @@
 import Header from "./Helpers/header";
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
+
 import Footer from "./Helpers/footer";
 import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
 import Menu from "./Helpers/menu";
 import Meta from "./Helpers/meta";
-import { useParams } from "react-router-dom";
 import "../../css/coupon.css";
+import { supabase } from "../../supabase";
+
 import {
   Container,
   Row,
@@ -24,15 +29,57 @@ import { routes } from "../../constants";
 
 const ReedemCoupon = () => {
   let { id } = useParams();
+  if (id == "") {
+    id = 3;
+  }
+
   console.log(id);
   const [review, setReview] = React.useState(null);
+
   React.useEffect(() => {
-    fetch("http://localhost:3001/api/get-reviews")
+    fetch(`/api/get-reviews/${id}`)
       .then((results) => results.json())
       .then((data) => {
         setReview(data);
       });
   }, []); // <-- Have to pass in [] here!
+  function sayHello() {
+    Swal.fire({
+      title: "Do you want to redeem the coupon?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Redeem",
+      denyButtonText: `Don't Redeem`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire("Yay!Redeemed", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Go for it! Click redeem", "", "info");
+      }
+    });
+    var data = JSON.stringify({
+      merchant: id,
+      user: supabase.auth.user().email,
+    });
+
+    var config = {
+      method: "post",
+      url: "/api/add-coupon-redeemption",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
   // page content
   const pageTitle = "Awesome! Redeem the coupon below.";
@@ -43,14 +90,11 @@ const ReedemCoupon = () => {
   );
   const [coupons, setCoupons] = useState([]);
   const [reviews, setReviews] = useState([]);
-
   let pageDescription = "";
   const fetchData = async () => {
-    const response = await fetch("http://localhost:3001/api/get-coupon/" + id);
+    const response = await fetch("/api/get-coupon/" + id);
     const data = await response.json();
-    const response_ = await fetch(
-      "http://localhost:3001/api/get-reviews/" + id
-    );
+    const response_ = await fetch("/api/get-reviews/" + id);
     const data_ = await response_.json();
     console.log(data);
     console.log(data_);
@@ -120,8 +164,9 @@ const ReedemCoupon = () => {
             size="lg"
             href="coupon-redeemed"
             className="white-anchor-tag"
+            onClick={sayHello}
           >
-            <Link to="/coupon-redeemed">Redeem</Link>
+            <Link to={`/coupon-redeemed/${id}`}>Redeem</Link>
           </Button>
         </div>
       </div>
