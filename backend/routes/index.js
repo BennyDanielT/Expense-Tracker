@@ -31,6 +31,7 @@ import {
 import {createPaymentIntent} from "../controllers/payment-server.js";
 import {
     addNotification,
+    deleteNotification,
     getNotificationTypes,
     sendCustomEmail,
     updateNotificationSettings,
@@ -87,6 +88,7 @@ router.post("/send-custom-mail", sendCustomEmail);
 router.post("/add-coupon-redeemption", addMerchantToDB);
 
 router.post("/settle-expense", settleExpense);
+router.delete("/delete-notification/:id", deleteNotification);
 
 
 export {router};

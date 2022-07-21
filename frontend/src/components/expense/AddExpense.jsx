@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Button, ButtonGroup, Form} from "react-bootstrap";
 import Select from "react-select";
-import {isSuccessfulResponse, routes, showPopup} from "../../constants";
+import {addNotification, isSuccessfulResponse, routes, showPopup} from "../../constants";
 import {useHistory} from "react-router-dom";
 import "../../css/expense.css";
 import {Heading} from "../Heading/Heading";
@@ -152,6 +152,7 @@ function AddExepnse() {
             prevIsAddExpenseResponseReceived !== isAddExpenseResponseReceived
         ) {
             if (isSuccessfulResponse(addExpenseResponseData)) {
+                addNotification(3, addExpenseResponseData.success[0], user().user.id);
                 showPopup("success", "Success", "Expense Successfully Created");
                 history.push(routes.expense.path);
             }

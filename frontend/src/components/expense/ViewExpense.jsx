@@ -2,13 +2,14 @@ import "../../css/expense.css";
 import {Heading} from "../Heading/Heading";
 import {Button, Card} from "react-bootstrap";
 import {useHistory, useParams} from "react-router-dom";
-import {isSuccessfulResponse, routes} from "../../constants";
+import {addNotification, isSuccessfulResponse, routes, showPopup} from "../../constants";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteExpense, viewExpense} from "../../redux/actions";
 import {usePrevious} from "react-use";
 import {Loading} from "../Loading";
 import Swal from "sweetalert2";
+import {useAuth} from "../../contexts/Auth";
 
 function ViewExpense() {
 
@@ -48,12 +49,23 @@ function ViewExpense() {
         (state) => state.expense.isDeleteExpenseResponseReceived
     );
 
+    const deleteExpenseResponseData = useSelector(
+        (state) => state.expense.deleteExpenseResponseData
+    );
+
     const prevIsDeleteExpenseResponseReceived = usePrevious(isDeleteExpenseResponseReceived);
+
+    const user = useAuth();
 
     useEffect(() => {
         if (prevIsDeleteExpenseResponseReceived !== undefined && prevIsDeleteExpenseResponseReceived !== isDeleteExpenseResponseReceived) {
             if (isDeleteExpenseResponseReceived) {
                 history.push(routes.expense.path);
+                if (isSuccessfulResponse(deleteExpenseResponseData)) {
+                    addNotification(4, deleteExpenseResponseData.success[0], user.user().user.id);
+                    showPopup( "success", "Success", "Expense Successfully Created");
+                    history.push(routes.expense.path);
+                }
             }
         }
     }, [isDeleteExpenseResponseReceived]);

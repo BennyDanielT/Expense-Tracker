@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+import axios from "axios";
 
 export const routes = {
     home: {
@@ -236,3 +237,18 @@ const base64ToImg = async (url, filename, mimeType) => {
     const buf = await res.arrayBuffer();
     return new File([buf], filename, {type: mimeType});
 };
+
+export const addNotification = async (type, message, user_id, callback) => {
+    console.log(type, message, user_id)
+    axios.post(`/api/notification-settings/`, {'user_id': user_id}).then((ele) => {
+        if (ele.data.success[0].types.includes(type)) {
+            axios.post(`/api/add-notification/`, {data: message, type}).then((ele) => {
+                if (callback) {
+                    callback();
+                }
+            }).catch((err) => {
+                showError(err);
+            });
+        }
+    });
+}
