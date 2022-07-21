@@ -92,7 +92,6 @@ const expense = (state = initialState, action) => {
                 deleteExpenseResponseData: action.response
             }
         }
-        
         default: {
             return {
                 ...state

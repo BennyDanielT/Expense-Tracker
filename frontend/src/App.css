@@ -8,7 +8,7 @@ a {
 }
 
 body {
-    background: #e1f5fe !important;
+    background: #ffffff !important;
     height: 100vh !important;
     width: 100% !important;
 }
@@ -53,4 +53,14 @@ body.swal2-height-auto {
 
 .white-anchor-tag a:hover {
     color: white;
+}
+.container-home-page {
+    position: relative;
+    top: 50%;
+    left: 51%;
+    right: 29%;
+
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
 }

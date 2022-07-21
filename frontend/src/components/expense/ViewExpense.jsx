@@ -42,7 +42,8 @@ function ViewExpense() {
     }, [isViewExpenseResponseReceived]);
 
     const editExpense = (currentExpense) => {
-        history.push({pathname: routes.editExpense.path.split(":")[0] + currentExpense.id});
+        // history.push({pathname: routes.editExpense.path.split(":")[0] + currentExpense.id, currentExpense});
+        history.push(routes.editExpense.path.split(":")[0] + currentExpense.id, currentExpense, currentExpense);
     };
 
     const isDeleteExpenseResponseReceived = useSelector(
@@ -63,7 +64,7 @@ function ViewExpense() {
                 history.push(routes.expense.path);
                 if (isSuccessfulResponse(deleteExpenseResponseData)) {
                     addNotification(4, deleteExpenseResponseData.success[0], user.user().user.id);
-                    showPopup( "success", "Success", "Expense Successfully Created");
+                    showPopup("success", "Success", "Expense Successfully Created");
                     history.push(routes.expense.path);
                 }
             }
@@ -84,8 +85,9 @@ function ViewExpense() {
                             <h5>Users for expenses</h5>
                             <ul>
                                 {currentExpense?.users?.map((user) => {
+                                    let tempUser = user.id ? user.email_id: user
                                     return (
-                                        <li key={user}>{user}</li>
+                                        <li key={tempUser}>{tempUser}</li>
                                     )
                                 })}
                             </ul>
