@@ -81,7 +81,9 @@ function ExpenseAnalysis() {
     useEffect(() => {
         if (prevIsViewExpensesResponseReceived !== undefined && prevIsViewExpensesResponseReceived !== isViewExpensesResponseReceived && groupExpenses[parseInt(viewExpensesResponseData.success[0].group_id)] !== undefined) {
             viewExpensesResponseData.success.map(expense => {
-                groupExpenses[parseInt(expense.group_id)].amount = viewExpensesResponseData.success.filter(ex => ex.group_id === expense.group_id).map(a => a.amount / a.user_ids.length).reduce((a, b) => a + b, 0)
+                if (groupExpenses[parseInt(expense.group_id)]) {
+                    groupExpenses[parseInt(expense.group_id)].amount = viewExpensesResponseData.success.filter(ex => ex.group_id === expense.group_id).map(a => a.amount / a.user_ids.length).reduce((a, b) => a + b, 0)
+                }
             })
             setChartData({
                 labels: Object.keys(groupExpenses).map(key => {

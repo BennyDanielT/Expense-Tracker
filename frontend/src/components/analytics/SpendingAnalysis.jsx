@@ -93,7 +93,7 @@ function SpendingTrends() {
     useEffect(() => {
         if (fetchExpensesResponseData) {
             if (!fetchExpensesResponseData.error) {
-                if (fetchExpensesResponseData.data !== undefined && tagList[fetchExpensesResponseData.data] && tagList[fetchExpensesResponseData.data].length && tagList[fetchExpensesResponseData.data[0].tag_id] !== undefined) {
+                if (fetchExpensesResponseData.data !== undefined && fetchExpensesResponseData.data[0] !== undefined && tagList[fetchExpensesResponseData.data[0].tag_id] !== undefined) {
                     tagList[fetchExpensesResponseData.data[0].tag_id].amount = fetchExpensesResponseData.data.map(a => a.amount).reduce((a, b) => a + b, 0)
                     setChartData({
                         labels: Object.keys(tagList).map(key => {
