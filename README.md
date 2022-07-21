@@ -11,7 +11,7 @@
 ## Authors
 
 * Abhishek Uppe (ab577089@dal.ca)
-* Vatsal Yadav
+* Vatsal Yadav (vatsal.yadav@dal.ca)
 * Devarshi Vyas (dv459527@dal.ca)
 * Ayush Verma (ayush.verma@dal.ca)
 * Smit Thakkar (sm928548@dal.ca)
