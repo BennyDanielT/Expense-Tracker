@@ -3,7 +3,7 @@ import {errorCodeResponses, isFieldAbsent} from "../utils.js";
 
 export const addExpense = async (request, response) => {
 
-    const {name, amount, type, user_ids, user_id, group_ids, tag_id} = request.body;
+    const {name, amount, type, user_id, group_id, tag_id} = request.body;
 
     try {
         const fields = [
@@ -15,10 +15,10 @@ export const addExpense = async (request, response) => {
                 label: "Type",
                 value: type
             },
-            {
-                label: "User Ids",
-                value: user_ids && Array.from(user_ids, Number)
-            },
+            // {
+            //     label: "User Ids",
+            //     value: user_ids && Array.from(user_ids, Number)
+            // },
             {
                 label: "Amount",
                 value: amount
@@ -29,7 +29,7 @@ export const addExpense = async (request, response) => {
             },
             {
                 label: "Group Ids",
-                value: group_ids
+                value: group_id
             },
             {
                 label: "Tag Id",
@@ -43,11 +43,20 @@ export const addExpense = async (request, response) => {
             return response.status(400).send({error: `${field.label} is a required field`});
         }
 
+        const groupData = await supabase
+            .from('group')
+            .select('user_ids')
+            .eq('id', group_id);
+
+        const user_ids = groupData.data[0].user_ids;
+
+
         const {data, error} = await supabase
             .from('expense')
             .insert([
-                {name, type, user_ids, amount, user_id, group_ids, tag_id}
+                {name, type, amount, user_id, user_ids, group_id, tag_id, current_time: new Date()}
             ]);
+
 
         if (error) {
             return response.status(400).send(error);
@@ -144,9 +153,9 @@ export const viewExpense = async (request, response) => {
         const groupResponse = await supabase
             .from('group')
             .select('*')
-            .in('id', data[0].group_ids);
+            .eq('id', data[0].group_id);
 
-        delete data[0].group_ids;
+        delete data[0].group_id;
 
         data[0].groups = groupResponse.data.map((ele) => ele.name);
 
