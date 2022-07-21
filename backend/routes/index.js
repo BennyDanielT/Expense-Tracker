@@ -4,47 +4,40 @@
 
 import express from "express";
 
-import { getCoupons } from "../controllers/coupons.js";
 import {
-  getCoupon,
-  getMerchantReviews,
-  getMerchantLocations,
+    addMerchantToDB,
+    getCoupon,
+    getCoupons,
+    getMerchantLocations,
+    getMerchantReviews,
 } from "../controllers/coupons.js";
 
-import { userSignin, userSignup } from "../controllers/userManagement.js";
-import {
-  createReminder,
-  deleteReminder,
-  updateReminder,
-  viewReminders,
-} from "../controllers/reminders.js";
+import {userSignin, userSignup} from "../controllers/userManagement.js";
+import {createReminder, deleteReminder, updateReminder, viewReminders,} from "../controllers/reminders.js";
+
+import {createTag, deleteTag, updateTag, viewTag, viewTagExpenses, viewTags,} from "../controllers/tags.js";
+
+import {createGroup, deleteGroup, updateGroup, viewGroup, viewGroups, viewUsers,} from "../controllers/group.js";
 
 import {
-  createTag,
-  deleteTag,
-  updateTag,
-  viewTag,
-  viewTags,
-  viewTagExpenses,
-} from "../controllers/tags.js";
-
-import {
-  createGroup,
-  deleteGroup,
-  updateGroup,
-  viewGroup,
-  viewGroups,
-  viewUsers,
-} from "../controllers/group.js";
-
-import {
-  addExpense,
-  deleteExpense,
-  editExpense,
-  viewExpense,
-  viewExpenses,
+    addExpense,
+    deleteExpense,
+    editExpense,
+    settleExpense,
+    viewExpense,
+    viewExpenses,
 } from "../controllers/expense.js";
-import { createPaymentIntent } from "../controllers/payment-server.js";
+
+import {createPaymentIntent} from "../controllers/payment-server.js";
+import {
+    addNotification,
+    deleteNotification,
+    getNotificationTypes,
+    sendCustomEmail,
+    updateNotificationSettings,
+    viewNotifications,
+    viewNotificationSettings
+} from "../controllers/notification.js";
 
 const router = express.Router();
 
@@ -86,4 +79,17 @@ router.post("/create-payment-intent", createPaymentIntent);
 router.get("/get-reviews/:id", getMerchantReviews);
 router.get("/get-location/:id", getMerchantLocations);
 
-export { router };
+router.get("/notification-type", getNotificationTypes);
+router.put("/update-notification-settings", updateNotificationSettings);
+router.post("/notification-settings", viewNotificationSettings);
+router.get("/view-notification", viewNotifications);
+router.post("/add-notification", addNotification);
+router.post("/send-custom-mail", sendCustomEmail);
+router.post("/add-coupon-redeemption", addMerchantToDB);
+
+router.post("/settle-expense", settleExpense);
+router.delete("/delete-notification/:id", deleteNotification);
+
+
+export {router};
+

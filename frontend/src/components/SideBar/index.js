@@ -67,16 +67,16 @@ function SideBar() {
 
           <SubMenu title={'Coupon Management'}>
             <MenuItem>
-              {' '}
-              <Link to={routes.viewCoupons.path}>View Coupons</Link>
+              {" "}
+              <Link to="/view-coupons">View Coupons</Link>
             </MenuItem>
             <MenuItem>
-              {' '}
-              <Link to={routes.redeemCoupon.path}>Redeem Coupons</Link>
+              {" "}
+              <Link to="/redeem-coupon/3">Redeem Coupons</Link>
             </MenuItem>
             <MenuItem>
-              {' '}
-              <Link to={routes.couponRedeemed.path}>Coupon Redeemed</Link>
+              {" "}
+              <Link to="/coupon-redeemed/3">Coupon Redeemed</Link>
             </MenuItem>
           </SubMenu>
           <SubMenu title={'Notification'}>

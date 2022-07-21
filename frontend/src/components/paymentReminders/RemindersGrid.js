@@ -56,7 +56,7 @@ export default function RemindersGrid() {
 
     useEffect(() => {
         console.log("user", supabase.auth.user().email)
-        dispatch(viewReminders({user_id: user().user.identities[0].user_id}));
+        dispatch(viewReminders({user_id: user().user.identities[0].id}));
     }, []);
 
 
@@ -174,7 +174,6 @@ export default function RemindersGrid() {
         } else if (form.checkValidity() === false) {
             event.stopPropagation();
         } else {
-            // TODO:
             remindersList.map(reminder => {
                 let updateReminderList = reminder
                 if (reminder.id === updateReminder.reminder.id) {
@@ -189,7 +188,7 @@ export default function RemindersGrid() {
                 id: updateReminder.reminder.id,
                 name: reminderName,
                 amount: reminderAmount,
-                user_id: user().user.identities[0].user_id,
+                user_id: user().user.identities[0].id,
                 desc: reminderDesc,
                 date: date,
                 email: supabase.auth.user().email

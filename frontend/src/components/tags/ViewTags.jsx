@@ -2,9 +2,9 @@
  * @author ${devarshivyas}
  */
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Table, Button } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 import { routes } from "../../constants";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,7 +38,7 @@ function ViewTags() {
 
   // hook to request the data
   useEffect(() => {
-    dispatch(viewTags(user().user.identities[0].user_id));
+    dispatch(viewTags(user().user.identities[0].id));
   }, [dispatch]);
 
   // hook to check if the data is received from the backend
@@ -49,6 +49,7 @@ function ViewTags() {
       viewTagsResponseData.data &&
       viewTagsResponseData.data.length
     ) {
+      console.log(viewTagsResponseData.data);
       setTags(viewTagsResponseData.data);
     } else {
       setTags([]);
@@ -140,7 +141,6 @@ function ViewTags() {
               <th>Actions</th>
             </tr>
           </thead>
-
           <tbody>
             {tags.map((tag, index) => (
               <tr key={index}>
@@ -183,4 +183,5 @@ function ViewTags() {
     </div>
   );
 }
+
 export { ViewTags };

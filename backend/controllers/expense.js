@@ -3,7 +3,7 @@ import {errorCodeResponses, isFieldAbsent} from "../utils.js";
 
 export const addExpense = async (request, response) => {
 
-    const {name, type, user_ids, icon} = request.body;
+    const {name, amount, type, user_id, group_id, tag_id} = request.body;
 
     try {
         const fields = [
@@ -15,13 +15,25 @@ export const addExpense = async (request, response) => {
                 label: "Type",
                 value: type
             },
+            // {
+            //     label: "User Ids",
+            //     value: user_ids && Array.from(user_ids, Number)
+            // },
             {
-                label: "User Ids",
-                value: user_ids && Array.from(user_ids, Number)
+                label: "Amount",
+                value: amount
             },
             {
-                label: "Image",
-                value: image
+                label: "User Id",
+                value: user_id
+            },
+            {
+                label: "Group Ids",
+                value: group_id
+            },
+            {
+                label: "Tag Id",
+                value: tag_id
             }
         ];
 
@@ -31,11 +43,20 @@ export const addExpense = async (request, response) => {
             return response.status(400).send({error: `${field.label} is a required field`});
         }
 
+        const groupData = await supabase
+            .from('group')
+            .select('user_ids')
+            .eq('id', group_id);
+
+        const user_ids = groupData.data[0].user_ids;
+
+
         const {data, error} = await supabase
             .from('expense')
             .insert([
-                {name, type, user_ids, icon}
+                {name, type, amount, user_id, user_ids, group_id, tag_id, current_time: new Date()}
             ]);
+
 
         if (error) {
             return response.status(400).send(error);
@@ -105,6 +126,7 @@ export const deleteExpense = async (request, response) => {
             .from('expense')
             .delete()
             .match({id});
+
         if (error) {
             return response.status(400).send(error);
         }
@@ -117,7 +139,6 @@ export const deleteExpense = async (request, response) => {
 
 export const viewExpense = async (request, response) => {
     const id = request.params.id;
-    const user = request.query.user;
 
     try {
         const {data, error} = await supabase
@@ -128,39 +149,33 @@ export const viewExpense = async (request, response) => {
         if (error) {
             return response.status(400).send(error);
         }
-        const userResponse = await supabase
-            .from('profiles')
+
+        const groupResponse = await supabase
+            .from('group')
             .select('*')
-            .eq('user_id', data[0].user_ids[0]);
+            .eq('id', data[0].group_id);
+
+        delete data[0].group_id;
+
+        data[0].groups = groupResponse.data.map((ele) => ele.name);
+
+        if (groupResponse.error) {
+            return response.status(400).send(error);
+        }
+
+        const userResponse = await supabase
+            .from('users')
+            .select('*')
+            .in('id', data[0].user_ids);
 
         if (userResponse.error) {
             return response.status(400).send(error);
         }
 
         delete data[0].user_ids;
-        data[0].users = userResponse.data;
 
-        const expenseResponse = await supabase
-            .from('expense')
-            .select('*')
+        data[0].users = userResponse.data.map((ele) => ele.email_id);
 
-        if (expenseResponse.error) {
-            return response.status(400).send(expenseResponse.error);
-        }
-
-        const expenses = {lent: [], owed: []};
-
-        expenseResponse.data.forEach((exp) => {
-           if (exp.user_id === user) {
-               expenses['lent'].push(exp);
-           } else {
-               if (exp.user_ids.includes(user)) {
-                   expenses['owed'].push(exp);
-               }
-           }
-        });
-
-        data[0].expenses = expenses;
         return response.send({success: data});
     } catch (e) {
         return response.status(500).send(errorCodeResponses["500"]);
@@ -169,9 +184,12 @@ export const viewExpense = async (request, response) => {
 
 export const viewExpenses = async (request, response) => {
     try {
+        const {user_id} = request.query;
+
         const {data, error} = await supabase
             .from('expense')
             .select('*')
+            .eq("user_id", user_id)
         if (error) {
             return response.status(400).send(error);
         }
@@ -181,15 +199,31 @@ export const viewExpenses = async (request, response) => {
     }
 }
 
-export const viewUsers = async (request, response) => {
+export const settleExpense = async (request, response) => {
     try {
+        const {id, amount} = request.body;
+
         const {data, error} = await supabase
-            .from('profiles')
-            .select('*')
+            .from('expense')
+            .select('amount')
+            .eq("id", id);
+
         if (error) {
             return response.status(400).send(error);
         }
-        return response.send({success: data});
+
+        const newAmount = data[0].amount - parseInt(amount);
+
+        const expenseResponse = await supabase
+            .from('expense')
+            .update({amount: newAmount})
+            .eq("id", id);
+
+        if (error) {
+            return response.status(400).send(error);
+        }
+
+        return response.send({success: expenseResponse});
     } catch (e) {
         return response.status(500).send(errorCodeResponses["500"]);
     }
