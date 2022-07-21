@@ -44,7 +44,7 @@ export default function HomePage() {
         {images_home.map((_, idx) => (
           <Col>
             <Card style={{ width: "15.6rem" }}>
-              <Card.Img variant="top" src={_.image} />
+              <Card.Img variant="top" src={_.image} responsive />
               <Card.Body>
                 <Card.Title>{_.title}</Card.Title>
                 <Card.Text>
