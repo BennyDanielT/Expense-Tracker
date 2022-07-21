@@ -102,7 +102,7 @@ function ViewTagDetails() {
                     <td>{expense.name}</td>
                     <td>{expense.amount}</td>
                     <td>{expense.type}</td>
-                    <td>{expense.group_ids.length > 0 ? "G" : "U"}</td>
+                    <td>{expense.group_ids? "G" : "U"}</td>
                   </tr>
               ))}
               </tbody>
