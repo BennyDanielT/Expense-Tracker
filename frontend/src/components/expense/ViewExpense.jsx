@@ -42,7 +42,9 @@ function ViewExpense() {
     }, [isViewExpenseResponseReceived]);
 
     const editExpense = (currentExpense) => {
-        history.push({pathname: routes.editExpense.path.split(":")[0] + currentExpense.id});
+        // history.push({pathname: routes.editExpense.path.split(":")[0] + currentExpense.id, currentExpense});
+        history.push(routes.editExpense.path.split(":")[0] + currentExpense.id, currentExpense, currentExpense);
+
     };
 
     const isDeleteExpenseResponseReceived = useSelector(
