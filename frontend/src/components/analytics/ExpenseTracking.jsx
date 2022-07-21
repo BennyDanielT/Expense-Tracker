@@ -21,11 +21,13 @@ function ExpenseTracking() {
     useEffect(() => {
         let yearStartDate = new Date(new Date().getFullYear(), 0, 1);
         let currentDate = new Date();
-        let monthList = {0:{name:yearStartDate.toLocaleString('en', {month: 'long'}), amount:0}}
+        let monthList = {0: {name: yearStartDate.toLocaleString('en', {month: 'long'}), amount: 0}}
         while (yearStartDate.setMonth(yearStartDate.getMonth() + 1) < currentDate) {
-            monthList[yearStartDate.getMonth()] = {name:yearStartDate.toLocaleString('en', {
-                month: 'long'
-            }), amount:0}
+            monthList[yearStartDate.getMonth()] = {
+                name: yearStartDate.toLocaleString('en', {
+                    month: 'long'
+                }), amount: 0
+            }
         }
         setMonthsList(monthList)
         dispatch(viewExpenses(user().user.id));
@@ -62,8 +64,8 @@ function ExpenseTracking() {
 
             setMontlyChartData({
                 labels: Object.keys(monthsList).map(key => {
-                return monthsList[key]
-            }).map(a => a.name),
+                    return monthsList[key]
+                }).map(a => a.name),
                 datasets: [
                     {
                         label: '2022',
@@ -95,7 +97,6 @@ function ExpenseTracking() {
             },
         },
     };
-
 
 
     return (
@@ -139,7 +140,9 @@ function ExpenseTracking() {
                 </Grid>
                 <Grid item xs={12} sm={8} md={5} style={{backgroundColor: "#ffffff", margin: "17px"}}>
                     {/* Code Reference : https://www.chartjs.org/docs/latest/charts/bar.html*/}
-                    {monthsList.length !== 0 && <Bar options={optionsMonthly} style={{backgroundColor: "#ffffff"}} height="200px" data={montlyChartData}/>}
+                    {monthsList.length !== 0 &&
+                        <Bar options={optionsMonthly} style={{backgroundColor: "#ffffff"}} height="200px"
+                             data={montlyChartData}/>}
                     {monthsList.length === 0 &&
                         <label> No Data Available, please add new expenses. </label>
                     }
