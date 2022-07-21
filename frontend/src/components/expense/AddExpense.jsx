@@ -20,9 +20,9 @@ function AddExepnse() {
         name: "",
         amount: "",
         type: "home",
-        user_ids: null,
+        // user_ids: null,
         tag_id: "",
-        group_ids: null,
+        group_id: "",
         user_id: user().user.identities[0].id
     });
     const [errors, setErrors] = useState({});
@@ -116,10 +116,10 @@ function AddExepnse() {
                 user_ids: e.map((ele) => ele.value),
             });
         },
-        group_ids: (e) => {
+        group_id: (e) => {
             setValues({
                 ...values,
-                group_ids: e.map((ele) => ele.value),
+                group_id: e.value,
             });
         },
         tag_id: (e) => {
@@ -188,11 +188,11 @@ function AddExepnse() {
 
     useEffect(() => {
         dispatch(getUsers());
-        dispatch(viewGroups());
-        dispatch(viewTags());
+        dispatch(viewGroups(user().user.id));
+        dispatch(viewTags(user().user.id));
     }, [dispatch]);
 
-    const [group_ids, setgroup_ids] = useState([]);
+    const [group_id, setgroup_id] = useState([]);
     const [user_ids, setuser_ids] = useState([]);
     const [tags, setTags] = useState([]);
 
@@ -238,7 +238,7 @@ function AddExepnse() {
                     value: ele.id
                 });
             });
-            setgroup_ids(res);
+            setgroup_id(res);
         }
     }, [isViewGroupsResponseReceived]);
 
@@ -336,27 +336,26 @@ function AddExepnse() {
                 <Form.Group className="mb-3" controlId="react-select-3-input">
                     <Form.Label>Available Groups</Form.Label>
                     <Select
-                        isMulti
                         name="colors"
-                        options={group_ids}
+                        options={group_id}
                         className="basic-multi-select"
                         classNamePrefix="select"
-                        onChange={onChangeFunctions["group_ids"]}
+                        onChange={onChangeFunctions["group_id"]}
                     />
-                    <div className="errors">{errors["group_ids"]}</div>
+                    <div className="errors">{errors["group_id"]}</div>
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="react-select-3-input">
-                    <Form.Label>Group Members</Form.Label>
-                    <Select
-                        isMulti
-                        name="colors"
-                        options={user_ids}
-                        className="basic-multi-select"
-                        classNamePrefix="select"
-                        onChange={onChangeFunctions["user_ids"]}
-                    />
-                    <div className="errors">{errors["user_ids"]}</div>
-                </Form.Group>
+                {/*<Form.Group className="mb-3" controlId="react-select-3-input">*/}
+                {/*    <Form.Label>Group Members</Form.Label>*/}
+                {/*    <Select*/}
+                {/*        isMulti*/}
+                {/*        name="colors"*/}
+                {/*        options={user_ids}*/}
+                {/*        className="basic-multi-select"*/}
+                {/*        classNamePrefix="select"*/}
+                {/*        onChange={onChangeFunctions["user_ids"]}*/}
+                {/*    />*/}
+                {/*    <div className="errors">{errors["user_ids"]}</div>*/}
+                {/*</Form.Group>*/}
 
                 <div className="errors mb-3">{mainError}</div>
                 <div className="d-flex justify-content-center">
