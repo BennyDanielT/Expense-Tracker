@@ -17,7 +17,7 @@
 * Smit Thakkar (sm928548@dal.ca)
 * Benny Tharigopala (bn489600@dal.ca)
 
-## Features developed
+## Features developed ( 9/12 i.e 75% features completed)
 
 
 1. Group Expense Tracking
