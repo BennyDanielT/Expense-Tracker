@@ -15,6 +15,8 @@ import { addExpense, getUsers } from "../../redux/actions";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { isSuccessfulResponse } from "../../constants";
 import "bootstrap/dist/js/bootstrap.bundle.min";
+import { viewGroups } from "../../redux/actions";
+import { useAuth } from "../../contexts/Auth";
 
 function AddExepnse() {
   const [values, setValues] = useState({
@@ -27,6 +29,8 @@ function AddExepnse() {
   });
   const [errors, setErrors] = useState({});
   const [mainError, setMainError] = useState("");
+
+  const { user } = useAuth();
 
   const onChangeFunctions = {
     name: (e) => {
@@ -160,6 +164,7 @@ function AddExepnse() {
 
   useEffect(() => {
     dispatch(getUsers());
+    dispatch(viewGroups(user().user.identities[0].id));
   }, [dispatch]);
 
   const [users, setUsers] = useState([]);
@@ -167,10 +172,7 @@ function AddExepnse() {
   const [transformedUsers, setTransformedUsers] = useState([]);
 
   useEffect(() => {
-    console.log(usersResponseData.success);
-    if (usersResponseData && usersResponseData.success.length) {
-      console.log("------------------>");
-      const array = [];
+    if (usersResponseData.success && usersResponseData.success.length) {
       let tempArray = [];
       usersResponseData["success"].forEach((ele) => {
         tempArray.push({
@@ -181,13 +183,40 @@ function AddExepnse() {
           //user_id: ele.user_id,
         });
       });
-      //   setUsers(array);
-      console.log(tempArray);
       setTransformedUsers(tempArray);
-      console.log("----");
-      console.log(transformedUsers);
     }
   }, [usersResponseData]);
+
+  const viewGroupsResponseData = useSelector(
+    (state) => state.group.viewGroupsResponseData
+  );
+
+  const isViewGroupsResponseReceived = useSelector(
+    (state) => state.group.isViewGroupsResponseReceived
+  );
+
+  const prevIsViewGroupsResponseReceived = usePrevious(
+    isViewGroupsResponseReceived
+  );
+
+  // show the success message only if view groups response is received successfully
+  useEffect(() => {
+    if (
+      prevIsViewGroupsResponseReceived !== isViewGroupsResponseReceived &&
+      isSuccessfulResponse(viewGroupsResponseData)
+    ) {
+      const res = [];
+      viewGroupsResponseData["success"].forEach((ele) => {
+        res.push({
+          label: ele.name,
+          value: ele.name,
+          name: ele.name,
+          id: ele.id,
+        });
+      });
+      setGroups(res);
+    }
+  }, [isViewGroupsResponseReceived]);
 
   const submitForm = (e) => {
     const callErrorFunctions = () => {
