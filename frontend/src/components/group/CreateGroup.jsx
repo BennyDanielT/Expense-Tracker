@@ -9,9 +9,10 @@ import "../../css/group.css";
 import {Heading} from "../Heading/Heading";
 import {useDispatch, useSelector} from "react-redux";
 import {createGroup, getUsers} from "../../redux/actions";
-import {getUserFullName, imgToBase64, isSuccessfulResponse, routes, showPopup} from "../../constants";
+import {addNotification, getUserFullName, imgToBase64, isSuccessfulResponse, routes, showPopup} from "../../constants";
 import {useHistory} from "react-router-dom";
 import {usePrevious} from "react-use";
+import {useAuth} from "../../contexts/Auth";
 
 // The component purpose is to create a group with all the form details entered by the user
 function CreateGroup() {
@@ -93,10 +94,13 @@ function CreateGroup() {
 
     const prevIsCreateGroupResponseReceived = usePrevious(isCreateGroupResponseReceived);
 
+    const {user} = useAuth();
+
     // show the success message only if create group response is received successfully
     useEffect(() => {
         if (prevIsCreateGroupResponseReceived !== undefined && prevIsCreateGroupResponseReceived !== isCreateGroupResponseReceived) {
             if (isSuccessfulResponse(createGroupResponseData)) {
+                addNotification(1, createGroupResponseData.success[0], user().user.id);
                 showPopup("success", "Success", "Group Successfully Created");
                 history.push(routes.group.path);
             }
