@@ -85,7 +85,7 @@ export default function CreateReminder() {
             event.preventDefault();
             event.stopPropagation();
         } else {
-            dispatch(createReminder({name: reminderName, amount: reminderAmount, user_id: user().user.identities[0].user_id, desc: reminderDesc, date: date, email: supabase.auth.user().email}));
+            dispatch(createReminder({name: reminderName, amount: reminderAmount, user_id: user().user.identities[0].id, desc: reminderDesc, date: date, email: supabase.auth.user().email}));
         }
 
         setValidated(true);

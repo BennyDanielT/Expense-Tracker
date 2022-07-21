@@ -17,7 +17,10 @@ function NotificationSettings() {
             axios.post(`/api/notification-settings/`, {'user_id': auth.user().user.id}).then((ele) => {
                 const types = notificationResponse.data.success;
                 if (ele.data.success) {
-                    const type_ids = new Set(ele.data.success[0].types);
+                    let type_ids = new Set([]);
+                    if (ele.data.success.length) {
+                        type_ids = new Set(ele.data.success[0].types);
+                    }
                     types.forEach((type) => {
                         type["checked"] = type_ids.has(type.type_id);
                     })

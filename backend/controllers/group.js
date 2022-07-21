@@ -160,13 +160,13 @@ export const viewGroup = async (request, response) => {
         const expenses = {lent: [], owed: []};
 
         expenseResponse.data.forEach((exp) => {
-           if (exp.user_id === user) {
-               expenses['lent'].push(exp);
-           } else {
-               if (exp.user_ids.includes(user)) {
-                   expenses['owed'].push(exp);
-               }
-           }
+            if (exp.user_id === user) {
+                expenses['lent'].push(exp);
+            } else {
+                if (exp.user_ids.includes(user)) {
+                    expenses['owed'].push(exp);
+                }
+            }
         });
 
         data[0].expenses = expenses;
@@ -180,19 +180,19 @@ export const viewGroup = async (request, response) => {
 export const viewGroups = async (request, response) => {
 
     const user = request.query.user;
-
     try {
         let {data, error} = await supabase
             .from('group')
             .select('*')
 
-        data = data.filter((ele) => ele.user_ids.includes(user))
+        if (user && user !== "undefined") {
+            data = data.filter((ele) => ele.user_ids.includes(user));
+        }
 
         if (error) {
             return response.status(400).send(error);
         }
 
-        console.log(data);
         return response.send({success: data});
     } catch (e) {
         return response.status(500).send(errorCodeResponses["500"]);

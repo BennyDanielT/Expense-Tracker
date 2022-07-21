@@ -24,14 +24,14 @@ function ViewTagDetails() {
     description: location.state?.tag?.description || "",
     icon: location.state?.tag?.icon || null,
     usage: location.state?.tag?.usage_count || 0,
-    user_id: location.state?.tag?.user_id || "",
+    user_id: location.state?.tag?.id || "",
   });
 
   const [expenses, setExpenses] = useState([]);
 
   // hook to request the data
   useEffect(() => {
-    dispatch(fetchExpenses(tagDetails.user_id));
+    dispatch(fetchExpenses(tagDetails.id));
   }, [dispatch]);
 
   // Fetch all related expenses request and processing

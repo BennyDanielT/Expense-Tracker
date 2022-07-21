@@ -19,7 +19,14 @@ import {createTag, deleteTag, updateTag, viewTag, viewTagExpenses, viewTags,} fr
 
 import {createGroup, deleteGroup, updateGroup, viewGroup, viewGroups, viewUsers,} from "../controllers/group.js";
 
-import {addExpense, deleteExpense, editExpense, viewExpense, viewExpenses,} from "../controllers/expense.js";
+import {
+    addExpense,
+    deleteExpense,
+    editExpense,
+    settleExpense,
+    viewExpense,
+    viewExpenses,
+} from "../controllers/expense.js";
 
 import {createPaymentIntent} from "../controllers/payment-server.js";
 import {
@@ -78,6 +85,8 @@ router.get("/view-notification", viewNotifications);
 router.post("/add-notification", addNotification);
 router.post("/send-custom-mail", sendCustomEmail);
 router.post("/add-coupon-redeemption", addMerchantToDB);
+
+router.post("/settle-expense", settleExpense);
 
 
 export {router};
