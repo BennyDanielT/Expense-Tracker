@@ -78,14 +78,19 @@ function ViewExpense() {
             <div className="m-5">
                 {!isViewExpenseResponseReceived ? <Loading/> :
                     <Card className="p-2 mb-3">
-                        <div>
-                            <h4>{currentExpense.name}</h4>
+                        <div className="d-flex justify-content-between">
+                            <div>
+                                <h4>{currentExpense.name}</h4>
+                            </div>
+                            <div>
+                                <h4>Amount: {currentExpense.amount}</h4>
+                            </div>
                         </div>
                         <div>
                             <h5>Users for expenses</h5>
                             <ul>
                                 {currentExpense?.users?.map((user) => {
-                                    let tempUser = user.id ? user.email_id: user
+                                    let tempUser = user.id ? user.email_id : user
                                     return (
                                         <li key={tempUser}>{tempUser}</li>
                                     )
@@ -94,14 +99,18 @@ function ViewExpense() {
                         </div>
 
                         <div>
-                            <h5>Groups related to expenses</h5>
-                            <ul>
-                                {currentExpense?.groups?.map((group) => {
-                                    return (
-                                        <li key={group}>{group}</li>
-                                    )
-                                })}
-                            </ul>
+                            {currentExpense?.groups?.length ?
+                                <>
+                                    <h5>Groups related to expenses</h5>
+                                    <ul>
+                                        {currentExpense?.groups?.map((group) => {
+                                            return (
+                                                <li key={group}>{group}</li>
+                                            )
+                                        })}
+                                    </ul>
+                                </>
+                                : <div> No Group Related Expenses</div>}
                         </div>
                         <div className="d-flex justify-content-evenly">
                             <Button className="mt-2"

@@ -93,7 +93,7 @@ function SpendingTrends() {
     useEffect(() => {
         if (fetchExpensesResponseData) {
             if (!fetchExpensesResponseData.error) {
-                if (fetchExpensesResponseData.data !== undefined && tagList[fetchExpensesResponseData.data[0].tag_id] !== undefined) {
+                if (fetchExpensesResponseData.data !== undefined && tagList[fetchExpensesResponseData.data] && tagList[fetchExpensesResponseData.data].length && tagList[fetchExpensesResponseData.data[0].tag_id] !== undefined) {
                     tagList[fetchExpensesResponseData.data[0].tag_id].amount = fetchExpensesResponseData.data.map(a => a.amount).reduce((a, b) => a + b, 0)
                     setChartData({
                         labels: Object.keys(tagList).map(key => {
@@ -177,16 +177,16 @@ function SpendingTrends() {
 
                         </Grid>)}
                     {tagList.length === 0 &&
-                        <label> No Data Available, please add category based expenses. </label>
+                    <label> No Data Available, please add category based expenses. </label>
                     }
                 </Grid>
                 <Grid item xs={12} sm={8} md={5} lg={4}>
                     {/* Code reference: https://www.chartjs.org/docs/latest/charts/doughnut.html*/}
                     {tagList.length !== 0 &&
-                        <Doughnut data={chartData} style={{backgroundColor: "#ffffff", marginBottom: "17px"}}
-                                  options={optionsIndi}/>}
+                    <Doughnut data={chartData} style={{backgroundColor: "#ffffff", marginBottom: "17px"}}
+                              options={optionsIndi}/>}
                     {tagList.length === 0 &&
-                        <label> No Data Available, please add category based expenses. </label>
+                    <label> No Data Available, please add category based expenses. </label>
                     }
                 </Grid>
 

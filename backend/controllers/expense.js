@@ -28,10 +28,6 @@ export const addExpense = async (request, response) => {
                 value: user_id
             },
             {
-                label: "Group Ids",
-                value: group_id
-            },
-            {
                 label: "Tag Id",
                 value: tag_id
             }
@@ -43,13 +39,18 @@ export const addExpense = async (request, response) => {
             return response.status(400).send({error: `${field.label} is a required field`});
         }
 
-        const groupData = await supabase
-            .from('group')
-            .select('user_ids')
-            .eq('id', group_id);
+        let user_ids = [];
 
-        const user_ids = groupData.data[0].user_ids;
 
+        if (group_id) {
+            const groupData = await supabase
+                .from('group')
+                .select('user_ids')
+                .eq('id', group_id);
+            user_ids = groupData.data[0].user_ids;
+        } else {
+            user_ids = [user_id];
+        }
 
         const {data, error} = await supabase
             .from('expense')
@@ -150,17 +151,19 @@ export const viewExpense = async (request, response) => {
             return response.status(400).send(error);
         }
 
-        const groupResponse = await supabase
-            .from('group')
-            .select('*')
-            .eq('id', data[0].group_id);
+        if (data[0].group_id) {
+            const groupResponse = await supabase
+                .from('group')
+                .select('*')
+                .eq('id', data[0].group_id);
 
-        delete data[0].group_id;
+            delete data[0].group_id;
 
-        data[0].groups = groupResponse.data.map((ele) => ele.name);
+            data[0].groups = groupResponse.data.map((ele) => ele.name);
 
-        if (groupResponse.error) {
-            return response.status(400).send(error);
+            if (groupResponse.error) {
+                return response.status(400).send(error);
+            }
         }
 
         const userResponse = await supabase

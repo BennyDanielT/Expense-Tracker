@@ -250,13 +250,18 @@ function AddExepnse() {
         e.preventDefault();
         if (Object.keys(values).length) {
             let error = false;
-            Object.values(values).forEach((value) => {
-                if (!value || (Array.isArray(value) && !value.length)) {
-                    error = true;
+            Object.entries(values).forEach((value) => {
+                if (value[0] !== 'group_id') {
+                    if (!value[1] || (Array.isArray(value[1]) && !value[1].length)) {
+                        error = true;
+                    }
                 }
             });
             if (!error) {
                 setMainError("");
+                if (!values['group_id']) {
+                    delete values['group_id'];
+                }
                 dispatch(addExpense(values));
             } else {
                 callErrorFunctions();

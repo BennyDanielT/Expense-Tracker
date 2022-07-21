@@ -159,7 +159,7 @@ function ExpenseAnalysis() {
                             </Grid>
                             <Grid item xs={4}>
                                 <Typography variant="body1" color="text.primary">
-                                    {group.amount} $
+                                    {group.amount.toFixed(2)} $
                                 </Typography>
                             </Grid>
 
