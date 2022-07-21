@@ -134,7 +134,7 @@ export default function PaymentHistory() {
               <th>Timestamp</th>
               <th>Payee</th>
               <th>Amount</th>
-              <th>Payment Status</th>
+              {/* <th>Payment Status</th> */}
             </tr>
           </thead>
           <tbody>
@@ -153,10 +153,10 @@ export default function PaymentHistory() {
             {values.map((v) => (
               <tr>
                 {' '}
-                <td>Paid on {v.timestamp}</td>
+                <td>Initiated on {v.timestamp}</td>
                 <td>{v.payee}</td>
                 <td>{v.amount}</td>
-                <td>{v.status}</td>
+                {/* <td>{v.status}</td> */}
               </tr>
             ))}
           </tbody>

@@ -3,55 +3,21 @@ import 'chart.js/auto';
 import {Col, Container, Form, Row} from "react-bootstrap";
 import {useState} from "react";
 import {Button, Grid, Typography} from "@mui/material";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect} from "react";
+import {fetchExpenses, viewTags} from "../../redux/actions";
+import {useAuth} from "../../contexts/Auth";
+import {usePrevious} from "react-use";
 
 function SpendingTrends() {
 
-    const individualTrends =
-        [
-            {"desc": "Food", "value": "147$"},
-            {"desc": "Travel", "value": "205$"},
-            {"desc": "Grocery", "value": "98$"},
-            {"desc": "Utilities", "value": "67$"},
-            {"desc": "Others", "value": "245$"},];
 
-    const groupTrends =
-        [{"desc": "Total money sent:", "value": "568$"},
-            {"desc": "Total money received:", "value": "92$"},
-            {"desc": "Total amount of group expenses:", "value": "476$"},
-            {"desc": "----------------------", "value": " "},
-            {"desc": "Group based expenses", "value": ""},
-            {"desc": "Home", "value": "252$"},
-            {"desc": "Friends:", "value": "62$"},
-            {"desc": "Work:", "value": "50$"},
-            {"desc": "Saturday Movie:", "value": "67$"},
-            {"desc": "Birthday:", "value": "45$"},];
-
-    const [trendMode, setTrendMode] = useState(individualTrends);
-
-    const dataGroup = {
-        labels: ['Home', 'Friends', 'Work', 'Saturday Movie', 'Birthday'],
-        datasets: [
-            {
-                label: 'Groups',
-                data: [252, 62, 50, 67, 45],
-                borderColor: ['rgba(255,206,86,0.2)'],
-                backgroundColor: ['rgba(232,99,132,1)',
-                    'rgba(232,211,6,1)',
-                    'rgba(54,162,235,1)',
-                    'rgba(255,159,64,1)',
-                    'rgba(153,102,255,1)'],
-                pointBackgroundColor: 'rgba(255,206,86,0.2)',
-            }
-
-        ]
-    }
-
-    const dataIndi = {
-        labels: ['Food', 'Travel', 'Grocery', 'Utilities', 'Others'],
+    const [chartData, setChartData] = useState({
+        labels: [],
         datasets: [
             {
                 label: 'Categories',
-                data: [147, 205, 98, 67, 245],
+                data:[],
                 borderColor: ['rgba(255,206,86,0.2)'],
                 backgroundColor: ['rgba(232,99,132,1)',
                     'rgba(232,211,6,1)',
@@ -62,7 +28,98 @@ function SpendingTrends() {
             }
 
         ]
-    }
+    });
+
+    const [tagList, setTagList] = useState([]);
+
+    let dispatch = useDispatch();
+
+    const { user } = useAuth();
+
+
+    // View Tags request and processing
+    const viewTagsResponseData = useSelector(
+        (state) => state.tag.viewTagsResponseData
+    );
+
+    const isViewTagsResponseReceived = useSelector(
+        (state) => state.tag.isViewTagsResponseReceived
+    );
+
+    // hook to request the data
+    useEffect(() => {
+        dispatch(viewTags(user().user.identities[0].user_id));
+    }, [dispatch]);
+
+
+    // hook to check if the data is received from the backend
+    // UI is updated accordingly
+    useEffect(() => {
+        if (
+            viewTagsResponseData &&
+            viewTagsResponseData.data &&
+            viewTagsResponseData.data.length
+        ) {
+
+            const response = {};
+            viewTagsResponseData.data.map(tag => {
+                response[tag.id] = {tagName: tag.name, amount: 0};
+            });
+
+            setTagList(response);
+        }
+    }, [viewTagsResponseData]);
+
+    useEffect(() => {
+        Object.keys(tagList).forEach((tag) => {
+            dispatch(fetchExpenses(tag));
+        });
+    }, [tagList]);
+
+
+    // Fetch all related expenses request and processing
+    // hook to check if the data is received from the backend
+    // UI is updated accordingly
+    const fetchExpensesResponseData = useSelector(
+        (state) => state.tag.fetchExpensesResponseData
+    );
+
+
+    const isFetchExpensesResponseReceived = useSelector(
+        (state) => state.tag.isFetchExpensesResponseReceived
+    );
+
+    useEffect(() => {
+        if (fetchExpensesResponseData) {
+            if (!fetchExpensesResponseData.error) {
+                if (fetchExpensesResponseData.data!==undefined &&  tagList[fetchExpensesResponseData.data[0].tag_id] !== undefined) {
+                    tagList[fetchExpensesResponseData.data[0].tag_id].amount = fetchExpensesResponseData.data.map(a => a.amount).reduce((a, b) => a + b, 0)
+                    setChartData({
+                        labels: Object.keys(tagList).map(key => {
+                            return tagList[key]
+                        }).map(a => a.tagName),
+                        datasets: [
+                            {
+                                label: 'Categories',
+                                data: Object.keys(tagList).map(key => {
+                                    return tagList[key]
+                                }).map(a => a.amount),
+                                borderColor: ['rgba(255,206,86,0.2)'],
+                                backgroundColor: ['rgba(232,99,132,1)',
+                                    'rgba(232,211,6,1)',
+                                    'rgba(54,162,235,1)',
+                                    'rgba(255,159,64,1)',
+                                    'rgba(153,102,255,1)'],
+                                pointBackgroundColor: 'rgba(255,206,86,0.2)'
+                            }
+
+                        ]
+                    })
+                }
+            }
+        }
+    }, [isFetchExpensesResponseReceived]);
+
 
     const optionsIndi = {
         plugins: {
@@ -79,41 +136,6 @@ function SpendingTrends() {
                     color: true
                 }
             }
-        }
-    }
-
-    const optionsGroup = {
-        plugins: {
-            title: {
-                display: true,
-                text: 'Group expenses',
-                color: 'blue',
-                font: {
-                    size: 18
-                },
-                responsive: true,
-                animation: {
-                    animateScale: true,
-                    color: true
-                }
-            }
-        }
-    }
-
-    const [spendingMode, setSpendingMode] = useState("Individual");
-    const [chartOptions, setChartOptions] = useState(optionsIndi);
-    const [chartData, setChartData] = useState(dataIndi);
-    function onHandleChange(e) {
-        setSpendingMode(e.target.value)
-        if (e.target.value === 'Individual'){
-            setChartData(dataIndi)
-            setChartOptions(optionsIndi)
-            setTrendMode(individualTrends)
-        }
-        else {
-            setChartData(dataGroup)
-            setChartOptions(optionsGroup)
-            setTrendMode(groupTrends)
         }
     }
 
@@ -134,27 +156,35 @@ function SpendingTrends() {
                     <Typography gutterBottom variant="h5" component="div">
                         Category Based Expenses
                     </Typography>
-                    {Object.values(trendMode).map(months =>
+                    { tagList.length !==0 &&  Object.keys(tagList).map(key => {
+                        return tagList[key];
+                    }).map(months =>
                         <Grid container
                               direction="row"
                               justifyContent="center"
                               alignItems="stretch">
                             <Grid item xs={8}>
                                 <Typography variant="body1" color="text.primary">
-                                    {months.desc}
+                                    {months.tagName}
                                 </Typography>
                             </Grid>
                             <Grid item xs={4}>
                                 <Typography variant="body1" color="text.primary">
-                                    {months.value}
+                                    {months.amount} $
                                 </Typography>
                             </Grid>
 
                         </Grid>)}
+                    { tagList.length ===0 &&
+                        <label> No Data Available, please add category based expenses. </label>
+                    }
                 </Grid>
                 <Grid item xs={12} sm={8} md={5} lg={4}>
-                    <Doughnut data={chartData} style={{backgroundColor: "#ffffff", marginBottom: "17px"}}
-                              options={chartOptions}/>
+                    { tagList.length !==0 && <Doughnut data={chartData} style={{backgroundColor: "#ffffff", marginBottom: "17px"}}
+                              options={optionsIndi}/>}
+                    { tagList.length ===0 &&
+                    <label> No Data Available, please add category based expenses. </label>
+                    }
                 </Grid>
 
 

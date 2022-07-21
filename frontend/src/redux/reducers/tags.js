@@ -104,13 +104,13 @@ const tag = (state = initialState, action) => {
     case FETCH_EXPENSE: {
       return {
         ...state,
-        isFetchExpensesResponseReceived: false,
+        isFetchExpensesResponseReceived: new Boolean(false),
       };
     }
     case FETCH_EXPENSE_RESPONSE: {
       return {
         ...state,
-        isFetchExpensesResponseReceived: true,
+        isFetchExpensesResponseReceived: new Boolean(true),
         fetchExpensesResponseData: action.response,
       };
     }

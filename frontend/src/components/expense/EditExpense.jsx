@@ -17,7 +17,11 @@ function EditExpense() {
 
     const actualMembers = [];
 
-    apiData.members.forEach((ele) => {
+    if (!apiData) {
+        // error handling
+    } 
+
+    apiData?.users.forEach((ele) => {
         actualMembers.push({label: ele.slice(0, 1).toUpperCase() + ele.slice(1), value: ele});
     });
 
