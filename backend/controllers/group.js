@@ -152,6 +152,7 @@ export const viewGroup = async (request, response) => {
         const expenseResponse = await supabase
             .from('expense')
             .select('*')
+            .eq('group_id', id)
 
         if (expenseResponse.error) {
             return response.status(400).send(expenseResponse.error);

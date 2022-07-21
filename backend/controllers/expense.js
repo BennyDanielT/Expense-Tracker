@@ -71,7 +71,7 @@ export const addExpense = async (request, response) => {
 
 export const editExpense = async (request, response) => {
 
-    const {name, user_ids, icon} = request.body;
+    const {name, user_ids, amount} = request.body;
 
     const id = request.params.id;
 
@@ -90,8 +90,8 @@ export const editExpense = async (request, response) => {
                 value: user_ids && Array.from(user_ids, Number)
             },
             {
-                label: "Icon",
-                value: icon
+                label: "Amount",
+                value: amount
             }
         ];
 
@@ -104,7 +104,7 @@ export const editExpense = async (request, response) => {
         const {data, error} = await supabase
             .from('expense')
             .update(
-                {name, user_ids, icon}
+                {name, user_ids, amount}
             ).match(
                 {id}
             )

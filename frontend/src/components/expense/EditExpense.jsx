@@ -7,25 +7,14 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {usePrevious} from "react-use";
 import {editExpense, getUsers, viewExpense} from "../../redux/actions";
+import {Loading} from "../Loading";
 
 function EditExpense() {
     const location = useLocation();
 
-    const apiData = location.state;
-
     const [mainError, setMainError] = useState("");
 
-    const actualMembers = [];
-
-    if (!apiData) {
-        // error handling
-    } 
-
-    apiData?.users.forEach((ele) => {
-        actualMembers.push({label: ele.slice(0, 1).toUpperCase() + ele.slice(1), value: ele});
-    });
-
-    const [values, setValues] = useState({name: apiData.name, members: actualMembers, icon: null, amount: null},);
+    const [values, setValues] = useState({name: '', members: [], amount: null},);
     const [errors, setErrors] = useState({});
 
     const onChangeFunctions = {
@@ -73,7 +62,7 @@ function EditExpense() {
         'members': (e) => {
             setValues({
                 ...values,
-                members: e.map((ele) => ele.value)
+                members: e
             });
         },
         'amount': (e) => {
@@ -125,16 +114,19 @@ function EditExpense() {
     useEffect(() => {
         if (prevIsViewExpenseResponseReceived !== isViewExpenseResponseReceived && isSuccessfulResponse(viewExpenseResponseData)) {
             const data = viewExpenseResponseData['success'][0];
-            const users = [];
-            data.users.forEach((ele) => {
-                users.push({label: getUserFullName(ele), value: ele.id});
-            });
-            setValues({...values, name: data.name, users});
+            let tempUsers = [];
+            if (usersResponseData && usersResponseData.success) {
+                data.users = usersResponseData.success.filter((ele) => data.users.includes(ele.email_id));
+                data.users.forEach((ele) => {
+                    tempUsers.push({label: ele.email_id, value: ele.id});
+                });
+            }
+            setValues({...values, name: data.name, amount: data.amount, members: tempUsers});
         }
     }, [isViewExpenseResponseReceived]);
 
-    const isUsersResponseReceived = useSelector((state) => state.expense.isUsersResponseReceived);
-    const usersResponseData = useSelector((state) => state.expense.usersResponseData);
+    const isUsersResponseReceived = useSelector((state) => state.group.isUsersResponseReceived);
+    const usersResponseData = useSelector((state) => state.group.usersResponseData);
     const prevIsUsersResponseReceived = usePrevious(isUsersResponseReceived);
 
     const [users, setUsers] = useState([]);
@@ -170,6 +162,32 @@ function EditExpense() {
         }
     }, [isEditExpenseResponseReceived]);
 
+    const submitForm = (e) => {
+        const callErrorFunctions = () => {
+            setMainError("Please fill out all the fields");
+        };
+
+        e.preventDefault();
+        if (Object.keys(values).length) {
+            let error = false;
+            Object.values(values).forEach((value) => {
+                if (!value || (Array.isArray(value) && !value.length)) {
+                    error = true;
+                }
+            });
+            if (!error) {
+                setMainError("");
+                values["user_ids"] = values.members.map((ele) => ele.value);
+                delete values["members"];
+                dispatch(editExpense(id, values));
+            } else {
+                callErrorFunctions();
+            }
+        } else {
+            callErrorFunctions();
+        }
+    };
+
     return (
         <div className="edit-expense p-4">
             <Form.Label><Heading>Edit Expense</Heading></Form.Label>
@@ -181,39 +199,41 @@ function EditExpense() {
                     <div className="errors">{errors['name']}</div>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="expenseAmount">
-                    <Form.Label>New Amount Amount:</Form.Label>
-                    <Form.Control type="numeric" placeholder="Enter amount " value={values["amount"]}
+                    <Form.Label>Amount:</Form.Label>
+                    <Form.Control type="numeric" placeholder="Enter amount" value={values["amount"]}
                                   onChange={onChangeFunctions['amount']}/>
                     <div className="errors">{errors['amount']}</div>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="expenseIcon">
-                    <Form.Label>Expense Image</Form.Label>
-                    <Form.Control type="file" accept="image/*" placeholder="Add expense image"
-                                  onChange={onChangeFunctions['icon']}/>
-                    <div className="errors">{errors['icon']}</div>
-                </Form.Group>
+                {/*<Form.Group className="mb-3" controlId="expenseIcon">*/}
+                {/*    <Form.Label>Expense Image</Form.Label>*/}
+                {/*    <Form.Control type="file" accept="image/*" placeholder="Add expense image"*/}
+                {/*                  onChange={onChangeFunctions['icon']}/>*/}
+                {/*    <div className="errors">{errors['icon']}</div>*/}
+                {/*</Form.Group>*/}
 
 
                 <Form.Group className="mb-3" controlId="react-select-3-input">
                     <Form.Label>Group Members</Form.Label>
-                    <Select
-                        isMulti
-                        name="colors"
-                        defaultValue={values.members}
-                        options={users}
-                        className="basic-multi-select"
-                        classNamePrefix="select"
-                        onChange={onChangeFunctions['members']}
-                    />
+                    {values.members ?
+                        <Select
+                            isMulti
+                            name="colors"
+                            value={values.members}
+                            options={users}
+                            className="basic-multi-select"
+                            classNamePrefix="select"
+                            onChange={onChangeFunctions['members']}
+                        />
+                        : <Loading/>}
                     <div className="errors">{errors['members']}</div>
                 </Form.Group>
 
                 <div className="errors mb-3">{mainError}</div>
 
                 <div className="d-flex justify-content-center">
-                    <Button className="mt-4" onClick={editExpense}>
-                        Edit {apiData.name}
+                    <Button className="mt-4" onClick={submitForm}>
+                        Edit Expense
                     </Button>
                 </div>
             </Form>
