@@ -4,6 +4,7 @@ import coupon from "../assets/home_assets/coupon.png";
 import receipt from "../assets/home_assets/receipt.png";
 import piechart from "../assets/home_assets/pie-chart.png";
 import piggy from "../assets/home_assets/piggy-bank.png";
+import clock from "../assets/home_assets/clock.png";
 
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
@@ -19,24 +20,29 @@ export default function HomePage() {
     {
       title: "Discounts 💲",
       image: coupon,
+      description: "Find the best deals and coupons",
     },
     {
       title: "Receipts 📝",
       image: receipt,
+      description: "Organise your virtual and physical receipts",
     },
     {
       title: "Charts 📈",
       image: piechart,
+      description: "Visulize your expenses like never before",
     },
     {
-      title: "Savings 🐷",
-      image: piggy,
+      title: "Reminders 🕛",
+      image: clock,
+      description: "Reminding you to pay your bills on time",
     },
   ];
   return (
     <div className="container-home-page">
       <div style={{ textAlign: "center" }}>
-        <h2>Application Features ✅</h2>
+        <h2>Expense Tracker ✅</h2>
+        <p> Let's make every expense count</p>
       </div>
       <br></br>
 
@@ -47,13 +53,10 @@ export default function HomePage() {
               <Card.Img variant="top" src={_.image} responsive />
               <Card.Body>
                 <Card.Title>{_.title}</Card.Title>
-                <Card.Text>
-                  This is a longer card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                </Card.Text>
+                <Card.Text>{_.description}</Card.Text>
               </Card.Body>
             </Card>
+            <br></br>
           </Col>
         ))}
       </Row>
