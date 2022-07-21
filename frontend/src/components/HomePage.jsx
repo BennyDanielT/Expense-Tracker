@@ -35,6 +35,11 @@ export default function HomePage() {
   ];
   return (
     <div className="container-home-page">
+      <div style={{ textAlign: "center" }}>
+        <h2>Application Features ✅</h2>
+      </div>
+      <br></br>
+
       <Row xs={1} md={4} className="g-10">
         {images_home.map((_, idx) => (
           <Col>
