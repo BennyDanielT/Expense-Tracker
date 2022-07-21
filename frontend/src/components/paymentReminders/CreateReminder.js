@@ -2,11 +2,10 @@
  * @author ${Vatsal Yadav}
  */
 
-import {useState, useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {Button, Form} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.css';
 import {useHistory} from "react-router-dom";
-import {Alert, Snackbar} from "@mui/material";
 import DatePicker from "react-datepicker";
 import {useDispatch, useSelector} from "react-redux";
 import {createReminder} from "../../redux/actions";

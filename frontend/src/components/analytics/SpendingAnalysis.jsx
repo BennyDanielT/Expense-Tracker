@@ -1,23 +1,30 @@
-import {Bar, Doughnut} from 'react-chartjs-2'
+/**
+ * @author ${Vatsal Yadav}
+ */
+
+import {Doughnut} from 'react-chartjs-2'
 import 'chart.js/auto';
-import {Col, Container, Form, Row} from "react-bootstrap";
-import {useState} from "react";
-import {Button, Grid, Typography} from "@mui/material";
+import {useEffect, useState} from "react";
+import {Grid, Typography} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
 import {fetchExpenses, viewTags} from "../../redux/actions";
 import {useAuth} from "../../contexts/Auth";
-import {usePrevious} from "react-use";
 
+// The component purpose is to view chart for expenses of tags and categories
 function SpendingTrends() {
 
+    const [tagList, setTagList] = useState([]);
+
+    let dispatch = useDispatch();
+
+    const {user} = useAuth();
 
     const [chartData, setChartData] = useState({
         labels: [],
         datasets: [
             {
                 label: 'Categories',
-                data:[],
+                data: [],
                 borderColor: ['rgba(255,206,86,0.2)'],
                 backgroundColor: ['rgba(232,99,132,1)',
                     'rgba(232,211,6,1)',
@@ -29,13 +36,6 @@ function SpendingTrends() {
 
         ]
     });
-
-    const [tagList, setTagList] = useState([]);
-
-    let dispatch = useDispatch();
-
-    const { user } = useAuth();
-
 
     // View Tags request and processing
     const viewTagsResponseData = useSelector(
@@ -89,10 +89,11 @@ function SpendingTrends() {
         (state) => state.tag.isFetchExpensesResponseReceived
     );
 
+    // Prepare chart data as per tags and total amount logged for each tag
     useEffect(() => {
         if (fetchExpensesResponseData) {
             if (!fetchExpensesResponseData.error) {
-                if (fetchExpensesResponseData.data!==undefined &&  tagList[fetchExpensesResponseData.data[0].tag_id] !== undefined) {
+                if (fetchExpensesResponseData.data !== undefined && tagList[fetchExpensesResponseData.data[0].tag_id] !== undefined) {
                     tagList[fetchExpensesResponseData.data[0].tag_id].amount = fetchExpensesResponseData.data.map(a => a.amount).reduce((a, b) => a + b, 0)
                     setChartData({
                         labels: Object.keys(tagList).map(key => {
@@ -156,7 +157,7 @@ function SpendingTrends() {
                     <Typography gutterBottom variant="h5" component="div">
                         Category Based Expenses
                     </Typography>
-                    { tagList.length !==0 &&  Object.keys(tagList).map(key => {
+                    {tagList.length !== 0 && Object.keys(tagList).map(key => {
                         return tagList[key];
                     }).map(months =>
                         <Grid container
@@ -175,15 +176,17 @@ function SpendingTrends() {
                             </Grid>
 
                         </Grid>)}
-                    { tagList.length ===0 &&
+                    {tagList.length === 0 &&
                         <label> No Data Available, please add category based expenses. </label>
                     }
                 </Grid>
                 <Grid item xs={12} sm={8} md={5} lg={4}>
-                    { tagList.length !==0 && <Doughnut data={chartData} style={{backgroundColor: "#ffffff", marginBottom: "17px"}}
-                              options={optionsIndi}/>}
-                    { tagList.length ===0 &&
-                    <label> No Data Available, please add category based expenses. </label>
+                    {/* Code reference: https://www.chartjs.org/docs/latest/charts/doughnut.html*/}
+                    {tagList.length !== 0 &&
+                        <Doughnut data={chartData} style={{backgroundColor: "#ffffff", marginBottom: "17px"}}
+                                  options={optionsIndi}/>}
+                    {tagList.length === 0 &&
+                        <label> No Data Available, please add category based expenses. </label>
                     }
                 </Grid>
 

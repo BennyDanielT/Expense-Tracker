@@ -1,15 +1,19 @@
+/**
+ * @author ${Vatsal Yadav}
+ */
+
 import {routes} from "../../constants";
-import {Button, Card, Col, Container, Form, Row} from "react-bootstrap";
+import {Card, Container, Row} from "react-bootstrap";
 import {useHistory} from "react-router-dom";
+// Image asset references:
+// https://www.flaticon.com/premium-icon/pie-chart_2936725
+// https://www.flaticon.com/premium-icon/bar-chart_1376254?related_id=1376203&origin=search
+// https://www.flaticon.com/free-icon/analytics_921591
 import AnalyticsImg from "../../assets/analytics.png";
 import BarChartImg from "../../assets/bar-chart.png";
 import BarChartTwoImg from "../../assets/bar-chart-two.png";
 
-
-// https://www.flaticon.com/premium-icon/bar-chart_738881
-// https://www.flaticon.com/premium-icon/pie-chart_2936725
-// https://www.flaticon.com/premium-icon/bar-chart_1376254?related_id=1376203&origin=search
-// https://www.flaticon.com/free-icon/analytics_921591
+// The component purpose is to show home page of the analytics feature
 function AnalyticsHome() {
 
     const history = useHistory();
