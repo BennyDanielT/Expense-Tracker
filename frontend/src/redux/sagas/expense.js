@@ -16,7 +16,7 @@ import {showError} from "../../constants";
 function* addExpense(action) {
     try {
         const json = yield axios
-            .post("/api/add-expense/", action.groupData)
+            .post("/api/add-expense/", action.expenseData)
             .then((res) => res.data);
         yield put(addExpenseResponse(json));
     } catch (err) {
@@ -29,10 +29,10 @@ export function* addExpenseSaga() {
     yield takeLatest(ADD_EXPENSE, addExpense);
 }
 
-function* viewExpenses() {
+function* viewExpenses(action) {
     try {
         const json = yield axios
-            .get("/api/view-expenses/")
+            .get(`/api/view-expenses/?user_id=${action.user_id}`)
             .then((res) => res.data);
         yield put(viewExpensesResponse(json));
     } catch (err) {
@@ -48,7 +48,7 @@ export function* viewExpensesSaga() {
 function* viewExpense(action) {
     try {
         const json = yield axios
-            .get(`/api/view-expense/${action.id}?user=${action.user}`)
+            .get(`/api/view-expense/${action.id}`)
             .then((res) => res.data);
         yield put(viewExpenseResponse(json));
     } catch (err) {
@@ -64,7 +64,7 @@ export function* viewExpenseSaga() {
 function* editExpense(action) {
     try {
         const json = yield axios
-            .put(`/api/edit-expense/${action.id}`, action.groupData)
+            .put(`/api/edit-expense/${action.id}`, action.expenseData)
             .then((res) => res.data);
         yield put(editExpenseResponse(json));
     } catch (err) {

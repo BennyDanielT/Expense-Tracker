@@ -10,9 +10,9 @@ export const VIEW_EXPENSES = "VIEW_EXPENSES";
 export const VIEW_EXPENSES_RESPONSE = "VIEW_EXPENSES_RESPONSE";
 
 
-export const addExpense = (groupData) => ({
+export const addExpense = (expenseData) => ({
     type: ADD_EXPENSE,
-    groupData
+    expenseData
 });
 
 export const addExpenseResponse = (response) => ({
@@ -20,10 +20,10 @@ export const addExpenseResponse = (response) => ({
     response
 });
 
-export const editExpense = (id, groupData) => ({
+export const editExpense = (id, expenseData) => ({
     type: EDIT_EXPENSE,
     id,
-    groupData
+    expenseData
 });
 
 export const editExpenseResponse = (response) => ({
@@ -41,8 +41,9 @@ export const deleteExpenseResponse = (response) => ({
     response
 });
 
-export const viewExpenses = () => ({
-    type: VIEW_EXPENSES
+export const viewExpenses = (user_id) => ({
+    type: VIEW_EXPENSES,
+    user_id
 });
 
 export const viewExpensesResponse = (response) => ({
@@ -50,10 +51,9 @@ export const viewExpensesResponse = (response) => ({
     response
 });
 
-export const viewExpense = (id, user) => ({
+export const viewExpense = (id) => ({
     type: VIEW_EXPENSE,
-    id,
-    user
+    id
 });
 
 export const viewExpenseResponse = (response) => ({

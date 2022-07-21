@@ -97,7 +97,7 @@ function CreateEditTag({ setting }) {
       unified: "1f3f7-fe0f",
     },
     usage: location.state?.tag?.usage_count || 0,
-    user_id: user().user.identities[0].user_id,
+    user_id: user().user.identities[0].id,
   });
 
   const [tagError, setTagError] = useState(null);
