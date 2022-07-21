@@ -125,7 +125,12 @@ export const viewNotifications = async (request, response) => {
                 .from('users')
                 .select("*")
                 .in('id', owe.data.user_ids);
-            res["owed"].push({id: owe.id, name: owe.data.name, users: data.map((ele) => ele.email_id), amount: owe.data.amount})
+            res["owed"].push({
+                id: owe.id,
+                name: owe.data.name,
+                users: data.map((ele) => ele.email_id),
+                amount: owe.data.amount
+            })
         }
 
         for (const len of lent) {
@@ -133,11 +138,16 @@ export const viewNotifications = async (request, response) => {
                 .from('users')
                 .select("*")
                 .in('id', len.data.user_ids);
-            res["lent"].push({id: len.id, name: len.data.name, users: data.map((ele) => ele.email_id), amount: len.data.amount})
+            res["lent"].push({
+                id: len.id,
+                name: len.data.name,
+                users: data.map((ele) => ele.email_id),
+                amount: len.data.amount
+            })
         }
 
-
         const deleted = data.filter((ele) => ele.type === 4 && ele.data.user_id === user_id);
+
         for (const del of deleted) {
             const {data, error} = await supabase
                 .from('users')
@@ -149,7 +159,7 @@ export const viewNotifications = async (request, response) => {
             })
         }
 
-        const groups = data.filter((ele) => ele.type === 1 && ele.data.user_id === user_id);
+        const groups = data.filter((ele) => ele.type === 1 && ele.data.user_ids.includes(user_id));
         for (const group of groups) {
             res["added_group"].push({id: group.id, name: group.data.name})
         }
