@@ -1,3 +1,7 @@
+/**
+ * @author ${Vatsal Yadav}
+ */
+
 import {Doughnut} from 'react-chartjs-2'
 import 'chart.js/auto';
 import {Grid, Typography} from "@mui/material";
@@ -9,6 +13,7 @@ import {isSuccessfulResponse} from "../../constants";
 import {useEffect} from "react";
 import {useState} from "react";
 
+// The component purpose is to view chart for expenses of different groups
 function ExpenseAnalysis() {
 
     const [groupExpenses, setGroupExpenses] = useState([]);
@@ -24,8 +29,9 @@ function ExpenseAnalysis() {
 
     const prevIsViewGroupsResponseReceived = usePrevious(isViewGroupsResponseReceived);
 
-    const { user } = useAuth();
+    const {user} = useAuth();
 
+    // Code Reference : https://www.chartjs.org/
     const [chartData, setChartData] = useState({
         labels: [],
         datasets: [
@@ -45,7 +51,6 @@ function ExpenseAnalysis() {
     });
 
     useEffect(() => {
-        console.log("dispatching")
         dispatch(viewGroups(user().user.id));
     }, []);
 
@@ -53,11 +58,9 @@ function ExpenseAnalysis() {
     useEffect(() => {
         if (prevIsViewGroupsResponseReceived !== isViewGroupsResponseReceived && isSuccessfulResponse(viewGroupsResponseData)) {
             const response = {};
-            console.log("viewGroupsResponseData['success']", viewGroupsResponseData['success'])
             viewGroupsResponseData['success'].forEach((ele) => {
                 response[ele.id] = {groupName: ele.name, amount: 0};
             });
-            console.log("response", response)
             setGroupExpenses(response);
 
         }
@@ -74,14 +77,10 @@ function ExpenseAnalysis() {
 
     const prevIsViewExpensesResponseReceived = usePrevious(isViewExpensesResponseReceived);
 
-
+// Prepare chart data as per groups and total amount logged for each group
     useEffect(() => {
-        console.log("viewExpensesResponseData.success", viewExpensesResponseData.success)
-        console.log("groupExpenses", groupExpenses)
         if (prevIsViewExpensesResponseReceived !== undefined && prevIsViewExpensesResponseReceived !== isViewExpensesResponseReceived && groupExpenses[parseInt(viewExpensesResponseData.success[0].group_id)] !== undefined) {
-            groupExpenses[parseInt(viewExpensesResponseData.success[0].group_id)].amount = viewExpensesResponseData.success.map(a => a.amount).reduce((a, b) => a + b, 0)
-            // viewExpensesResponseData.success.filter((ele) => ele.group_ids.includes(groupExpenses))
-
+            groupExpenses[parseInt(viewExpensesResponseData.success[0].group_id)].amount = viewExpensesResponseData.success.map(a => a.amount/a.user_ids.length).reduce((a, b) => a + b, 0)
             setChartData({
                 labels: Object.keys(groupExpenses).map(key => {
                     return groupExpenses[key]
@@ -110,20 +109,6 @@ function ExpenseAnalysis() {
     useEffect(() => {
         dispatch(viewExpenses(user().user.id));
     }, [groupExpenses]);
-
-    const groupTrends =
-        [{"desc": "Total money sent:", "value": "568$"},
-            {"desc": "Total money received", "value": "92$"},
-            {"desc": "Total amount of group expenses", "value": "476$"},
-            {"desc": "Total amount of individual expenses", "value": "757$"},
-            {"desc": "Highest single expenses recorded", "value": "92$"},
-            {"desc": "----------------------", "value": " "},
-            {"desc": "Home", "value": "252$"},
-            {"desc": "Friends", "value": "62$"},
-            {"desc": "Work", "value": "50$"},
-            {"desc": "Saturday Movie", "value": "67$"},
-            {"desc": "Birthday", "value": "45$"},];
-
 
     const optionsGroup = {
         plugins: {
@@ -158,7 +143,7 @@ function ExpenseAnalysis() {
                     <Typography gutterBottom variant="h5" component="div">
                         Group Based Expenses
                     </Typography>
-                    { groupExpenses.length !==0 &&  Object.keys(groupExpenses).map(key => {
+                    {groupExpenses.length !== 0 && Object.keys(groupExpenses).map(key => {
                         return groupExpenses[key];
                     }).map(group =>
                         <Grid container
@@ -177,14 +162,16 @@ function ExpenseAnalysis() {
                             </Grid>
 
                         </Grid>)}
-                    { groupExpenses.length ===0 &&
+                    {groupExpenses.length === 0 &&
                         <label> No Data Available, please add group based expenses. </label>
                     }
                 </Grid>
                 <Grid item xs={12} sm={8} md={5} lg={4}>
-                    { groupExpenses.length !==0 && <Doughnut data={chartData} style={{backgroundColor: "#ffffff", marginBottom: "17px"}}
-                              options={optionsGroup}/>}
-                    { groupExpenses.length ===0 &&
+                    {/* Code reference: https://www.chartjs.org/docs/latest/charts/doughnut.html*/}
+                    {groupExpenses.length !== 0 &&
+                        <Doughnut data={chartData} style={{backgroundColor: "#ffffff", marginBottom: "17px"}}
+                                  options={optionsGroup}/>}
+                    {groupExpenses.length === 0 &&
                         <label>No Data Available, please add group based expenses.</label>
                     }
                 </Grid>

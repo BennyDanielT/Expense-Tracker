@@ -1,8 +1,13 @@
+/**
+ * @author ${Vatsal Yadav}
+ */
+
 import {Bar} from 'react-chartjs-2'
 import 'chart.js/auto';
 import {Button, Grid, Typography} from "@mui/material";
 import {useState} from "react";
 
+// The component purpose is to view monthly expenses charts
 function ExpenseTracking() {
 
     const monthlyExpenseData2022 =
@@ -241,6 +246,7 @@ function ExpenseTracking() {
 
                 </Grid>
                 <Grid item xs={12} sm={8} md={5} style={{backgroundColor: "#ffffff", margin: "17px"}}>
+                    {/* Code Reference : https://www.chartjs.org/docs/latest/charts/bar.html*/}
                     <Bar options={chartOptions} style={{backgroundColor: "#ffffff"}} height="200px" data={chartData}/>
                 </Grid>
 
