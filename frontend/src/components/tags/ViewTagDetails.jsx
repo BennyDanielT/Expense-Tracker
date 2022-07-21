@@ -64,7 +64,6 @@ function ViewTagDetails() {
   return (
     <div
       style={{
-        width: "100vw",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -85,7 +84,7 @@ function ViewTagDetails() {
       <h3>Related Expenses</h3>
       {!isFetchExpensesResponseReceived ? (
         <Loading />
-      ) : (
+      ) : expenses && expenses.length ? (
         <Table striped bordered hover responsive>
           <thead>
             <tr>
@@ -97,19 +96,19 @@ function ViewTagDetails() {
             </tr>
           </thead>
           <tbody>
-            {expenses &&
-              expenses.length &&
-              expenses.map((expense, index) => (
-                <tr key={index}>
-                  <td>{expense.id}</td>
-                  <td>{expense.name}</td>
-                  <td>{expense.amount}</td>
-                  <td>{expense.type}</td>
-                  <td>{expense.group_ids.length > 0 ? "G" : "U"}</td>
-                </tr>
-              ))}
+            {expenses.map((expense, index) => (
+              <tr key={index}>
+                <td>{expense.id}</td>
+                <td>{expense.name}</td>
+                <td>{expense.amount}</td>
+                <td>{expense.type}</td>
+                <td>{expense.group_ids.length > 0 ? "G" : "U"}</td>
+              </tr>
+            ))}
           </tbody>
         </Table>
+      ) : (
+        <span>No expenses were found related to this tag</span>
       )}
     </div>
   );
