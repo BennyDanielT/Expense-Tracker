@@ -198,11 +198,11 @@ function Routing() {
             <Signup />
           </Route>
 
-          <PrivateRoute exact path={routes.forgotPassword.path}>
+          <Route exact path={routes.forgotPassword.path}>
             <Layout>
               <ForgotPassword />
             </Layout>
-          </PrivateRoute>
+          </Route>
 
           <PrivateRoute exact path={routes.passwordChanged.path}>
             <Layout>

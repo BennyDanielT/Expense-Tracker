@@ -16,10 +16,10 @@ app.use(bodyparser.urlencoded({ extended: false }));
 app.use("/api/", router);
 
 // serve react app in backend after the frontend build is completed
-app.use(express.static(path.join("build")));
-app.get("*", function (request, response) {
-  response.sendFile("index.html", { root: path.join("build") });
-});
+// app.use(express.static(path.join("build")));
+// app.get("*", function (request, response) {
+//   response.sendFile("index.html", { root: path.join("build") });
+// });
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
