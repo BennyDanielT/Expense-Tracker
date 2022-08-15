@@ -1,23 +1,23 @@
-# Assignment 3
+# CSCI 5709 - GROUP PROJECT - EXPENSE TRACKER
 
 ## Group Information
 
 1. *Group No*: 24
-2. *Date Created*: 13 JUL 2022
+2. *Date Created*: 13 May 2022
 3. *Last Modification Date*: 15 JUL 2022
 4. *Website URL*: http://group24-expensetracker-dev.us-east-1.elasticbeanstalk.com/
 5. *Git URL*: https://git.cs.dal.ca/ayushv/group24_expensetracker
 
 ## Authors
 
+* Benny Tharigopala (bn489600@dal.ca)
 * Abhishek Uppe (ab577089@dal.ca)
 * Vatsal Yadav (vatsal.yadav@dal.ca)
 * Devarshi Vyas (dv459527@dal.ca)
 * Ayush Verma (ayush.verma@dal.ca)
 * Smit Thakkar (sm928548@dal.ca)
-* Benny Tharigopala (bn489600@dal.ca)
 
-## Features developed ( 9/12 i.e 75% features completed)
+## Features developed
 
 
 1. Group Expense Tracking
